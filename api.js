@@ -1,7 +1,5 @@
-import Editor from "./Editor";
-import React, { useState } from "react";
-import JSrunner from "javascript-code-runner";
-import fs from 'fs';
+const fs = require('fs')
+
 
 
 const testObj =   {
@@ -14,64 +12,29 @@ const testObj =   {
   "tests": "describe(\"Tests\", () => {  it(\"test\", () => {Test.assertSimilar(vaccineList('12 weeks','up-to-date','december'), [, 'rotavirus'], \"Your list isn't returning what was expected.\");Test.assertSimilar(vaccineList('12 months','16 weeks','june'), [, 'hibMenC', 'measlesMumpsRubella', 'meningitisB', 'pneumococcal'], \"Your list isn't returning what was expected.\");Test.assertSimilar(vaccineList('40 months','12 months','october'), [,'measlesMumpsRubella','meningitisB','offer fluVaccine','preSchoolBooster'], \"Your list isn't returning what was expected.\");  });});"
 }
 
+const imports = `const assert = require('assert');
+const request = require('supertest')
+const { expect } = require('chai');`
 
-function IDE() {
 
-  const funcName = testObj.starterCode
 
-  const funcFrame = formatPrompt(testObj.starterCode)
-
-  const [code, setCode] = useState(funcFrame)
-  const [html, setHtml] = useState('')
-
-  function formatPrompt(prompt) {
-    return `${prompt.slice(0, prompt.length - 1)}
-
-  }`
+async function createFile(tests) {
+  try {
+    await fs.writeFile('src/components/tester.spec.js', tests, (err) => {
+      if (err) throw err
+    })
+  } catch (error) {
+    console.log(error)
   }
-
-
-
-
-
-  formatPrompt(testObj.starterCode)
-
-  function runCode() {
-    let toRun = code + `${funcName}('dave')`
-     const { result, message } = JSrunner(toRun);
-     setHtml(result)
-     console.log(result);
-     console.log(message);
-  }
-
-
-  const srcDoc = `
-  <html>
-    <body>${html}</body>
-  </html>
-  `
-
-  return (
-    <div className="App">
-    <div className='editor'>
-      <Editor
-      onChange={setCode}
-      value={code}
-      funcName={funcName}
-      runCode={runCode}
-      />
-    </div>
-    <iframe
-    srcDoc={srcDoc}
-    title='output'
-    sandbox='allow-scripts'
-    frameBorder='0'
-    width='100%'
-    height='100%'
-     />
-
-    </div>
-  );
 }
 
-export default IDE;
+function replacer(str) {
+  return str.replace(/\\/g, "")
+}
+
+
+const tests = (imports + replacer(testObj.tests))
+
+
+createFile(tests)
+
