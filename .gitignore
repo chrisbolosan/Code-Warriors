@@ -9,7 +9,6 @@
 /coverage
 
 # production
-/config/config.env
 /build
 
 # misc
