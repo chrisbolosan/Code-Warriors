@@ -3,9 +3,16 @@ import "codemirror/theme/material.css";
 import "codemirror/addon/edit/closebrackets";
 import "codemirror/mode/javascript/javascript";
 import { Controlled } from "react-codemirror2";
+import { connect } from 'react-redux';
+import { fetchExercises } from '../store/exercises.js'
+import React, { useState, useEffect } from 'react';
 
-export default function Editor(props) {
+export function Editor(props) {
   const { onChange, value } = props;
+
+  useEffect(() => {
+    props.fetchExercises()
+  }, []);
 
   function handleChange(editor, data, value) {
     onChange(value);
@@ -23,6 +30,7 @@ export default function Editor(props) {
   }
 
   async function runTest() {
+    console.log(props.exercises)
 
     const runScript = document.createElement("script");
 
@@ -58,3 +66,17 @@ export default function Editor(props) {
     </div>
   );
 }
+
+const mapState = (state) => {
+  return {
+    exercises: state.exercises
+  };
+};
+
+const mapDispatch = (dispatch) => {
+  return {
+    fetchExercises: () => dispatch(fetchExercises())
+  };
+};
+
+export default connect(mapState, mapDispatch)(Editor);
