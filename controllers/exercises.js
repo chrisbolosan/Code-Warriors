@@ -1,4 +1,4 @@
-const Exercise = require('../models/Exercise');
+const Exercise = require("../models/Exercise");
 
 // @desc    Get Exercise
 // @route   GET /api/exercises
@@ -7,6 +7,18 @@ exports.getExercises = async (req, res, next) => {
   try {
     const exercises = await Exercise.find();
     res.status(200).json(exercises);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// @desc Get a specific Exercise
+// @route GET /api/exercises/:id
+// @access Public
+exports.getExercise = async (req, res, next) => {
+  try {
+    const exercise = await Exercise.findById(req.params.id);
+    res.status(200).json(exercise);
   } catch (err) {
     next(err);
   }
@@ -24,7 +36,7 @@ exports.createExercise = async (req, res, next) => {
   }
 };
 
-// @desc Update especific Exercise
+// @desc Update a specific Exercise
 // @route PUT /api/exercises/:id
 // @access Private
 exports.updateExercise = async (req, res, next) => {
@@ -36,12 +48,12 @@ exports.updateExercise = async (req, res, next) => {
   }
 };
 
-// @desc Get especific Exercise
-// @route GET /api/exercises/:id
-// @access Public
-exports.getExercise = async (req, res, next) => {
+// @desc Delete  a specific Exercise
+// @route  /api/exercises/:id
+// @access Private
+exports.deleteExercise = async (req, res, next) => {
   try {
-    const exercise = await Exercise.findById(req.params.id);
+    const exercise = await Exercise.findByIdAndDelete(req.params.id);
     res.status(200).json(exercise);
   } catch (err) {
     next(err);

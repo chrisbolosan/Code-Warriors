@@ -20,5 +20,6 @@ app.use(morgan('dev'));
 // Setting up routes
 
 app.use('/api/exercises', require('./routes/exercises'));
+app.use('/api/users', require('./routes/users'));
 
 app.listen(PORT, console.log(`Running on port ${PORT}`));
