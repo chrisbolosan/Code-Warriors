@@ -1,6 +1,4 @@
-const fs = require('fs')
-
-const test = `describe('#sum()', function() {
+describe('#sum()', function() {
   context('without arguments', function() {
 
     it('should return 0', function() {
@@ -31,19 +29,3 @@ const test = `describe('#sum()', function() {
 
   })
 })
-`
-
-
-async function createFile(tests) {
-  try {
-    fs.writeFile('public/sum.test.js', tests, (err) => {
-      if (err) throw err
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-
-createFile(test)
-

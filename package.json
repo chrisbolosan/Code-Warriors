@@ -9,6 +9,7 @@
     "chai": "^4.3.4",
     "codemirror": "^5.62.3",
     "javascript-code-runner": "^1.0.9",
+    "live-server": "^1.2.1",
     "mocha": "^9.1.0",
     "react": "^17.0.2",
     "react-codemirror2": "^7.2.1",
@@ -21,8 +22,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test": "mocha",
+    "test:browser": "live-server --port=9000 --mount=/:public"
   },
   "eslintConfig": {
     "extends": [

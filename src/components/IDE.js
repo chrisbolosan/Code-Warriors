@@ -1,7 +1,6 @@
 import Editor from "./Editor";
 import React, { useState } from "react";
 import JSrunner from "javascript-code-runner";
-import fs from 'fs';
 
 
 const testObj =   {
@@ -29,10 +28,6 @@ function IDE() {
 
   }`
   }
-
-
-
-
 
   formatPrompt(testObj.starterCode)
 

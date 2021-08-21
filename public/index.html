@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="node_modules/mocha/mocha.css">
+    <link href="https://unpkg.com/mocha@4.0.1/mocha.css" rel="stylesheet" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
     <title>React App</title>
+
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <div id="mocha"></div>
-    <script src="node_modules/mocha/mocha.js"></script>
-    <script src="node_modules/chai/chai.js"></script>
+    <script src="https://unpkg.com/chai@4.1.2/chai.js"></script>
+    <script src="https://unpkg.com/mocha@9.1.0/mocha.js"></script>
+
+    <script>
+      let expect = chai.expect
+      mocha.setup('bdd')
+    </script>
+    <script src="/sum.js"></script>
+    <script src="/sum.test.js"></script>
+    <script>
+        mocha.run();
+    </script>
   </body>
 </html>
