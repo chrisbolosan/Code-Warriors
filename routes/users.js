@@ -10,6 +10,6 @@ deleteUser
 } = require('../controllers/users');
 
 router.route('/').get(getUsers).post(createUser);
-router.route('/:id').get(getUser).put(updateUser).deleteExercise(deleteUser);
+router.route('/:id').get(getUser).put(updateUser).delete(deleteUser);
 
 module.exports = router;
