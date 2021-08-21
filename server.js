@@ -2,6 +2,9 @@ const express = require('express');
 const morgan = require('morgan');
 const connectDB = require('./config/db');
 const path = require('path');
+const dotenv = require('dotenv');
+
+dotenv.config({ path: './config/config.env' });
 
 // Connecting to the database
 connectDB();
