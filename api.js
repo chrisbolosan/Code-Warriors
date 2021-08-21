@@ -1,40 +1,20 @@
 const fs = require('fs')
 
-const test = `describe('#sum()', function() {
-  context('without arguments', function() {
-
-    it('should return 0', function() {
-      expect(sum()).to.equal(0)
-    })
-
-  })
-
-  context('with number arguments', function() {
-
-    it('should return sum of arguments', function() {
-      expect(sum(1, 2, 3, 4, 5)).to.equal(15)
-    })
-
-    it('should return argument when only one argument is passed', function() {
-      expect(sum(5)).to.equal(5)
-    })
-
-  })
-
-  context('with non-number arguments', function() {
-
-    it('should throw error', function() {
-      expect(function() {
-        sum(1, 2, '3', [4], 5)
-      }).to.throw(TypeError, 'sum() expects only numbers.')
-    })
-
-  })
-})
+const test = `describe("#sum()", function () {
+  context("with number arguments", function () {
+    it("should return sum of arguments", function () {
+      expect(sum(1, 2)).to.equal(3);
+    });
+  });
+});
 `
 
+const func = `function sum(a,b){
+	return a + b
+  }`
 
-async function createFile(tests) {
+
+async function createTestFile(tests) {
   try {
     fs.writeFile('public/sum.test.js', tests, (err) => {
       if (err) throw err
@@ -44,6 +24,17 @@ async function createFile(tests) {
   }
 }
 
+async function createFuncFile(func) {
+  try {
+    fs.writeFile('public/sum2.js', func, (err) => {
+      if (err) throw err
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
 
-createFile(test)
+
+createTestFile(test)
+createFuncFile(func)
 
