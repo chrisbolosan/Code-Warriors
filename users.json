@@ -1,51 +1,51 @@
 [
-    {
-        "username": "chris",
-        "email": "chris@gmail.com",
-        "password": "123",
-        "rank": "Beginner",
-        "totalPoints":100
-    },
-    {
-        "username": "haram",
-        "email": "haram@gmail.com",
-        "password": "123",
-        "rank": "Intermediate",
-        "totalPoints":100
-    },
-    {
-        "username": "antonio",
-        "email": "antonio@gmail.com",
-        "password": "123",
-        "rank": "Intermediate",
-        "totalPoints":100
-    },
-    {
-        "username": "gabe",
-        "email": "gabe@gmail.com",
-        "password": "123",
-        "rank": "Intermediate",
-        "totalPoints":100
-    },
-    {
-        "username": "adrian",
-        "email": "adrian@gmail.com",
-        "password": "123",
-        "rank": "Intermediate",
-        "totalPoints":100
-    },
-    {
-        "username": "lukeskywalker",
-        "email": "skywalker@gmail.com",
-        "password": "123",
-        "rank": "Master",
-        "totalPoints":500
-    },
-    {
-        "username": "jillian",
-        "email": "jillian@gmail.com",
-        "password": "123",
-        "rank": "Master",
-        "totalPoints":100
-    }
+  {
+    "username": "chris",
+    "email": "chris@gmail.com",
+    "password": "12345678",
+    "rank": "Beginner",
+    "totalPoints": 100
+  },
+  {
+    "username": "haram",
+    "email": "haram@gmail.com",
+    "password": "12345678",
+    "rank": "Intermediate",
+    "totalPoints": 100
+  },
+  {
+    "username": "antonio",
+    "email": "antonio@gmail.com",
+    "password": "12345678",
+    "rank": "Intermediate",
+    "totalPoints": 100
+  },
+  {
+    "username": "gabe",
+    "email": "gabe@gmail.com",
+    "password": "12345678",
+    "rank": "Intermediate",
+    "totalPoints": 100
+  },
+  {
+    "username": "adrian",
+    "email": "adrian@gmail.com",
+    "password": "12345678",
+    "rank": "Intermediate",
+    "totalPoints": 100
+  },
+  {
+    "username": "lukeskywalker",
+    "email": "skywalker@gmail.com",
+    "password": "12345678",
+    "rank": "Master",
+    "totalPoints": 500
+  },
+  {
+    "username": "jillian",
+    "email": "jillian@gmail.com",
+    "password": "12345678",
+    "rank": "Master",
+    "totalPoints": 1000
+  }
 ]

@@ -16,13 +16,13 @@ exports.getUsers = async (req, res, next) => {
 // @route GET /api/users/:id
 // @access Public
 exports.getUser = async (req, res, next) => {
-    try {
-      const user = await User.findById(req.params.id);
-      res.status(200).json(user);
-    } catch (err) {
-      next(err);
-    }
-  };
+  try {
+    const user = await User.findById(req.params.id);
+    res.status(200).json(user);
+  } catch (err) {
+    next(err);
+  }
+};
 
 // @desc Create or Seed user
 // @route POST /api/users
@@ -30,7 +30,7 @@ exports.getUser = async (req, res, next) => {
 exports.createUser = async (req, res, next) => {
   try {
     const user = await User.create(req.body);
-    res.status(201).json(user);
+    res.status(201).json({ data: user });
   } catch (err) {
     next(err);
   }
