@@ -17,9 +17,8 @@ class Game extends React.Component{
 
   render(){
     const {exercise, solution, testSolution, fetchExercise } = this.props;
-    console.log(exercise);
-    console.log(exercise.hasOwnProperty())
-    if(exercise.hasOwnProperty()){
+
+    if(exercise.problemDescription){
       return(
         <div className="Game">
         <div>

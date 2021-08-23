@@ -36,7 +36,8 @@ class IDE extends React.Component {
   }
 
 
-  async handleSubmit() {
+  async handleSubmit(event) {
+    event.preventDefault()
     await this.props.testSolution("6123caa2a0b84caf217f3dc3", this.state.input);
     this.result()
   }
@@ -46,17 +47,17 @@ class IDE extends React.Component {
 
   }
 
-  componentDidUpdate(prevProps){
-    console.log('Previous Props: ', prevProps)
-    console.log("Props: ", this.props)
-    if(prevProps !== this.props){
-      this.setState({ input: this.props.exercise.exerciseBody });
-     }
-    }
+  // componentDidUpdate(prevProps){
+  //   console.log('Previous Props: ', prevProps)
+  //   console.log("Props: ", this.props)
+  //   if(prevProps !== this.props){
+  //     this.setState({ input: this.props.exercise.exerciseBody });
+  //    }
+  //   }
 
   render() {
     return (
-      
+
       <div className="IDE">
 
         <div className="editor-container">
