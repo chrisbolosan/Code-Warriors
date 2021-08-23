@@ -1,34 +1,47 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { fetchExercise } from '../store/exercise';
-import { testSolution } from '../store/solution';
+import React from "react";
+import { connect } from "react-redux";
+import { fetchExercise } from "../store/exercise";
+import { testSolution } from "../store/solution";
 // import { updateExercise } from '../store/exercise.js';
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/theme/material.css';
-import 'codemirror/addon/edit/closebrackets';
-import 'codemirror/mode/javascript/javascript';
-import { Controlled } from 'react-codemirror2';
+import "codemirror/lib/codemirror.css";
+import "codemirror/theme/material.css";
+import "codemirror/addon/edit/closebrackets";
+import "codemirror/mode/javascript/javascript";
+import { Controlled } from "react-codemirror2";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 class IDE extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: '',
+      input: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.result = this.result.bind(this);
+  }
+
+  result() {
+    toast(this.props.solution.message, {
+      position: 'top-center',
+      style: {
+        color: this.props.solution.success ? 'green' : 'red'
+      }
+    });
   }
 
   handleChange(userInput) {
     this.setState({ input: userInput });
   }
 
-  handleSubmit() {
-    this.props.testSolution('6122e58b5d3aad59a0799c10', this.state.input);
+  async handleSubmit() {
+    await this.props.testSolution("6123caa2a0b84caf217f3dc3", this.state.input);
+    this.result()
   }
 
   async componentDidMount() {
-    await this.props.fetchExercise('6122e58b5d3aad59a0799c10');
+    await this.props.fetchExercise("6123caa2a0b84caf217f3dc3");
     this.setState({ input: this.props.exercise.exerciseBody });
   }
 
@@ -51,15 +64,19 @@ class IDE extends React.Component {
             options={{
               lineWrapping: true,
               lint: true,
-              mode: 'javascript',
+              mode: "javascript",
               lineNumbers: true,
-              theme: 'material',
+              theme: "material",
               autoCloseBrackets: true,
             }}
           />
+
+          <div>
           <button type="submit" onClick={this.handleSubmit}>
             Run
           </button>
+            <ToastContainer />
+          </div>
         </div>
       </div>
     );
