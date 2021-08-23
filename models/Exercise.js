@@ -1,17 +1,17 @@
 const mongoose = require('mongoose');
 
 const ExerciseSchema = new mongoose.Schema({
-  frame: {
+  exerciseBody: {
     type: String,
     required: true,
   },
-  tests: {
+  test: {
     type: String,
     required: true,
   },
-  solution: {
+  problemDescription: {
     type: String,
-    default: '',
+    required: true,
   },
 });
 

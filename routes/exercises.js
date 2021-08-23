@@ -7,9 +7,17 @@ const {
   updateExercise,
   getExercise,
   deleteExercise,
+  testExercise,
 } = require('../controllers/exercises');
 
 router.route('/').get(getExercises).post(createExercise);
-router.route('/:id').get(getExercise).put(updateExercise).delete(deleteExercise);
+
+router.route('/solution').post(testExercise);
+
+router
+  .route('/:id')
+  .get(getExercise)
+  .put(updateExercise)
+  .delete(deleteExercise);
 
 module.exports = router;
