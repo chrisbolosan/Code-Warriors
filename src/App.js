@@ -1,9 +1,12 @@
-import IDE from "./components/IDE.js";
+import React from "react"
+import Routes from "./Routes"
+import Navbar from "./components/Navbar"
 
 function App() {
   return (
-    <div className="App">
-      <IDE />
+    <div>
+      <Navbar />
+      <Routes />
     </div>
   );
 }
