@@ -1,9 +1,38 @@
 import React from "react"
+import { connect } from "react-redux"
+import { setLeaderboard } from "../store/leaderboard"
 
-const Leaderboard = () => {
-  return (
-    <div>This is the leaderboard page.</div>
-  )
+
+// thunk api/users/leaderboard
+class Leaderboard extends React.Component {
+  async componentDidMount() {
+    await setLeaderboard()
+  }
+
+  render() {
+    return (
+      <div id="leaderboard-container">
+        <h1>LEADERBOARD</h1>
+        <ul>
+          {this.props.leaderboard.map((user) => (
+            <li>user</li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
 }
 
-export default Leaderboard
+const mapState = (state) => {
+  return {
+    leaderboard: state.leaderboard
+  }
+}
+
+const mapDispatch = (dispatch) => {
+  return {
+    setLeaderboard: (leaderboard) => dispatch(setLeaderboard(leaderboard))
+  }
+}
+
+export default connect(mapState, mapDispatch)(Leaderboard)
