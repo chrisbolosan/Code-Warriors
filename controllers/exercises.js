@@ -73,15 +73,17 @@ exports.testExercise = async (req, res, next) => {
     const userSolution = req.body.solution;
     const problem = `${userSolution} ${test}`;
     const { result, message } = Jsrunner(problem);
-    if (message) {
+    if (result === "false") {
       return res.json({ success: false, message });
-    } else if (!result) {
+    } else if (result === "true") {
+      res.json({ success: true, message: 'Tests passed!' });
+    } else {
       return res.json({
         success: false,
         message: 'The current solution does not match the test requirements',
       });
     }
-    res.json({ success: true, message: 'Tests passed!' });
+
   } catch (err) {
     next(err);
   }
