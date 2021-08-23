@@ -8,30 +8,43 @@ class Game extends React.Component{
   constructor(props){
     super(props)
   }
-
   async componentDidMount() {
-    await this.props.fetchExercise("6123caa2a0b84caf217f3dc3");
+    const aExercise = await this.props.fetchExercise("6123caa2a0b84caf217f3dc3");
+    console.log(this.props.exercise);
+    console.log(aExercise);
   }
+
 
   render(){
     const {exercise, solution, testSolution, fetchExercise } = this.props;
-    return(
-      <>
-      <div>
-          {this.props.exercise ? this.props.exercise.problemDescription : null}
-       </div>
-        <IDE exercise={exercise}
-             solution={solution}
-             testSolution={testSolution}
-             fetchExercise={fetchExercise}
-             />
-        <IDE exercise={exercise}
-             solution={solution}
-             testSolution={testSolution}
-             fetchExercise={fetchExercise}
-             />
-      </>
-    )
+    console.log(exercise);
+    console.log(exercise.hasOwnProperty())
+    if(exercise.hasOwnProperty()){
+      return(
+        <div className="Game">
+        <div>
+            {exercise ? exercise.problemDescription : null}
+         </div>
+          <IDE exercise={exercise}
+               solution={solution}
+               testSolution={testSolution}
+               fetchExercise={fetchExercise}
+          />
+          <IDE exercise={exercise}
+               solution={solution}
+               testSolution={testSolution}
+               fetchExercise={fetchExercise}
+               />
+
+        </div>
+      )
+    } else {
+      return(
+        <div>"Game Loading..."</div>
+      )
+    }
+
+}
 }
 
 const mapState = (state) => {

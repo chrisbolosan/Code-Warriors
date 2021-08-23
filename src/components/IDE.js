@@ -1,7 +1,7 @@
 import React from "react";
-import { connect } from "react-redux";
+/* import { connect } from "react-redux";
 import { fetchExercise } from "../store/exercise";
-import { testSolution } from "../store/solution";
+import { testSolution } from "../store/solution"; */
 // import { updateExercise } from '../store/exercise.js';
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material.css";
@@ -42,11 +42,21 @@ class IDE extends React.Component {
   }
 
  componentDidMount() {
-    this.setState({ input: this.props.exercise.exerciseBody });
+  this.setState({input: this.props.exercise.exerciseBody})
+
   }
+
+  componentDidUpdate(prevProps){
+    console.log('Previous Props: ', prevProps)
+    console.log("Props: ", this.props)
+    if(prevProps !== this.props){
+      this.setState({ input: this.props.exercise.exerciseBody });
+     }
+    }
 
   render() {
     return (
+      
       <div className="IDE">
 
         <div className="editor-container">
@@ -81,4 +91,4 @@ class IDE extends React.Component {
   }
 }
 
-
+export default IDE;
