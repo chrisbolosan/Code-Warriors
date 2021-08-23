@@ -25,8 +25,6 @@ class IDE extends React.Component {
 
   handleSubmit() {
     this.props.testSolution('6122e58b5d3aad59a0799c10', this.state.input);
-    console.log(this.props.solution);
-    console.log(this.state.input);
   }
 
   async componentDidMount() {
