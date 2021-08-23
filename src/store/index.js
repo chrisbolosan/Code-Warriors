@@ -4,12 +4,14 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import exercise from './exercise.js';
 import solution from './solution';
+import leaderboard from "./leaderboard"
 import auth from "./auth"
 
 const reducer = combineReducers({
   auth,
   exercise,
   solution,
+  leaderboard
 });
 
 const middleware = composeWithDevTools(

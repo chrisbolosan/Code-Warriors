@@ -24,8 +24,6 @@ class Routes extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/IDE" component={IDE} />
-            <Route exact path="/user/:userId" component={UserProfile} />
-            <Route exact path="/leaderboard" component={Leaderboard} />
           </Switch>
         ) : (
           <Switch>
@@ -33,31 +31,14 @@ class Routes extends Component {
             <Route exact path="/" component={GuestHome} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/user/:userId" component={UserProfile} />
+            <Route exact path="/leaderboard" component={Leaderboard} />
           </Switch>
         )}
       </div>
     );
   }
 }
-
-/*
-          {isLoggedIn ? (
-            <Switch>
-              <Route path="/home" component={Home} />
-              <Route path="/leaderboard" component={Leaderboard}
-              />
-              <Route path="/users/:username" component={UserProfile} />
-              <Redirect to="/home" />
-            </Switch>
-          ) : (
-            <Switch>
-              <Route path="/" exact component={GuestHome} />
-              <Route path="/login" component={Login} />
-              <Route path="/signup" component={Signup} />
-            </Switch>
-          )}
-
-*/
 
 /**
  * CONTAINER
