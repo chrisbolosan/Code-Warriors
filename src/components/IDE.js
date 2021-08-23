@@ -35,6 +35,7 @@ class IDE extends React.Component {
     this.setState({ input: userInput });
   }
 
+
   async handleSubmit() {
     await this.props.testSolution("6123caa2a0b84caf217f3dc3", this.state.input);
     this.result()
@@ -42,6 +43,7 @@ class IDE extends React.Component {
 
   async componentDidMount() {
     await this.props.fetchExercise("6123caa2a0b84caf217f3dc3");
+
     this.setState({ input: this.props.exercise.exerciseBody });
   }
 
