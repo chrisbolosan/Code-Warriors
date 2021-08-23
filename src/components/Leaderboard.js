@@ -18,7 +18,7 @@ class Leaderboard extends React.Component {
           {this.props.leaderboard.map((user) => (
             <>
               <Link to={`users/${user._id}`}>{user.username}</Link>
-              <p>{user.totalPoints}</p>
+              <p>Points: {user.totalPoints}</p>
             </>
           ))}
         </div>
