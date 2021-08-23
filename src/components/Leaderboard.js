@@ -1,23 +1,27 @@
 import React from "react"
 import { connect } from "react-redux"
 import { setLeaderboard } from "../store/leaderboard"
+import { Link } from "react-router-dom"
 
 
 // thunk api/users/leaderboard
 class Leaderboard extends React.Component {
-  async componentDidMount() {
-    await setLeaderboard()
+  componentDidMount() {
+    this.props.setLeaderboard()
   }
 
   render() {
     return (
       <div id="leaderboard-container">
         <h1>LEADERBOARD</h1>
-        <ul>
+        <div>
           {this.props.leaderboard.map((user) => (
-            <li>user</li>
+            <>
+              <Link to={`users/${user._id}`}>{user.username}</Link>
+              <p>{user.totalPoints}</p>
+            </>
           ))}
-        </ul>
+        </div>
       </div>
     )
   }

@@ -20,7 +20,7 @@ export const setLeaderboard = () => {
 };
 
 // REDUCER
-export default function exerciseReducer(state = {}, action) {
+export default function exerciseReducer(state = [], action) {
   switch (action.type) {
     case SET_LEADERBOARD:
       return action.leaderboard;
