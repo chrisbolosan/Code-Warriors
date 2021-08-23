@@ -41,18 +41,14 @@ class IDE extends React.Component {
     this.result()
   }
 
-  async componentDidMount() {
-    await this.props.fetchExercise("6123caa2a0b84caf217f3dc3");
-
+ componentDidMount() {
     this.setState({ input: this.props.exercise.exerciseBody });
   }
 
   render() {
     return (
       <div className="IDE">
-        <>
-          {this.props.exercise ? this.props.exercise.problemDescription : null}
-        </>
+
         <div className="editor-container">
           {/* This is the IDE component from codemirror */}
           <Controlled
@@ -85,18 +81,4 @@ class IDE extends React.Component {
   }
 }
 
-const mapState = (state) => {
-  return {
-    exercise: state.exercise,
-    solution: state.solution,
-  };
-};
 
-const mapDispatch = (dispatch) => {
-  return {
-    testSolution: (id, solution) => dispatch(testSolution(id, solution)),
-    fetchExercise: (id) => dispatch(fetchExercise(id)),
-  };
-};
-
-export default connect(mapState, mapDispatch)(IDE);
