@@ -8,24 +8,25 @@ import {me} from './store'
 import GuestHome from "./components/GuestHome"
 import { Login, SignUp } from "./components/AuthForm"
 import IDE from "./components/IDE";
-// import { Login, SignUp } from "./components/AuthForm"
 
+// import { Login, SignUp } from "./components/AuthForm"
 
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
   }
   render() {
-    return(
-        <Switch>
-          {// these routes are for non-logged in users, except for the ide
-          }
-          <Route exact path="/" component ={GuestHome} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/signup" component={SignUp} />
-          <Route exact path="/IDE" component={IDE} />
-        </Switch>
-    )
+    return (
+      <Switch>
+        {
+          // these routes are for non-logged in users, except for the ide
+        }
+        <Route exact path="/" component={GuestHome} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/signup" component={SignUp} />
+        <Route exact path="/IDE" component={IDE} />
+      </Switch>
+    );
   }
 }
 
