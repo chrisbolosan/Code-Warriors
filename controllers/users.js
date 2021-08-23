@@ -59,3 +59,18 @@ exports.deleteUser = async (req, res, next) => {
     next(err);
   }
 };
+
+// @desc  Get leaderboard
+// @route /api/users/leaderboard
+// @access Public
+exports.getLeaderboard = async (req, res, next) => {
+  try {
+    const leaderboard = await User.find()
+      .sort({ totalPoints: -1 })
+      .limit(10)
+      .select('username totalPoints');
+    res.status(200).json(leaderboard);
+  } catch (e) {
+    console.error(e);
+  }
+};
