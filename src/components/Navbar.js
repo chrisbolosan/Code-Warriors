@@ -33,7 +33,7 @@ const Navbar = ({ handleClick, isLoggedIn, user, userId }) => {
   }))(Badge);
 
   return (
-   
+
     <nav id="navbar">
       <div className={classes.root}>
         <AppBar position="static">
@@ -46,7 +46,8 @@ const Navbar = ({ handleClick, isLoggedIn, user, userId }) => {
             >
             </IconButton>
             <Typography variant="h4" className={classes.title}>
-            <Link to="/"><Button>Home</Button></Link>         </Typography>
+            <Link to="/"><Button>Home</Button></Link>
+            </Typography>
             <Typography variant="h4" className={classes.title}>
             <Link to="/login"><Button>Login</Button></Link>
             </Typography>
@@ -61,7 +62,7 @@ const Navbar = ({ handleClick, isLoggedIn, user, userId }) => {
         </AppBar>
         </div>
            </nav>
-  
+
   );
 };
 export default Navbar;

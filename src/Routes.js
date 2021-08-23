@@ -1,10 +1,10 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { withRouter, Route, Switch, Redirect } from "react-router-dom"
-import {me} from './store'
-// import Home from "./components/Home"
-//import Leaderboard from "./components/Leaderboard"
-//import UserProfile from "./components/UserProfile"
+import { me } from './store'
+import Home from "./components/Home"
+import Leaderboard from "./components/Leaderboard"
+import UserProfile from "./components/UserProfile"
 import GuestHome from "./components/GuestHome"
 import { Login, SignUp } from "./components/AuthForm"
 import IDE from "./components/IDE";
@@ -22,7 +22,10 @@ class Routes extends Component {
       <div>
         {isLoggedIn ? (
           <Switch>
+            <Route exact path="/" component={Home} />
             <Route exact path="/IDE" component={IDE} />
+            <Route exact path="/user/:userId" component={UserProfile} />
+            <Route exact path="/leaderboard" component={Leaderboard} />
           </Switch>
         ) : (
           <Switch>
