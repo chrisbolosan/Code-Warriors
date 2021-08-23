@@ -49,7 +49,7 @@ class IDE extends React.Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="IDE">
         <>
           {this.props.exercise ? this.props.exercise.problemDescription : null}
         </>
