@@ -24,11 +24,11 @@ class IDE extends React.Component {
   }
 
   handleSubmit() {
-    this.props.testSolution('6122e58b5d3aad59a0799c10', this.state.input);
+    this.props.testSolution('6123caa2a0b84caf217f3dc3', this.state.input);
   }
 
   async componentDidMount() {
-    await this.props.fetchExercise('6122e58b5d3aad59a0799c10');
+    await this.props.fetchExercise('6123caa2a0b84caf217f3dc3');
     this.setState({ input: this.props.exercise.exerciseBody });
   }
 
