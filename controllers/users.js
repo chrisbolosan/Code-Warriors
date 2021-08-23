@@ -1,9 +1,8 @@
-const User = require("../models/User");
+const User = require('../models/User');
 
 // @desc    Get users
 // @route   GET /api/users
 // @access  Public
-
 exports.getUsers = async (req, res, next) => {
   try {
     const users = await User.find();
@@ -12,6 +11,7 @@ exports.getUsers = async (req, res, next) => {
     next(err);
   }
 };
+
 // @desc Get a specific user
 // @route GET /api/users/:id
 // @access Public

@@ -1,4 +1,5 @@
-const Exercise = require("../models/Exercise");
+const Exercise = require('../models/Exercise');
+const Jsrunner = require('javascript-code-runner');
 
 // @desc    Get Exercise
 // @route   GET /api/exercises
@@ -48,13 +49,39 @@ exports.updateExercise = async (req, res, next) => {
   }
 };
 
-// @desc Delete  a specific Exercise
-// @route  /api/exercises/:id
-// @access Private
+// @desc    Delete  a specific Exercise
+// @route   DELETE /api/exercises/:id
+// @access  Private
 exports.deleteExercise = async (req, res, next) => {
   try {
     const exercise = await Exercise.findByIdAndDelete(req.params.id);
     res.status(200).json(exercise);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// @desc    Check user solution
+// @route   POST /api/exercises/solution
+// @access  Public
+
+// POST body: {id: "Problem ID", solution: "User solution"}
+// Response: {success: "true", message: "Tests passed!"}
+exports.testExercise = async (req, res, next) => {
+  try {
+    const { test } = await Exercise.findById(req.body.id);
+    const userSolution = req.body.solution;
+    const problem = `${userSolution} ${test}`;
+    const { result, message } = Jsrunner(problem);
+    if (message) {
+      return res.json({ success: false, message });
+    } else if (!result) {
+      return res.json({
+        success: false,
+        message: 'The current solution does not match the test requirements',
+      });
+    }
+    res.json({ success: true, message: 'Tests passed!' });
   } catch (err) {
     next(err);
   }

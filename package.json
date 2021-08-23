@@ -8,7 +8,6 @@
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
-    "chai": "^4.3.4",
     "codemirror": "^5.62.3",
     "colors": "^1.4.0",
     "dotenv": "^10.0.0",
@@ -16,7 +15,6 @@
     "javascript-code-runner": "^1.0.9",
     "jsonwebtoken": "^8.5.1",
     "live-server": "^1.2.1",
-    "mocha": "^9.1.0",
     "mongoose": "^5.13.7",
     "morgan": "^1.10.0",
     "react": "^17.0.2",
@@ -33,11 +31,10 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start:dev": "nodemon server.js",
+    "start:dev": "yarn build && nodemon server.js",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "seed": "node seeder.js",
-    "test": "mocha",
     "test:browser": "live-server --port=9000 --mount=/:public"
   },
   "eslintConfig": {

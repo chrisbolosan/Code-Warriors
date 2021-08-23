@@ -1,7 +1,7 @@
 [
   {
-    "frame": "function sum(a,b)",
-    "tests": "describe(\"#sum()\", function () {context(\"with number arguments\", function () {it(\"should return sum of arguments\", function () {expect(sum(1, 2)).to.equal(3);});}););",
-    "solution": ""
+    "exerciseBody": "function twoSum(a, b) {}",
+    "test": "function checkTest(func, target) {return func(2, 3) === 5} checkTest(twoSum, 5)",
+    "problemDescription": "Given a function that receives two arguments return the sum of those"
   }
 ]
