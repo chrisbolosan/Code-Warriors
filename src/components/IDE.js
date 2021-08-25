@@ -40,13 +40,13 @@ class IDE extends React.Component {
 
   }
 
-  componentDidUpdate(prevProps){
-    console.log('Previous Props: ', prevProps)
-    console.log("Props: ", this.props)
-    if(prevProps !== this.props){
-      this.setState({ input: this.props.exercise.exerciseBody });
-     }
-    }
+  // componentDidUpdate(prevProps){
+  //   console.log('Previous Props: ', prevProps)
+  //   console.log("Props: ", this.props)
+  //   if(prevProps !== this.props){
+  //     this.setState({ input: this.props.exercise.exerciseBody });
+  //    }
+  //   }
 
   render() {
     const {enabled} = this.props;

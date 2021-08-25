@@ -1,5 +1,7 @@
 .IDE {
-  font-size: 1.25rem;
+  /* font-size: 1.25rem; */
+  width: 75%;
+  padding: 10px
 }
 
 .Game{
