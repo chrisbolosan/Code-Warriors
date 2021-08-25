@@ -10,6 +10,27 @@ import "codemirror/mode/javascript/javascript";
 import { Controlled } from "react-codemirror2";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import socket from "socket.io-client"
+
+// window.location.origin describes the URL of the page we're on
+const clientSocket = socket(window.location.origin)
+
+// Run when connected to server
+clientSocket.on("connect", () => {
+  console.log("Connected to server")
+})
+
+clientSocket.on("message", message => {
+  console.log(message)
+})
+
+clientSocket.on("solution", solutionText => {
+  const newDiv = document.createElement("div")
+  newDiv.innerText = solutionText
+  const testing = document.getElementById("testing")
+  testing.appendChild(newDiv)
+
+})
 
 class IDE extends React.Component {
   constructor(props) {
@@ -19,25 +40,23 @@ class IDE extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-
   }
 
  handleChange(userInput) {
     this.setState({ input: userInput });
   }
 
-
   async handleSubmit(event) {
     event.preventDefault()
     if(this.props.enabled){
       await this.props.testSolution("6123caa2a0b84caf217f3dc3", this.state.input);
       this.props.result()
+      clientSocket.emit(`solution`, this.state.input)
     }
   }
 
  componentDidMount() {
   this.setState({input: this.props.exercise.exerciseBody})
-
   }
 
   // componentDidUpdate(prevProps){
@@ -94,6 +113,8 @@ class IDE extends React.Component {
           </button>
             <ToastContainer />
           </div>
+        </div>
+        <div id="testing">
         </div>
       </div>
     );
