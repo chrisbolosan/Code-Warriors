@@ -7,19 +7,7 @@ import "codemirror/mode/javascript/javascript";
 import { Controlled } from "react-codemirror2";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import socket from "socket.io-client"
-
-// window.location.origin describes the URL of the page we're on
-const clientSocket = socket(window.location.origin)
-
-// Run when connected to server
-clientSocket.on("connect", () => {
-  console.log("Connected to server")
-})
-
-clientSocket.on("message", message => {
-  console.log(message)
-})
+import clientSocket from "../socket/socket"
 
 class IDE extends React.Component {
   constructor(props) {
@@ -31,9 +19,9 @@ class IDE extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
- handleChange(userInput) {
+ async handleChange(userInput) {
     this.setState({ input: userInput });
-    clientSocket.emit(`solution`, this.state.input)
+    await clientSocket.emit(`solution`, this.state.input)
   }
 
   async handleSubmit(event) {
@@ -87,7 +75,6 @@ class IDE extends React.Component {
             className="code-mirror-wrapper"
             options={ options }
           />
-
           <div>
           <button type="submit" onClick={this.handleSubmit} disabled={!enabled}>
             Run

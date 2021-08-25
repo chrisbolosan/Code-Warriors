@@ -7,16 +7,21 @@ import { Controlled } from "react-codemirror2";
 
 class IDEOpponent extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       functionText: this.props.exercise
-    }
+    };
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.functionText !== this.props.functionText) {
-      this.setState({functionText: this.props.functionText})
-    }
+      if (
+        prevProps.solutionObject.solutionText !==
+        this.props.solutionObject.solutionText
+      ) {
+        if (this.props.solutionObject.id !== this.props.solutionObject.playerId) {
+          this.setState({ functionText: this.props.solutionObject.solutionText });
+        }
+      }
   }
 
   render() {
@@ -28,7 +33,7 @@ class IDEOpponent extends React.Component {
       theme: "material",
       autoCloseBrackets: true,
       readOnly: true,
-    }
+    };
     return (
       <div className="IDE">
         <div className="editor-container">
@@ -38,7 +43,7 @@ class IDEOpponent extends React.Component {
             // callback sets the input to the state as code
             value={this.state.functionText}
             className="code-mirror-wrapper"
-            options={ options }
+            options={options}
           />
         </div>
       </div>
@@ -46,4 +51,4 @@ class IDEOpponent extends React.Component {
   }
 }
 
-export default IDEOpponent
+export default IDEOpponent;

@@ -34,12 +34,14 @@ app.get("/*", (req, res, next) => {
 })
 
 // Run when client connects
-io.on("connection", (socket) => {
-  socket.broadcast.emit("message", "a user just joined the room")
+io.on("connection", async (socket) => {
+  console.log(socket.id)
+  await io.emit("message", socket.id)
+  //socket.broadcast.emit("message", "a user just joined the room")
 
   // listen for solution code
-  socket.on("solution", (solutionText) => {
-    io.emit("solution", {
+  socket.on("solution", async (solutionText) => {
+    await io.emit("solution", {
       id: socket.id,
       solutionText
     })
