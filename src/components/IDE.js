@@ -1,14 +1,14 @@
 import React from "react";
-/* import { connect } from "react-redux";
-import { fetchExercise } from "../store/exercise";
-import { testSolution } from "../store/solution"; */
+import { connect } from "react-redux";
+//import { fetchExercise } from "../store/exercise";
+//import { testSolution } from "../store/solution"; */
 // import { updateExercise } from '../store/exercise.js';
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material.css";
 import "codemirror/addon/edit/closebrackets";
 import "codemirror/mode/javascript/javascript";
 import { Controlled } from "react-codemirror2";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 class IDE extends React.Component {
@@ -19,26 +19,20 @@ class IDE extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.result = this.result.bind(this);
+
   }
 
-  result() {
-    toast(this.props.solution.message, {
-      position: 'top-center',
-      style: {
-        color: this.props.solution.success ? 'green' : 'red'
-      }
-    });
-  }
-
-  handleChange(userInput) {
+ handleChange(userInput) {
     this.setState({ input: userInput });
   }
 
 
-  async handleSubmit() {
-    await this.props.testSolution("6123caa2a0b84caf217f3dc3", this.state.input);
-    this.result()
+  async handleSubmit(event) {
+    event.preventDefault()
+    if(this.props.enabled){
+      await this.props.testSolution("6123caa2a0b84caf217f3dc3", this.state.input);
+      this.props.result()
+    }
   }
 
  componentDidMount() {
@@ -55,8 +49,30 @@ class IDE extends React.Component {
     }
 
   render() {
+    const {enabled} = this.props;
+    let options;
+    if(!enabled){
+      options = {
+        lineWrapping: true,
+        lint: true,
+        mode: "javascript",
+        lineNumbers: true,
+        theme: "material",
+        autoCloseBrackets: true,
+        readOnly: true,
+      }
+    } else {
+      options = {
+        lineWrapping: true,
+        lint: true,
+        mode: "javascript",
+        lineNumbers: true,
+        theme: "material",
+        autoCloseBrackets: true,
+      }
+    }
     return (
-      
+
       <div className="IDE">
 
         <div className="editor-container">
@@ -69,18 +85,11 @@ class IDE extends React.Component {
             }}
             value={this.state.input}
             className="code-mirror-wrapper"
-            options={{
-              lineWrapping: true,
-              lint: true,
-              mode: "javascript",
-              lineNumbers: true,
-              theme: "material",
-              autoCloseBrackets: true,
-            }}
+            options={ options }
           />
 
           <div>
-          <button type="submit" onClick={this.handleSubmit}>
+          <button type="submit" onClick={this.handleSubmit} disabled={!enabled}>
             Run
           </button>
             <ToastContainer />
@@ -90,5 +99,9 @@ class IDE extends React.Component {
     );
   }
 }
-
-export default IDE;
+const mapState = (state) => {
+  return {
+    solution: state.solution
+  }
+}
+export default connect(mapState, null)(IDE);
