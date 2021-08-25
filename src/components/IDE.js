@@ -1,8 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-//import { fetchExercise } from "../store/exercise";
-//import { testSolution } from "../store/solution"; */
-// import { updateExercise } from '../store/exercise.js';
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material.css";
 import "codemirror/addon/edit/closebrackets";
@@ -58,14 +55,6 @@ class IDE extends React.Component {
  componentDidMount() {
   this.setState({input: this.props.exercise.exerciseBody})
   }
-
-  // componentDidUpdate(prevProps){
-  //   console.log('Previous Props: ', prevProps)
-  //   console.log("Props: ", this.props)
-  //   if(prevProps !== this.props){
-  //     this.setState({ input: this.props.exercise.exerciseBody });
-  //    }
-  //   }
 
   render() {
     const {enabled} = this.props;
