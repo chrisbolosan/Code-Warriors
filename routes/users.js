@@ -4,14 +4,21 @@ const router = express.Router();
 const {
   getUsers,
   getUser,
-  createUser,
   updateUser,
   deleteUser,
+  signup,
+  login,
   getLeaderboard,
 } = require('../controllers/users');
 
-router.route('/').get(getUsers).post(createUser);
+//protect middleware
+const{protect} =require('../middleware/auth')
+
+router.route('/').get(getUsers);
+router.post("/signup", signup);
+router.route('/login').post(login);
 router.route('/leaderboard').get(getLeaderboard);
-router.route('/:id').get(getUser).put(updateUser).delete(deleteUser);
+router.route('/:id').get(getUser).put(protect, updateUser).delete(deleteUser);
+
 
 module.exports = router;
