@@ -35,7 +35,7 @@ app.get("/*", (req, res, next) => {
 
 // Run when client connects
 io.on("connection", (socket) => {
-  socket.broadcast.emit("message", "A user has joined the room")
+  socket.broadcast.emit("message", `a user, ${socket.id} has just joined the room`)
 
   // listen for solution code
   socket.on("solution", (solutionText) => {

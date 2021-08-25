@@ -19,12 +19,6 @@ class Game extends React.Component{
     this.result = this.result.bind(this);
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (prevProps.functionText !== this.props.functionText) {
-
-  //   }
-  // }
-
   result() {
     toast(this.props.solution.message, {
       position: 'top-center',
