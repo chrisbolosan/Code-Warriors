@@ -29,11 +29,11 @@ class Game extends React.Component{
                testSolution={testSolution}
                fetchExercise={fetchExercise}
           />
-          <IDE exercise={exercise}
+          {/* <IDE exercise={exercise}
                solution={solution}
                testSolution={testSolution}
                fetchExercise={fetchExercise}
-               />
+               /> */}
 
         </div>
       )
