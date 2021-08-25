@@ -1,8 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-//import { fetchExercise } from "../store/exercise";
-//import { testSolution } from "../store/solution"; */
-// import { updateExercise } from '../store/exercise.js';
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material.css";
 import "codemirror/addon/edit/closebrackets";
@@ -10,27 +7,7 @@ import "codemirror/mode/javascript/javascript";
 import { Controlled } from "react-codemirror2";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import socket from "socket.io-client"
-
-// window.location.origin describes the URL of the page we're on
-const clientSocket = socket(window.location.origin)
-
-// Run when connected to server
-clientSocket.on("connect", () => {
-  console.log("Connected to server")
-})
-
-clientSocket.on("message", message => {
-  console.log(message)
-})
-
-clientSocket.on("solution", solutionText => {
-  const newDiv = document.createElement("div")
-  newDiv.innerText = solutionText
-  const testing = document.getElementById("testing")
-  testing.appendChild(newDiv)
-
-})
+import clientSocket from "../socket/socket"
 
 class IDE extends React.Component {
   constructor(props) {
@@ -42,8 +19,9 @@ class IDE extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
- handleChange(userInput) {
+ async handleChange(userInput) {
     this.setState({ input: userInput });
+    await clientSocket.emit(`solution`, this.state.input)
   }
 
   async handleSubmit(event) {
@@ -51,21 +29,12 @@ class IDE extends React.Component {
     if(this.props.enabled){
       await this.props.testSolution("6123caa2a0b84caf217f3dc3", this.state.input);
       this.props.result()
-      clientSocket.emit(`solution`, this.state.input)
     }
   }
 
  componentDidMount() {
   this.setState({input: this.props.exercise.exerciseBody})
   }
-
-  // componentDidUpdate(prevProps){
-  //   console.log('Previous Props: ', prevProps)
-  //   console.log("Props: ", this.props)
-  //   if(prevProps !== this.props){
-  //     this.setState({ input: this.props.exercise.exerciseBody });
-  //    }
-  //   }
 
   render() {
     const {enabled} = this.props;
@@ -106,7 +75,6 @@ class IDE extends React.Component {
             className="code-mirror-wrapper"
             options={ options }
           />
-
           <div>
           <button type="submit" onClick={this.handleSubmit} disabled={!enabled}>
             Run

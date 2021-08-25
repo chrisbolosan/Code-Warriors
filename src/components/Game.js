@@ -6,17 +6,23 @@ import { testSolution } from "../store/solution";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IDEOpponent from "./IDEOpponent"
-import socket from "socket.io-client"
-
-const clientSocket = socket(window.location.origin)
+import clientSocket from "../socket/socket"
 
 class Game extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      functionText: ""
+      playerId: "",
+      solutionText: "",
+      id: ""
     }
     this.result = this.result.bind(this);
+  }
+
+  componentDidUpdate(prevState) {
+    if (prevState.solutionText !== this.state.solutionText) {
+
+    }
   }
 
   result() {
@@ -30,15 +36,17 @@ class Game extends React.Component{
 
   async componentDidMount() {
     await this.props.fetchExercise("6123caa2a0b84caf217f3dc3");
-    clientSocket.on("solution", solutionText => {
-      this.setState({
-        functionText: solutionText
+    clientSocket.on("solution", async solutionObject => {
+      await this.setState(solutionObject)
+    })
+    clientSocket.on("message", async (message) => {
+      await this.setState({
+        playerId: message
       })
     })
   }
 
   render(){
-    console.log(this.state.functionText)
     const {exercise, testSolution } = this.props;
     const {result} = this;
 
@@ -53,7 +61,8 @@ class Game extends React.Component{
                result={result}
                enabled={true}
           />
-          <IDEOpponent functionText={this.state.functionText}
+          <IDEOpponent solutionObject={this.state}
+                       exercise={exercise.exerciseBody}
           />
         </div>
       )
