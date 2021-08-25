@@ -1,4 +1,3 @@
-import IDE from "./components/IDE.js";
 import Game from './components/Game'
 
 
