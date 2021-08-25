@@ -8,6 +8,15 @@ import { Controlled } from "react-codemirror2";
 class IDEOpponent extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      functionText: this.props.exercise
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.functionText !== this.props.functionText) {
+      this.setState({functionText: this.props.functionText})
+    }
   }
 
   render() {
@@ -27,7 +36,7 @@ class IDEOpponent extends React.Component {
           <Controlled
             // this is the onChange equivilent of the imported component
             // callback sets the input to the state as code
-            value={this.props.functionText}
+            value={this.state.functionText}
             className="code-mirror-wrapper"
             options={ options }
           />

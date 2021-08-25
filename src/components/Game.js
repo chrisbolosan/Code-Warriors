@@ -30,9 +30,9 @@ class Game extends React.Component{
 
   async componentDidMount() {
     await this.props.fetchExercise("6123caa2a0b84caf217f3dc3");
-    clientSocket.on("solution", solutionText => {
+    clientSocket.on("solution", solutionObject => {
       this.setState({
-        functionText: solutionText
+        functionText: solutionObject.solutionText
       })
     })
   }
@@ -54,6 +54,7 @@ class Game extends React.Component{
                enabled={true}
           />
           <IDEOpponent functionText={this.state.functionText}
+                       exercise={exercise.exerciseBody}
           />
         </div>
       )

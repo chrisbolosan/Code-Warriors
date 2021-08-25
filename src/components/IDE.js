@@ -21,14 +21,6 @@ clientSocket.on("message", message => {
   console.log(message)
 })
 
-clientSocket.on("solution", solutionText => {
-  const newDiv = document.createElement("div")
-  newDiv.innerText = solutionText
-  const testing = document.getElementById("testing")
-  testing.appendChild(newDiv)
-
-})
-
 class IDE extends React.Component {
   constructor(props) {
     super(props);
@@ -41,6 +33,7 @@ class IDE extends React.Component {
 
  handleChange(userInput) {
     this.setState({ input: userInput });
+    clientSocket.emit(`solution`, this.state.input)
   }
 
   async handleSubmit(event) {
@@ -48,7 +41,6 @@ class IDE extends React.Component {
     if(this.props.enabled){
       await this.props.testSolution("6123caa2a0b84caf217f3dc3", this.state.input);
       this.props.result()
-      clientSocket.emit(`solution`, this.state.input)
     }
   }
 
