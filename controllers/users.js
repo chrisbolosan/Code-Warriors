@@ -1,29 +1,42 @@
-const User = require('../models/User');
+const User = require("../models/User");
 //middleware for try/catch
-const asyncHandler = require('../middleware/async');
-const ErrorResponse = require('../utils/errorResponse');
+const asyncHandler = require("../middleware/async");
+const ErrorResponse = require("../utils/errorResponse");
 
 // @desc    Get users
 // @route   GET /api/users
 // @access  Public
 exports.getUsers = asyncHandler(async (req, res, next) => {
-  const users = await User.find().select('username totalPoints rank ');
-  res.status(200).json(users);
+  if (req.admin) {
+    const users = await User.find().select("username totalPoints rank ");
+    res.status(200).json(users);
+  } else {
+    const user = await User.findById(req._id);
+    res.status(200).json(user);
+  }
 });
 
 // @desc Get a specific user
 // @route GET /api/users/:id
 // @access Public
 exports.getUser = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.params.id).select(
-    'username totalPoints rank'
-  );
-  res.status(200).json(user);
+  if (req.admin) {
+    const user = await User.findById(req.params.id).select(
+      "username totalPoints rank email"
+    );
+    res.status(200).json(user);
+    //if requestID matches userid, send response is information for the matching id
+  } else if (req._id === req.params.id) {
+    const user = await User.findById(req.params.id).select("username totalPoints rank email")
+    res.status(200).json(user)
+  } else {
+    req.status(401).send("You are not an admin to visualize this user or this user does not correspond to your id")
+  }
 });
 
 // @desc Create new user
 // @route POST /api/auth/signup
-// @access Private
+// @access Public
 exports.signup = asyncHandler(async (req, res, next) => {
   //   const user = await User.create(req.body);
   //   res.status(201).json({ data: user });
@@ -44,9 +57,9 @@ exports.signup = asyncHandler(async (req, res, next) => {
   sendTokenResponse(user, 200, res);
 });
 
-//@desc Login user
-// @route POST /api/users/login
-//ACCESS  PUBLIC
+//@desc     Login user
+// @route   POST /api/users/login
+//@access   Public
 exports.login = asyncHandler(async (req, res, next) => {
   const { username, password } = req.body;
 
@@ -54,19 +67,19 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   if (!username || !password) {
     return next(
-      new ErrorResponse('Please provide an username and password', 400)
+      new ErrorResponse("Please provide an username and password", 400)
     );
   }
   //Check for user plus validation password
   const user = await User.findOne({ username });
   if (!user) {
-    return next(new ErrorResponse('Invalid credentials', 401));
+    return next(new ErrorResponse("Invalid credentials", 401));
   }
   //Check if password matches
   const isMatch = await user.matchPassword(password);
   if (!isMatch) {
     console.log(isMatch);
-    return next(new ErrorResponse('Invalid credentials', 401));
+    return next(new ErrorResponse("Invalid credentials", 401));
   }
   //create token
   //   const token = user.getSignedJwtToken();
@@ -77,15 +90,19 @@ exports.login = asyncHandler(async (req, res, next) => {
 
 // @desc Update a specific user
 // @route PUT /api/users/:id
-// @access Private
+// @access Private only to user's own id.
 exports.updateUser = asyncHandler(async (req, res, next) => {
+  if (req.admin) {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body)
+    res.status(204).json(user)
+  } else if (req.params.id === )
   const user = await User.findByIdAndUpdate(req.params.id, req.body);
   res.status(204).json(user);
 });
 
 // @desc Delete  a specific user
 // @route  /api/users/:id
-// @access Private
+// @access Private only to user's own id.
 exports.deleteUser = asyncHandler(async (req, res, next) => {
   const user = await User.findByIdAndDelete(req.params.id);
   res.status(200).json(user);
@@ -98,7 +115,7 @@ exports.getLeaderboard = asyncHandler(async (req, res, next) => {
   const leaderboard = await User.find()
     .sort({ totalPoints: -1 })
     .limit(10)
-    .select('username totalPoints');
+    .select("username totalPoints");
   res.status(200).json(leaderboard);
 });
 
@@ -113,12 +130,12 @@ const sendTokenResponse = (user, statusCode, res) => {
     httpOnly: true,
   };
   //cookie environment when in production, we'll have a secure route
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === "production") {
     options.secure = true;
   }
   res
     .status(statusCode)
-    .cookie('token', token, options)
+    .cookie("token", token, options)
     //send token back to response
     .json({
       success: true,
