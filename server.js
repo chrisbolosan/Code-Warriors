@@ -22,4 +22,8 @@ app.use(morgan('dev'));
 app.use('/api/exercises', require('./routes/exercises'));
 app.use('/api/users', require('./routes/users'));
 
+app.get("/*", (req, res, next) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"))
+})
+
 app.listen(PORT, console.log(`Running on port ${PORT}`));
