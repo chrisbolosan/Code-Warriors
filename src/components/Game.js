@@ -5,13 +5,25 @@ import { fetchExercise } from "../store/exercise";
 import { testSolution } from "../store/solution";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import IDEOpponent from "./IDEOpponent"
+import socket from "socket.io-client"
+
+const clientSocket = socket(window.location.origin)
 
 class Game extends React.Component{
   constructor(props){
     super(props);
+    this.state = {
+      functionText: ""
+    }
     this.result = this.result.bind(this);
-
   }
+
+  // componentDidUpdate(prevProps) {
+  //   if (prevProps.functionText !== this.props.functionText) {
+
+  //   }
+  // }
 
   result() {
     toast(this.props.solution.message, {
@@ -24,10 +36,15 @@ class Game extends React.Component{
 
   async componentDidMount() {
     await this.props.fetchExercise("6123caa2a0b84caf217f3dc3");
+    clientSocket.on("solution", solutionText => {
+      this.setState({
+        functionText: solutionText
+      })
+    })
   }
 
-
   render(){
+    console.log(this.state.functionText)
     const {exercise, testSolution } = this.props;
     const {result} = this;
 
@@ -42,12 +59,8 @@ class Game extends React.Component{
                result={result}
                enabled={true}
           />
-          {/* <IDE exercise={exercise}
-               solution={solution}
-               testSolution={testSolution}
-               fetchExercise={fetchExercise}
-               /> */}
-
+          <IDEOpponent functionText={this.state.functionText}
+          />
         </div>
       )
     } else {
