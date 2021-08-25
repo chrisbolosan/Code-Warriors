@@ -7,13 +7,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IDEOpponent from "./IDEOpponent"
 import clientSocket from "../socket/socket"
-//import socket from "socket.io-client"
-
-//const clientSocket = socket(window.location.origin)
-
-// clientSocket.on("connect", async () => {
-//   await console.log("Connected to server")
-// })
 
 class Game extends React.Component{
   constructor(props){
@@ -53,7 +46,6 @@ class Game extends React.Component{
     })
   }
 
-// const clientSocket = socket(window.location.origin)
   render(){
     const {exercise, testSolution } = this.props;
     const {result} = this;
