@@ -10,6 +10,8 @@ const {
   testExercise,
 } = require('../controllers/exercises');
 
+const { protect } = require('../middleware/auth');
+
 router.route('/').get(getExercises).post(createExercise);
 
 router.route('/solution').post(testExercise);

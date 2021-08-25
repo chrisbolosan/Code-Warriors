@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
-const bcrypt = require("bcrypt")
-const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+
+dotenv.config({ path: '../config/config.env' });
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -26,16 +29,24 @@ const UserSchema = new mongoose.Schema({
     enum: ['Beginner', 'Intermediate', 'Master'],
     default: 'Beginner',
   },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
   totalPoints: {
     type: Number,
     default: 0,
   },
 });
 
-UserSchema.pre('save', async function(next) {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-})
+UserSchema.pre('save', async function (next) {
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
+
+UserSchema.methods.matchPassword = function (password) {
+  return bcrypt.compareSync(password, this.password);
+};
 
 //sign JWT and return
 UserSchema.methods.getSignedJwtToken = function () {
@@ -44,5 +55,16 @@ UserSchema.methods.getSignedJwtToken = function () {
     expiresIn: process.env.JWT_EXPIRE,
   });
 };
+
 const User = mongoose.model('User', UserSchema);
+
+UserSchema.statics.findByToken = async function (token) {
+  try {
+    const { id } = await jwt.verify(token, process.env.JWT_SECRET);
+    const user = User.findById(id);
+    return user;
+  } catch (e) {
+    console.error(e);
+  }
+};
 module.exports = User;

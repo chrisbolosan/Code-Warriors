@@ -12,13 +12,12 @@ const {
 } = require('../controllers/users');
 
 //protect middleware
-const{protect} =require('../middleware/auth')
+const { protect } = require('../middleware/auth');
 
 router.route('/').get(getUsers);
-router.post("/signup", signup);
+router.post('/signup', signup);
 router.route('/login').post(login);
 router.route('/leaderboard').get(getLeaderboard);
-router.route('/:id').get(getUser).put(protect, updateUser).delete(deleteUser);
-
+router.route('/:id').get(getUser).put(updateUser).delete(deleteUser);
 
 module.exports = router;

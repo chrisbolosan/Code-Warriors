@@ -1,13 +1,13 @@
-const User = require("../models/User");
+const User = require('../models/User');
 //middleware for try/catch
-const asyncHandler = require("../middleware/async");
-const ErrorResponse = require("../utils/errorResponse");
+const asyncHandler = require('../middleware/async');
+const ErrorResponse = require('../utils/errorResponse');
 
 // @desc    Get users
 // @route   GET /api/users
 // @access  Public
 exports.getUsers = asyncHandler(async (req, res, next) => {
-  const users = await User.find();
+  const users = await User.find().select('username totalPoints rank ');
   res.status(200).json(users);
 });
 
@@ -15,18 +15,20 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
 // @route GET /api/users/:id
 // @access Public
 exports.getUser = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.params.id).select(
+    'username totalPoints rank'
+  );
   res.status(200).json(user);
 });
 
 // @desc Create new user
-// @route POST /api/signup
+// @route POST /api/auth/signup
 // @access Private
 exports.signup = asyncHandler(async (req, res, next) => {
-//   const user = await User.create(req.body);
-//   res.status(201).json({ data: user });
-// });
-const { username, password, email } = req.body;
+  //   const user = await User.create(req.body);
+  //   res.status(201).json({ data: user });
+  // });
+  const { username, password, email } = req.body;
 
   //create user
   const user = await User.create({
@@ -42,28 +44,29 @@ const { username, password, email } = req.body;
   sendTokenResponse(user, 200, res);
 });
 
-
 //@desc Login user
-// @route POST /API/login
+// @route POST /api/users/login
 //ACCESS  PUBLIC
 exports.login = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   //Validate email & password
 
-  if (!email || !password) {
-    return next(new ErrorResponse("Please provide an email and password", 400));
+  if (!username || !password) {
+    return next(
+      new ErrorResponse('Please provide an username and password', 400)
+    );
   }
   //Check for user plus validation password
-  const user = await User.findOne({ email }).select("+password");
+  const user = await User.findOne({ username });
   if (!user) {
-    return next(new ErrorResponse("Invalid credentials", 401));
+    return next(new ErrorResponse('Invalid credentials', 401));
   }
   //Check if password matches
   const isMatch = await user.matchPassword(password);
-
   if (!isMatch) {
-    return next(new ErrorResponse("Invalid credentials", 401));
+    console.log(isMatch);
+    return next(new ErrorResponse('Invalid credentials', 401));
   }
   //create token
   //   const token = user.getSignedJwtToken();
@@ -71,7 +74,6 @@ exports.login = asyncHandler(async (req, res, next) => {
   //   res.status(200).json({ success: true, token });
   sendTokenResponse(user, 200, res);
 });
-
 
 // @desc Update a specific user
 // @route PUT /api/users/:id
@@ -96,14 +98,14 @@ exports.getLeaderboard = asyncHandler(async (req, res, next) => {
   const leaderboard = await User.find()
     .sort({ totalPoints: -1 })
     .limit(10)
-    .select("username totalPoints");
+    .select('username totalPoints');
   res.status(200).json(leaderboard);
 });
 
 const sendTokenResponse = (user, statusCode, res) => {
   //create token
   const token = user.getSignedJwtToken();
-//parameters for cookie JWT
+  //parameters for cookie JWT
   const options = {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
@@ -111,12 +113,12 @@ const sendTokenResponse = (user, statusCode, res) => {
     httpOnly: true,
   };
   //cookie environment when in production, we'll have a secure route
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === 'production') {
     options.secure = true;
   }
   res
     .status(statusCode)
-    .cookie("token", token, options)
+    .cookie('token', token, options)
     //send token back to response
     .json({
       success: true,
