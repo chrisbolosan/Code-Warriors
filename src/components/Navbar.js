@@ -1,12 +1,13 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Badge from "@material-ui/core/Badge";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import Badge from '@material-ui/core/Badge';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Navbar = ({ handleClick, isLoggedIn, user, userId }) => {
+const Navbar = ({ isLoggedIn }) => {
   const classes = useStyles();
 
   const StyledBadge = withStyles((theme) => ({
@@ -28,7 +29,7 @@ const Navbar = ({ handleClick, isLoggedIn, user, userId }) => {
       right: -3,
       top: 5,
       border: `1px solid ${theme.palette.background.paper}`,
-      padding: "0 4px",
+      padding: '0 4px',
     },
   }))(Badge);
 
@@ -65,7 +66,7 @@ const Navbar = ({ handleClick, isLoggedIn, user, userId }) => {
               </Typography>
               <Typography variant="h4" className={classes.title}>
                 <Link to="/">
-                  <Button color="primary" href="#" onClick={handleClick}>
+                  <Button color="primary" href="#">
                     Logout
                   </Button>
                 </Link>
@@ -110,4 +111,15 @@ const Navbar = ({ handleClick, isLoggedIn, user, userId }) => {
     </nav>
   );
 };
-export default Navbar;
+
+const mapState = (state) => {
+  return {
+    isLoggedIn: !!state.auth._id,
+  };
+};
+
+const mapDispatch = (dispatch) => {
+  return {};
+};
+
+export default connect(mapState, mapDispatch)(Navbar);

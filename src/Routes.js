@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter, Route, Switch, Redirect } from "react-router-dom";
-import { me } from "./store";
-import Home from "./components/Home";
-import Leaderboard from "./components/Leaderboard";
-import UserProfile from "./components/UserProfile";
-import GuestHome from "./components/GuestHome";
-import { Login, SignUp } from "./components/AuthForm";
-import Game from "./components/Game";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { me } from './store';
+import Home from './components/Home';
+import Leaderboard from './components/Leaderboard';
+import UserProfile from './components/UserProfile';
+import GuestHome from './components/GuestHome';
+import { Login, SignUp } from './components/AuthForm';
+import Game from './components/Game';
 
 class Routes extends Component {
   componentDidMount() {
@@ -15,6 +15,7 @@ class Routes extends Component {
   }
   render() {
     const { isLoggedIn } = this.props;
+    console.log(isLoggedIn);
 
     return (
       <div>
@@ -46,7 +47,7 @@ const mapState = (state) => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
-    isLoggedIn: !!state.auth.id,
+    isLoggedIn: !!state.auth._id,
     isAdmin: !!state.auth.isAdmin,
   };
 };
