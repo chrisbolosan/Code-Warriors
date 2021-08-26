@@ -37,9 +37,8 @@ io.on("connection", async (socket) => {
   socket.on('createGame', (roomId) => {
     rooms.push(roomId)
     socket.join(roomId);
-    console.log('create room roomId', roomId)
+    // console.log('create room roomId', roomId)
     io.emit('roomId', roomId)
-    io.to(roomId).emit(roomId, `User has joined ${roomId}`)
     io.emit('rooms', rooms)
   })
 
@@ -52,8 +51,6 @@ socket.on('joinRoom', (roomId) => {
   // listen for solution code
   socket.on("solution", async (solutionObj) => {
     //Emit solution object back to front end
-
-
     await io.emit("solution", solutionObj)
   })
 })

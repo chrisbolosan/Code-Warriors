@@ -19,11 +19,7 @@ const roomId = Math.floor(Math.random() * 10000000);
 
 
   function handleClick() {
-    clientSocket.emit('createGame', roomId)
-    // history.push({
-    //   pathname: `/IDE/${roomId}`,
-    //   // state: {roomId}
-    // });
+    clientSocket.emit('createGame', roomId);
   }
 
   function joinRoom(event) {
@@ -34,13 +30,23 @@ const roomId = Math.floor(Math.random() * 10000000);
   return (
     <div>
       <h1>This is the logged in user homepage</h1>
-      <Link to={`/IDE`}>
+      <Link to={{
+          pathname: '/game',
+          state: {
+            room: roomId
+          }
+        }}>
         <button type='button' onClick={handleClick}>Create Game</button>
       </Link>
       <div>
       {rooms && rooms.map((room) => {
        return  (
-        <Link to={`/IDE`}>
+        <Link to={{
+          pathname: '/game',
+          state: {
+            room: room
+          }
+        }}>
           <button onClick={joinRoom} value={room} key={room} type='button'>{room}</button>
         </Link>
        )

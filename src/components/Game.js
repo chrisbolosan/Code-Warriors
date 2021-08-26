@@ -32,13 +32,10 @@ class Game extends React.Component {
     clientSocket.on("solution", (solutionObject) => {
       this.setState(solutionObject);
     });
-
-    // clientSocket.on("roomnumber", (roomnumber) => {
-    //   console.log(roomnumber)
-    // });
   }
 
   render() {
+    const roomId = this.props.location.state.room
     const { exercise, testSolution } = this.props;
     const { result } = this;
 
@@ -51,11 +48,13 @@ class Game extends React.Component {
             testSolution={testSolution}
             result={result}
             enabled={true}
+            roomId={roomId}
           />
           <IDEOpponent
           //pass solution obj as props to dummy IDE
             solutionObject={this.state}
             exercise={exercise.exerciseBody}
+            roomId={roomId}
           />
         </div>
       );
