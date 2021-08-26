@@ -23,7 +23,7 @@ app.use(morgan("dev"));
 
 // Setting up routes
 // auth and api routes
-app.use("/auth", require("./routes/auth/me"));
+app.use("/api/auth/me", require("./routes/auth/me"));
 app.use("/api/exercises", require("./routes/exercises"));
 app.use("/api/users", require("./routes/users"));
 

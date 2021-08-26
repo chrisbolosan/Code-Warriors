@@ -45,7 +45,7 @@ export const authenticate =
     }
   };
 
-export const signUp = (username, password, email) => async (dispatch) => {
+export const signUpThunk = (username, password, email) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/auth/me`, {
       username,
