@@ -30,18 +30,17 @@ app.get('/*', (req, res, next) => {
 });
 
 // Run when client connects
-io.on('connection', async (socket) => {
-  console.log(socket.id);
-  await io.emit('message', socket.id);
+
+io.on("connection", async (socket) => {
+  // await io.emit("message", socket.id)
   //socket.broadcast.emit("message", "a user just joined the room")
 
   // listen for solution code
-  socket.on('solution', async (solutionText) => {
-    await io.emit('solution', {
-      id: socket.id,
-      solutionText,
-    });
-  });
-});
+  socket.on("solution", async (solutionObj) => {
+    //Emit solution object back to front end
+    await io.emit("solution", solutionObj)
+  })
+})
+
 
 server.listen(PORT, console.log(`Running on port ${PORT}`));
