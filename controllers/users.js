@@ -19,6 +19,7 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
 // @desc Get a specific user
 // @route GET /api/users/:id
 // @access Public
+//if request is coming from admin token,  admin can see all params.
 exports.getUser = asyncHandler(async (req, res, next) => {
   if (req.admin) {
     const user = await User.findById(req.params.id).select(
@@ -27,10 +28,12 @@ exports.getUser = asyncHandler(async (req, res, next) => {
     res.status(200).json(user);
     //if requestID matches userid, send response is information for the matching id
   } else if (req._id === req.params.id) {
-    const user = await User.findById(req.params.id).select("username totalPoints rank email")
-    res.status(200).json(user)
+    const user = await User.findById(req.params.id).select(
+      "username totalPoints rank email"
+    );
+    res.status(200).json(user);
   } else {
-    req.status(401).send("You are not an admin to visualize this user or this user does not correspond to your id")
+    req.status(401).send("Not authorized");
   }
 });
 
@@ -93,19 +96,29 @@ exports.login = asyncHandler(async (req, res, next) => {
 // @access Private only to user's own id.
 exports.updateUser = asyncHandler(async (req, res, next) => {
   if (req.admin) {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body)
-    res.status(204).json(user)
-  } else if (req.params.id === )
-  const user = await User.findByIdAndUpdate(req.params.id, req.body);
-  res.status(204).json(user);
+    const user = await User.findByIdAndUpdate(req.params.id, req.body);
+    res.status(204).json(user);
+  } else if (req.params.id === req._id) {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body);
+    res.status(204).json(user);
+  } else {
+    res.status(401).json({ success: false, message: "Unauthorized request" });
+  }
 });
 
 // @desc Delete  a specific user
 // @route  /api/users/:id
-// @access Private only to user's own id.
+// @access Private only to either Admins or User's by their id
 exports.deleteUser = asyncHandler(async (req, res, next) => {
-  const user = await User.findByIdAndDelete(req.params.id);
-  res.status(200).json(user);
+  if (req.admin) {
+    const user = await User.findByIdAndDelete(req.params.id);
+    res.status(200).json(user);
+  } else if (req.params.id === req._id) {
+    const user = await User.findByIdAndDelete(req.params.id);
+    res.status(200).json(user);
+  } else {
+    res.status(401).json({ success: false, message: "Unauthorized request" });
+  }
 });
 
 // @desc  Get leaderboard

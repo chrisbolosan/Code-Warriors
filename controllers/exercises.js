@@ -1,5 +1,6 @@
-const Exercise = require('../models/Exercise');
-const Jsrunner = require('javascript-code-runner');
+const Exercise = require("../models/Exercise");
+const Jsrunner = require("javascript-code-runner");
+const asyncHandler = require("../middleware/async");
 
 // @desc    Get Exercise
 // @route   GET /api/exercises
@@ -28,38 +29,38 @@ exports.getExercise = async (req, res, next) => {
 // @desc Create or Seed Exercise
 // @route POST /api/exercises
 // @access Private
-exports.createExercise = async (req, res, next) => {
-  try {
+exports.createExercise = asyncHandler(async (req, res, next) => {
+  if (req.admin || req.rank === "intermediate" || req.rank === "master") {
     const exercise = await Exercise.create(req.body);
     res.status(201).json(exercise);
-  } catch (err) {
-    next(err);
+  } else {
+    res.status(401).json({ success: false, message: "Unauthorized access" });
   }
-};
+});
 
 // @desc Update a specific Exercise
 // @route PUT /api/exercises/:id
 // @access Private
-exports.updateExercise = async (req, res, next) => {
-  try {
+exports.updateExercise = asyncHandler(async (req, res, next) => {
+  if (req.admin || req.rank === "intermediate" || req.rank === "master") {
     const exercise = await Exercise.findByIdAndUpdate(req.params.id, req.body);
     res.status(204).json(exercise);
-  } catch (err) {
-    next(err);
+  } else {
+    res.status(401).json({ success: false, message: "Unauthorized access" });
   }
-};
+});
 
 // @desc    Delete  a specific Exercise
 // @route   DELETE /api/exercises/:id
 // @access  Private
-exports.deleteExercise = async (req, res, next) => {
-  try {
-    const exercise = await Exercise.findByIdAndDelete(req.params.id);
-    res.status(200).json(exercise);
-  } catch (err) {
-    next(err);
+exports.deleteExercise = asyncHandler(async (req, res, next) => {
+  if (req.admin || req.rank === "intermediate" || req.rank === "master") {
+    const exercise = await Exercise.findByIdAndUpdate(req.params.id);
+    res.status(204).json(exercise);
+  } else {
+    res.status(401).json({ success: false, message: "Unauthorized access" });
   }
-};
+});
 
 // @desc    Check user solution
 // @route   POST /api/exercises/solution
@@ -73,17 +74,17 @@ exports.testExercise = async (req, res, next) => {
     const userSolution = req.body.solution;
     const problem = `${userSolution} ${test}`;
     const { result, message } = Jsrunner(problem);
-    if (result === 'false') {
+    if (result === "false") {
       return res.json({
         success: false,
-        message: 'Solution does not match test requirements',
+        message: "Solution does not match test requirements",
       });
     } else if (message) {
       return res.json({ success: false, message });
     } else {
       return res.json({
         success: true,
-        message: 'tests passed',
+        message: "tests passed",
       });
     }
   } catch (err) {
