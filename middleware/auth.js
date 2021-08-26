@@ -3,7 +3,7 @@ const asyncHandler = require("./async");
 const ErrorResponse = require("../utils/errorResponse");
 const User = require("../models/User");
 
-//middleware protect routes
+// gatekeeping middleware protect routes
 //adds requests to the req variables along with try catch
 exports.protect = asyncHandler(async (req, res, next) => {
   try {
@@ -19,6 +19,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
     req.admin = isAdmin;
     req._id = _id;
   } catch (err) {
+    console.error(err);
     return next(new ErrorResponse("Not Authorized to access this route", 401));
   }
 });

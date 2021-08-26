@@ -57,17 +57,17 @@ UserSchema.methods.getSignedJwtToken = function () {
   });
 };
 
-const User = mongoose.model("User", UserSchema);
-
 //when make a request to headers, get's the token and the secret token and return the userid
-UserSchema.statics.findByToken = async function (token) {
+UserSchema.static("findByToken", async function (token) {
   try {
     const { id } = await jwt.verify(token, process.env.JWT_SECRET);
-    const user = User.findById(id);
-    //returns the correct user
+    const user = this.findById(id);
     return user;
   } catch (e) {
     console.error(e);
   }
-};
+});
+
+const User = mongoose.model("User", UserSchema);
+
 module.exports = User;

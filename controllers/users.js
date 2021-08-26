@@ -35,61 +35,70 @@ exports.getUser = asyncHandler(async (req, res, next) => {
   } else {
     req.status(401).send("Not authorized");
   }
+  res.status(401).json({ message: "something wrong happened" });
 });
 
 // @desc Create new user
 // @route POST /api/auth/signup
 // @access Public
-exports.signup = asyncHandler(async (req, res, next) => {
-  //   const user = await User.create(req.body);
-  //   res.status(201).json({ data: user });
-  // });
-  const { username, password, email } = req.body;
+exports.signup = async (req, res, next) => {
+  try {
+    //   const user = await User.create(req.body);
+    //   res.status(201).json({ data: user });
+    // });
+    const { username, password, email } = req.body;
 
-  //create user
-  const user = await User.create({
-    username,
-    password,
-    email,
-    //default other fields
-  });
-  //create token
-  //   const token = user.getSignedJwtToken();
+    //create user
+    const user = await User.create({
+      username,
+      password,
+      email,
+      //default other fields
+    });
+    //create token
+    //   const token = user.getSignedJwtToken();
 
-  //   res.status(200).json({ success: true, token });
-  sendTokenResponse(user, 200, res);
-});
+    //   res.status(200).json({ success: true, token });
+    sendTokenResponse(user, 200, res);
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 //@desc     Login user
 // @route   POST /api/users/login
 //@access   Public
-exports.login = asyncHandler(async (req, res, next) => {
-  const { username, password } = req.body;
+exports.login = async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
 
-  //Validate email & password
+    //Validate email & password
 
-  if (!username || !password) {
-    return next(
-      new ErrorResponse("Please provide an username and password", 400)
-    );
-  }
-  //Check for user plus validation password
-  const user = await User.findOne({ username });
-  if (!user) {
-    return next(new ErrorResponse("Invalid credentials", 401));
-  }
-  //Check if password matches
-  const isMatch = await user.matchPassword(password);
-  if (!isMatch) {
-    console.log(isMatch);
-    return next(new ErrorResponse("Invalid credentials", 401));
-  }
-  //create token
-  //   const token = user.getSignedJwtToken();
+    if (!username || !password) {
+      return next(
+        new ErrorResponse("Please provide an username and password", 400)
+      );
+    }
+    //Check for user plus validation password
+    const user = await User.findOne({ username });
+    if (!user) {
+      return next(new ErrorResponse("Invalid credentials", 401));
+    }
+    //Check if password matches
+    const isMatch = await user.matchPassword(password);
+    if (!isMatch) {
+      console.log(isMatch);
+      return next(new ErrorResponse("Invalid credentials", 401));
+    }
+    //create token
+    //   const token = user.getSignedJwtToken();
 
-  //   res.status(200).json({ success: true, token });
-  sendTokenResponse(user, 200, res);
-});
+    //   res.status(200).json({ success: true, token });
+    sendTokenResponse(user, 200, res);
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 // @desc Update a specific user
 // @route PUT /api/users/:id
