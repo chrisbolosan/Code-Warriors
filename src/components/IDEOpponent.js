@@ -22,8 +22,8 @@ class IDEOpponent extends React.Component {
         //If not, set state and rerender dummy ide
         this.setState({ functionText: this.props.solutionObject.input });
       } else {
-        //FUCK IT
-        console.log('fucc it')
+        //Do nothing
+        return
       }
 
     }
