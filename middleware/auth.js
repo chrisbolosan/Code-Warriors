@@ -1,32 +1,25 @@
-const jwt = require("jsonwebtoken");
-const asyncHandler = require("./async");
-const ErrorResponse = require("../utils/errorResponse");
-const User = require("../models/User");
+const User = require('../models/User');
 
-//middleware protect routes
-
-exports.protect = asyncHandler(async (req, res, next) => {
-  let token;
-
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
-    token = req.headers.authorization.split(" ")[1];
-  }
-  
-  //make sure token exists
-  if (!token) {
-    return next(new ErrorResponse("Not Authorized to access this route", 401));
-  }
+// gatekeeping middleware protect routes
+//adds requests to the req variables along with try catch
+const authHandler = async (req, res, next) => {
   try {
-    //verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(decoded, "imdecoded");
-    //credentials verified by user id
-    req.user = await User.findById(decoded.id);
+    const { isAdmin, username, _id, rank } = await User.findByToken(
+      req.headers.authorization
+    );
+
+    if (!username) {
+      res.status(401).send('Invalid token, no user found');
+    }
+
+    req.admin = isAdmin;
+    req.id = _id;
+    req.rank = rank;
     next();
   } catch (err) {
-    return next(new ErrorResponse("Not Authorized to access this route", 401));
+    res.status(401).send('Invalid token or no token found');
+    next(err);
   }
-});
+};
+
+module.exports = authHandler;

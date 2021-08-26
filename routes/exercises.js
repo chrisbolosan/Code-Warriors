@@ -8,16 +8,20 @@ const {
   getExercise,
   deleteExercise,
   testExercise,
+  getRandomExercise,
 } = require('../controllers/exercises');
 
-router.route('/').get(getExercises).post(createExercise);
+//middleware for only authorized users and admins
+const authHandler = require('../middleware/auth');
 
+router.route('/').get(getExercises).post(authHandler, createExercise);
+router.route('/random').get(getRandomExercise);
 router.route('/solution').post(testExercise);
 
 router
   .route('/:id')
   .get(getExercise)
-  .put(updateExercise)
-  .delete(deleteExercise);
+  .put(authHandler, updateExercise)
+  .delete(authHandler, deleteExercise);
 
 module.exports = router;

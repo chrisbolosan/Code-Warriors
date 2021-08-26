@@ -15,6 +15,12 @@ const ExerciseSchema = new mongoose.Schema({
   },
 });
 
+ExerciseSchema.statics.getRandomExercise = async function () {
+  const count = await this.count();
+  const rand = Math.floor(Math.random() * count);
+  const randomDoc = await this.findOne().skip(rand);
+  return randomDoc;
+};
 const Exercise = mongoose.model('Exercise', ExerciseSchema);
 
 module.exports = Exercise;
