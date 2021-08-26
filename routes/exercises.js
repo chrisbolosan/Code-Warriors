@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
 const {
@@ -8,16 +8,19 @@ const {
   getExercise,
   deleteExercise,
   testExercise,
-} = require('../controllers/exercises');
+} = require("../controllers/exercises");
 
-router.route('/').get(getExercises).post(createExercise);
+//middleware for only authorized users and admins
+const { protect } = require("../middleware/auth");
 
-router.route('/solution').post(testExercise);
+router.route("/").get(getExercises).post(protect, createExercise);
+
+router.route("/solution").post(testExercise);
 
 router
-  .route('/:id')
+  .route("/:id")
   .get(getExercise)
-  .put(updateExercise)
-  .delete(deleteExercise);
+  .put(protect, updateExercise)
+  .delete(protect, deleteExercise);
 
 module.exports = router;
