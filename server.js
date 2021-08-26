@@ -31,12 +31,17 @@ app.get('/*', (req, res, next) => {
 
 // Run when client connects
 
+let rooms = []
+
 io.on("connection", async (socket) => {
-  socket.on('createGame', (roomnumber) => {
-    socket.join(roomnumber);
-    io.emit('roomnumber', roomnumber)
-    io.to(roomnumber).emit(roomnumber, `User has joined ${roomnumber}`)
+  socket.on('createGame', (roomId) => {
+    rooms.push(roomId)
+    socket.join(roomId);
+    io.emit('roomId', roomId)
+    io.to(roomId).emit(roomId, `User has joined ${roomId}`)
   })
+
+  io.emit('rooms', rooms)
 
 
   // listen for solution code

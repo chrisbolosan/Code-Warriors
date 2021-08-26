@@ -1,20 +1,23 @@
-import React from "react"
+import React, { useState } from "react"
 import clientSocket from "../socket/socket"
 import { useHistory } from "react-router-dom";
 
 
 const Home = () => {
 let history = useHistory()
+const [rooms, setRooms] = useState([])
 
-  clientSocket.on("roomnumber", (roomnumber) => {
-    console.log(roomnumber)
-  });
+clientSocket.on("rooms", (rooms) => {
+  setRooms(...rooms)
+});
 
+console.log(rooms)
   function handleClick() {
-    const roomnumber = Math.floor(Math.random() * 10000000);
-    clientSocket.emit('createGame', roomnumber)
+    const roomId = Math.floor(Math.random() * 10000000);
+    clientSocket.emit('createGame', roomId)
     history.push({
-      pathname: `/IDE`,
+      pathname: `/IDE/${roomId}`,
+      state: {roomId}
     });
   }
   return (

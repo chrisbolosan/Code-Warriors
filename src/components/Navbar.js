@@ -54,9 +54,7 @@ const Navbar = ({ handleClick, isLoggedIn, user, userId }) => {
             <Typography variant="h4" className={classes.title}>
             <Link to="/signup"><Button>Signup</Button></Link>
             </Typography>
-            <Typography variant="h4" className={classes.title}>
-            <Link to="/IDE"><Button>IDE</Button></Link>
-            </Typography>
+
             {/* <Button color="inherit">Login</Button> */}
           </Toolbar>
         </AppBar>
