@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { me } from './store';
-import Home from './components/Home';
-import Leaderboard from './components/Leaderboard';
-import UserProfile from './components/UserProfile';
-import GuestHome from './components/GuestHome';
-import { Login, SignUp } from './components/AuthForm';
-import Game from './components/Game';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withRouter, Route, Switch, Redirect } from "react-router-dom";
+import { me } from "./store";
+import Home from "./components/Home";
+import Leaderboard from "./components/Leaderboard";
+import UserProfile from "./components/UserProfile";
+import GuestHome from "./components/GuestHome";
+import { Login, SignUp } from "./components/AuthForm";
+import Game from "./components/Game";
 
 class Routes extends Component {
   componentDidMount() {
@@ -22,6 +22,7 @@ class Routes extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/IDE" component={Game} />
+            <Route exact path="/user/:userId" component={UserProfile} />
           </Switch>
         ) : (
           <Switch>

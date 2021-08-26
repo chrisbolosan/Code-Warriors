@@ -38,6 +38,7 @@ export const authenticate =
         password,
       });
       window.localStorage.setItem(TOKEN, res.data.token);
+      console.log("i authenticated", res);
       dispatch(me());
       history.push("/");
     } catch (authError) {

@@ -61,6 +61,9 @@ const Navbar = ({ handleClick, isLoggedIn, user, userId }) => {
                 </Link>
               </Typography>
               <Typography variant="h4" className={classes.title}>
+                <Button>Profile</Button>
+              </Typography>
+              <Typography variant="h4" className={classes.title}>
                 <Link to="/">
                   <Button color="primary" href="#" onClick={handleClick}>
                     Logout
