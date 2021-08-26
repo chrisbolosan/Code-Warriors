@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const authHandler = require('../middleware/auth');
 
 const {
   getUsers,
@@ -11,14 +12,16 @@ const {
   getLeaderboard,
 } = require('../controllers/users');
 
-//protect middleware
-const{protect} =require('../middleware/auth')
+//middleware for only authorized users and admins
 
-router.route('/').get(getUsers);
-router.post("/signup", signup);
+router.route('/').get(authHandler, getUsers);
+router.route('/signup').post(signup);
 router.route('/login').post(login);
-router.route('/leaderboard').get(getLeaderboard);
-router.route('/:id').get(getUser).put(protect, updateUser).delete(deleteUser);
-
+router.route('/leaderboard').get(authHandler, getLeaderboard);
+router
+  .route('/:id')
+  .get(getUser)
+  .put(authHandler, updateUser)
+  .delete(authHandler, deleteUser);
 
 module.exports = router;
