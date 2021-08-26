@@ -32,12 +32,18 @@ app.get('/*', (req, res, next) => {
 // Run when client connects
 
 io.on("connection", async (socket) => {
-  // await io.emit("message", socket.id)
-  //socket.broadcast.emit("message", "a user just joined the room")
+  socket.on('createGame', (roomnumber) => {
+    socket.join(roomnumber);
+    io.emit('roomnumber', roomnumber)
+    io.to(roomnumber).emit(roomnumber, `User has joined ${roomnumber}`)
+  })
+
 
   // listen for solution code
   socket.on("solution", async (solutionObj) => {
     //Emit solution object back to front end
+
+
     await io.emit("solution", solutionObj)
   })
 })

@@ -31,6 +31,10 @@ class Game extends React.Component {
     clientSocket.on("solution", (solutionObject) => {
       this.setState(solutionObject);
     });
+
+    // clientSocket.on("roomnumber", (roomnumber) => {
+    //   console.log(roomnumber)
+    // });
   }
 
   render() {
