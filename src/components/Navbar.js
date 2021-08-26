@@ -33,7 +33,6 @@ const Navbar = ({ handleClick, isLoggedIn, user, userId }) => {
   }))(Badge);
 
   return (
-
     <nav id="navbar">
       <div className={classes.root}>
         <AppBar position="static">
@@ -43,27 +42,32 @@ const Navbar = ({ handleClick, isLoggedIn, user, userId }) => {
               className={classes.menuButton}
               color="inherit"
               aria-label="menu"
-            >
-            </IconButton>
+            ></IconButton>
             <Typography variant="h4" className={classes.title}>
-            <Link to="/"><Button>Home</Button></Link>
+              <Link to="/">
+                <Button>Home</Button>
+              </Link>
             </Typography>
             <Typography variant="h4" className={classes.title}>
-            <Link to="/login"><Button>Login</Button></Link>
+              <Link to="/login">
+                <Button>Login</Button>
+              </Link>
             </Typography>
             <Typography variant="h4" className={classes.title}>
-            <Link to="/signup"><Button>Signup</Button></Link>
+              <Link to="/signup">
+                <Button>Signup</Button>
+              </Link>
             </Typography>
             <Typography variant="h4" className={classes.title}>
-            <Link to="/IDE"><Button>IDE</Button></Link>
+              <Link to="/IDE">
+                <Button>IDE</Button>
+              </Link>
             </Typography>
             {/* <Button color="inherit">Login</Button> */}
           </Toolbar>
         </AppBar>
-        </div>
-           </nav>
-
+      </div>
+    </nav>
   );
 };
 export default Navbar;
-
