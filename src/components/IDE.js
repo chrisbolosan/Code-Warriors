@@ -14,14 +14,16 @@ class IDE extends React.Component {
     super(props);
     this.state = {
       input: "",
+      playerId: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
  async handleChange(userInput) {
-    this.setState({ input: userInput });
-    await clientSocket.emit(`solution`, this.state.input)
+    await this.setState({ input: userInput });
+    //Emit the solution and clientId in an object
+    clientSocket.emit(`solution`, this.state)
   }
 
   async handleSubmit(event) {
@@ -33,7 +35,11 @@ class IDE extends React.Component {
   }
 
  componentDidMount() {
-  this.setState({input: this.props.exercise.exerciseBody})
+   //sets state to the exercise body and client socket Id
+  this.setState({
+    input: this.props.exercise.exerciseBody,
+    playerId: clientSocket.id
+  })
   }
 
   render() {
