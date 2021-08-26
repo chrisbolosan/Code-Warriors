@@ -40,7 +40,7 @@ class IDEOpponent extends React.Component {
       readOnly: true,
     };
     return (
-      <div className="IDE">
+      <div className="IDE opponent">
         <div className="editor-container">
           {/* This is the IDE component from codemirror */}
           <Controlled
