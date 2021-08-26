@@ -22,11 +22,11 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/IDE/:roomId" component={Game} />
+            <Route exact path="/IDE" component={Game} />
           </Switch>
         ) : (
           <Switch>
-            <Route exact path="/IDE" component={Game} />
+            {/* <Route exact path="/IDE" component={Game} /> */}
             <Route exact path="/" component={GuestHome} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={SignUp} />
