@@ -14,7 +14,8 @@ class IDE extends React.Component {
     super(props);
     this.state = {
       input: "",
-      playerId: ""
+      playerId: "",
+      roomId: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,13 +37,16 @@ class IDE extends React.Component {
 
  componentDidMount() {
    //sets state to the exercise body and client socket Id
+   console.log(this.props)
   this.setState({
     input: this.props.exercise.exerciseBody,
-    playerId: clientSocket.id
+    playerId: clientSocket.id,
+    roomId: this.props.roomId
   })
   }
 
   render() {
+    // console.log("IDE props", this.props)
     const {enabled} = this.props;
     let options;
     if(!enabled){

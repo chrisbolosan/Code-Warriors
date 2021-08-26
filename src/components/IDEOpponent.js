@@ -19,8 +19,12 @@ class IDEOpponent extends React.Component {
     if (prevProps.solutionObject.input !== this.props.solutionObject.input) {
       //Check if current socket id is same as sender socket idm which is on the solution obj
       if (this.props.solutionObject.playerId !== clientSocket.id) {
+        if(this.props.roomId === this.props.solutionObject.roomId) {
+          this.setState({ functionText: this.props.solutionObject.input });
+        } else {
+          console.log('WRONG ROOM')
+        }
         //If not, set state and rerender dummy ide
-        this.setState({ functionText: this.props.solutionObject.input });
       } else {
         //Do nothing
         return
@@ -30,6 +34,7 @@ class IDEOpponent extends React.Component {
   }
 
   render() {
+    // console.log("oppo props", this.props)
     const options = {
       lineWrapping: true,
       lint: true,

@@ -14,18 +14,19 @@ class Routes extends Component {
     this.props.loadInitialData();
   }
   render() {
-    const { isLoggedIn } = this.props;
+    // const { isLoggedIn } = this.props;
+    const isLoggedIn = true
 
     return (
       <div>
         {isLoggedIn ? (
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/IDE" component={Game} />
+            <Route exact path="/game" component={Game} />
           </Switch>
         ) : (
           <Switch>
-            <Route exact path="/IDE" component={Game} />
+            {/* <Route exact path="/IDE" component={Game} /> */}
             <Route exact path="/" component={GuestHome} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={SignUp} />
