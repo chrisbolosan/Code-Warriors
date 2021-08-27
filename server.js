@@ -22,6 +22,8 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // Setting up routes
+// auth and api routes
+app.use('/auth/me', require('./routes/auth/me'));
 app.use('/api/exercises', require('./routes/exercises'));
 app.use('/api/users', require('./routes/users'));
 app.use('/api/battles', require('./routes/battles'));
@@ -31,6 +33,7 @@ app.get('/*', (req, res, next) => {
 });
 
 // Run when client connects
+
 
 let rooms = [];
 
@@ -47,6 +50,7 @@ io.on('connection', async (socket) => {
     console.log('join room roomId', roomId);
     socket.join(roomId);
   });
+
 
   // listen for solution code
   socket.on('solution', async (solutionObj) => {
