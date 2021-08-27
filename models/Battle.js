@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
+// const uniqueValidator = require('mongoose-unique-validator');
 
 const BattleSchema = new mongoose.Schema({
   _id: Number,
   exercise_id: {
     type: String,
-    required: true,
-    unique: true,
+    required: true
   },
   completed: {
     type: Boolean,
@@ -21,7 +20,7 @@ const BattleSchema = new mongoose.Schema({
   },
 });
 
-BattleSchema.plugin(uniqueValidator);
+//BattleSchema.plugin(uniqueValidator);
 
 const Battle = mongoose.model('Battle', BattleSchema);
 

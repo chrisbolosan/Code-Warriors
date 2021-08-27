@@ -17,18 +17,25 @@ const Home = (props) => {
     });
   }, [fetchRooms, rooms])
 
+  useEffect(() => {
+    getExercise()
+  }, [])
+
   // generate a random roomId
   const roomId = Math.floor(Math.random() * 10000000);
 
   // when a user clicks creates a game
-  async function handleClick() {
-    await getExercise()
-    console.log(props.exercise)
-
+  function handleClick() {
     clientSocket.emit('createGame', roomId);
     addRoom({
       _id: Number(roomId),
-      exercise_id: ""
+      exercise_id: props.exercise._id,
+      players: [{
+        id: props.auth._id,
+        username: props.auth.username,
+        rank: props.auth.rank,
+        points: props.auth.totalPoints
+      }]
     })
   }
 
@@ -49,15 +56,15 @@ const Home = (props) => {
         <button type='button' onClick={handleClick}>Create Game</button>
       </Link>
       <div>
-      {rooms && rooms.map((room) => {
+      {props.rooms.map((room) => {
        return  (
         <Link to={{
           pathname: '/game',
           state: {
-            room: room
+            roomId: room._id
           }
         }}>
-          <button onClick={joinRoom} value={room} key={room} type='button'>{room}</button>
+          <button onClick={joinRoom} value={room._id} key={room._id} type='button'>{`${room.players[0].username}'s room`}</button>
         </Link>
        )
 
@@ -71,7 +78,8 @@ const Home = (props) => {
 const mapState = state => {
   return {
     rooms: state.rooms,
-    exercise: state.exercise
+    exercise: state.exercise,
+    auth: state.auth
   }
 }
 
