@@ -57,7 +57,8 @@ const Home = (props) => {
           rank: props.auth.rank,
           points: props.auth.totalPoints
         }
-      ]
+      ],
+      open: false
     }, roomId)
   }
 

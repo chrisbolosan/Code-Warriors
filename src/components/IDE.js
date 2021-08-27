@@ -23,6 +23,7 @@ class IDE extends React.Component {
 
  async handleChange(userInput) {
     await this.setState({ input: userInput });
+
     //Emit the solution and clientId in an object
     clientSocket.emit(`solution`, this.state)
   }

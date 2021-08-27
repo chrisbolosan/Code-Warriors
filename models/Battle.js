@@ -18,6 +18,10 @@ const BattleSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  open: {
+    type: Boolean,
+    default: true
+  }
 });
 
 //BattleSchema.plugin(uniqueValidator);

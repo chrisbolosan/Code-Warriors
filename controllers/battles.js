@@ -39,7 +39,8 @@ exports.getBattles = async (req, res, next) => {
 exports.getOpenBattles = async (req, res, next) => {
   try {
     const battle = await Battle.find({
-      completed: false
+      completed: false,
+      open: true
     });
     res.status(200).json(battle);
   } catch (e) {
