@@ -15,7 +15,6 @@ class Game extends React.Component {
     this.result = this.result.bind(this);
   }
 
-
   result() {
     toast(this.props.solution.message, {
       position: "top-center",

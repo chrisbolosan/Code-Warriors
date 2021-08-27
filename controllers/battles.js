@@ -36,6 +36,17 @@ exports.getBattles = async (req, res, next) => {
   }
 };
 
+exports.getOpenBattles = async (req, res, next) => {
+  try {
+    const battle = await Battle.find({
+      completed: false
+    });
+    res.status(200).json(battle);
+  } catch (e) {
+    next(e);
+  }
+};
+
 exports.getBattle = async (req, res, next) => {
   try {
     const battle = await Battle.findById(req.params.roomID);
