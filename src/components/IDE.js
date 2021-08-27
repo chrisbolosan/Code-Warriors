@@ -7,7 +7,7 @@ import "codemirror/mode/javascript/javascript";
 import { Controlled } from "react-codemirror2";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import clientSocket from "../socket/socket"
+import clientSocket from "../socket/socket";
 
 class IDE extends React.Component {
   constructor(props) {
@@ -15,41 +15,44 @@ class IDE extends React.Component {
     this.state = {
       input: "",
       playerId: "",
-      roomId: ""
+      roomId: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
- async handleChange(userInput) {
+  async handleChange(userInput) {
     await this.setState({ input: userInput });
     //Emit the solution and clientId in an object
-    clientSocket.emit(`solution`, this.state)
+    clientSocket.emit(`solution`, this.state);
   }
 
   async handleSubmit(event) {
-    event.preventDefault()
-    if(this.props.enabled){
-      await this.props.testSolution("6128f53f83a4ca7174a10b3b", this.state.input);
-      this.props.result()
+    event.preventDefault();
+    if (this.props.enabled) {
+      await this.props.testSolution(
+        "612941295523ef45fc19c449",
+        this.state.input
+      );
+      this.props.result();
     }
   }
 
- componentDidMount() {
-   //sets state to the exercise body and client socket Id
-   console.log(this.props)
-  this.setState({
-    input: this.props.exercise.exerciseBody,
-    playerId: clientSocket.id,
-    roomId: this.props.roomId
-  })
+  componentDidMount() {
+    //sets state to the exercise body and client socket Id
+    console.log(this.props);
+    this.setState({
+      input: this.props.exercise.exerciseBody,
+      playerId: clientSocket.id,
+      roomId: this.props.roomId,
+    });
   }
 
   render() {
     // console.log("IDE props", this.props)
-    const {enabled} = this.props;
+    const { enabled } = this.props;
     let options;
-    if(!enabled){
+    if (!enabled) {
       options = {
         lineWrapping: true,
         lint: true,
@@ -58,7 +61,7 @@ class IDE extends React.Component {
         theme: "material",
         autoCloseBrackets: true,
         readOnly: true,
-      }
+      };
     } else {
       options = {
         lineWrapping: true,
@@ -67,12 +70,10 @@ class IDE extends React.Component {
         lineNumbers: true,
         theme: "material",
         autoCloseBrackets: true,
-      }
+      };
     }
     return (
-
       <div className="IDE">
-
         <div className="editor-container">
           {/* This is the IDE component from codemirror */}
           <Controlled
@@ -83,24 +84,27 @@ class IDE extends React.Component {
             }}
             value={this.state.input}
             className="code-mirror-wrapper"
-            options={ options }
+            options={options}
           />
           <div>
-          <button type="submit" onClick={this.handleSubmit} disabled={!enabled}>
-            Run
-          </button>
+            <button
+              type="submit"
+              onClick={this.handleSubmit}
+              disabled={!enabled}
+            >
+              Run
+            </button>
             <ToastContainer />
           </div>
         </div>
-        <div id="testing">
-        </div>
+        <div id="testing"></div>
       </div>
     );
   }
 }
 const mapState = (state) => {
   return {
-    solution: state.solution
-  }
-}
+    solution: state.solution,
+  };
+};
 export default connect(mapState, null)(IDE);

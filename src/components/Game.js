@@ -15,7 +15,6 @@ class Game extends React.Component {
     this.result = this.result.bind(this);
   }
 
-
   result() {
     toast(this.props.solution.message, {
       position: "top-center",
@@ -27,7 +26,7 @@ class Game extends React.Component {
 
   async componentDidMount() {
     // console.log(this.props.location.state.roomId)
-    await this.props.fetchExercise("6128f53f83a4ca7174a10b3b");
+    await this.props.fetchExercise("612941295523ef45fc19c449");
     //Listen for solution event, set solution obj to state
     clientSocket.on("solution", (solutionObject) => {
       this.setState(solutionObject);
@@ -35,7 +34,7 @@ class Game extends React.Component {
   }
 
   render() {
-    const roomId = this.props.location.state.room
+    const roomId = this.props.location.state.room;
     const { exercise, testSolution } = this.props;
     const { result } = this;
 
@@ -51,7 +50,7 @@ class Game extends React.Component {
             roomId={roomId}
           />
           <IDEOpponent
-          //pass solution obj as props to dummy IDE
+            //pass solution obj as props to dummy IDE
             solutionObject={this.state}
             exercise={exercise.exerciseBody}
             roomId={roomId}

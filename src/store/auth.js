@@ -38,7 +38,6 @@ export const authenticate =
         password,
       });
       window.localStorage.setItem(TOKEN, res.data.token);
-      console.log("i authenticated", res);
       dispatch(me());
       history.push("/");
     } catch (authError) {
@@ -46,20 +45,21 @@ export const authenticate =
     }
   };
 
-export const signUpThunk = (username, password, email) => async (dispatch) => {
-  try {
-    const res = await axios.get(`/api/auth/me`, {
-      username,
-      password,
-      email,
-    });
-    window.localStorage.setItem(TOKEN, res.data.token);
-    dispatch(me());
-    history.push("/");
-  } catch (error) {
-    return dispatch(signUp({ error }));
-  }
-};
+export const signUpThunk =
+  (username, password, email, method) => async (dispatch) => {
+    try {
+      const res = await axios.post(`/api/users/${method}`, {
+        username,
+        password,
+        email,
+      });
+      window.localStorage.setItem(TOKEN, res.data.token);
+      dispatch(me());
+      history.push("/");
+    } catch (error) {
+      return dispatch(signUp({ error: error }));
+    }
+  };
 
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
