@@ -1,5 +1,6 @@
 const Exercise = require('../models/Exercise');
 const Jsrunner = require('javascript-code-runner');
+const babel = require("@babel/core")
 
 // @desc    Get Exercise
 // @route   GET /api/exercises
@@ -85,8 +86,19 @@ exports.deleteExercise = async (req, res, next) => {
 exports.testExercise = async (req, res, next) => {
   try {
     const { test } = await Exercise.findById(req.body.id);
-    const userSolution = req.body.solution;
+    let userSolution = req.body.solution;
+      babel.transform(
+        userSolution,
+        {
+          babelrc: true,
+          filename: "../.babelrc"
+        },
+        function (err, result) {
+          userSolution = result.code
+        }
+      )
     const problem = `${userSolution} ${test}`;
+    console.log(problem)
     const { result, message } = Jsrunner(problem);
     if (result === 'false') {
       return res.json({

@@ -8,6 +8,7 @@ import { Controlled } from "react-codemirror2";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import clientSocket from "../socket/socket"
+import axios from "axios"
 
 class IDE extends React.Component {
   constructor(props) {
@@ -28,13 +29,24 @@ class IDE extends React.Component {
     clientSocket.emit(`solution`, this.state)
   }
 
+  // // when user clicks "RUN"
+  // async handleRun(event) {
+  //   const testResults = await axios.post
+  // }
+
   async handleSubmit(event) {
     event.preventDefault()
     if(this.props.enabled){
-      await this.props.testSolution("6128f53f83a4ca7174a10b3b", this.state.input);
+      await this.props.testSolution(this.props.exercise._id, this.state.input);
       this.props.result()
     }
   }
+
+  // when user clicks "SUBMIT"
+  // async handleSubmit(event) {
+  //   event.preventDefault()
+
+  // }
 
  componentDidMount() {
    //sets state to the exercise body and client socket Id
@@ -90,6 +102,9 @@ class IDE extends React.Component {
           <button type="submit" onClick={this.handleSubmit} disabled={!enabled}>
             Run
           </button>
+          <button type="submit" onClick={this.handleSubmit2} disabled={!enabled}>
+            Submit
+          </button>
             <ToastContainer />
           </div>
         </div>
@@ -101,7 +116,8 @@ class IDE extends React.Component {
 }
 const mapState = (state) => {
   return {
-    solution: state.solution
+    solution: state.solution,
+    exercise: state.exercise
   }
 }
 export default connect(mapState, null)(IDE);
