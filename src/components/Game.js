@@ -1,7 +1,7 @@
 import React from "react";
 import IDE from "./IDE";
 import { connect } from "react-redux";
-import { fetchExercise } from "../store/exercise";
+//import { fetchExercise } from "../store/exercise";
 import { testSolution } from "../store/solution";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -26,7 +26,7 @@ class Game extends React.Component {
 
   async componentDidMount() {
     // console.log(this.props.location.state.roomId)
-    await this.props.fetchExercise("6128f53f83a4ca7174a10b3b");
+    //await this.props.fetchExercise("6128f53f83a4ca7174a10b3b");
     //Listen for solution event, set solution obj to state
     clientSocket.on("solution", (solutionObject) => {
       this.setState(solutionObject);
@@ -73,7 +73,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     testSolution: (id, solution) => dispatch(testSolution(id, solution)),
-    fetchExercise: (id) => dispatch(fetchExercise(id)),
+    //fetchExercise: (id) => dispatch(fetchExercise(id)),
   };
 };
 

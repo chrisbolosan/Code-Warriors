@@ -1,31 +1,41 @@
 import React, { useState, useEffect } from "react"
 import clientSocket from "../socket/socket"
 import { useHistory, Link } from "react-router-dom";
+import { connect } from "react-redux"
+import { setRooms, addRoom } from "../store/rooms"
+import { getRandomExercise } from "../store/exercise"
 
+const Home = (props) => {
 
-const Home = () => {
-// let history = useHistory()
-const [rooms, setRooms] = useState([])
+  const { fetchRooms, addRoom, getExercise } = props
+  const [rooms, setRooms] = useState([])
 
+  useEffect(()=> {
+    fetchRooms()
+    clientSocket.on("rooms", (rooms) => {
+      setRooms(rooms)
+    });
+  }, [fetchRooms, rooms])
 
+  // generate a random roomId
+  const roomId = Math.floor(Math.random() * 10000000);
 
-useEffect(()=> {
-  clientSocket.on("rooms", (rooms) => {
-    setRooms(rooms)
-  });
-}, [rooms])
+  // when a user clicks creates a game
+  async function handleClick() {
+    await getExercise()
+    console.log(props.exercise)
 
-const roomId = Math.floor(Math.random() * 10000000);
-
-
-  function handleClick() {
     clientSocket.emit('createGame', roomId);
+    addRoom({
+      _id: Number(roomId),
+      exercise_id: ""
+    })
   }
 
+  // when a user clicks join game
   function joinRoom(event) {
     clientSocket.emit('joinRoom', event.target.value)
   }
-
 
   return (
     <div>
@@ -58,4 +68,25 @@ const roomId = Math.floor(Math.random() * 10000000);
   )
 }
 
-export default Home
+const mapState = state => {
+  return {
+    rooms: state.rooms,
+    exercise: state.exercise
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    fetchRooms: () => {
+      dispatch(setRooms())
+    },
+    addRoom: (room) => {
+      dispatch(addRoom(room))
+    },
+    getExercise: () => {
+      dispatch(getRandomExercise())
+    }
+  }
+}
+
+export default connect(mapState, mapDispatch)(Home)
