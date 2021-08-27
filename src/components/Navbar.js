@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Navbar = ({ isLoggedIn, handleClick }) => {
+const Navbar = ({ isLoggedIn, handleClick, userId }) => {
   const classes = useStyles();
 
   const StyledBadge = withStyles((theme) => ({
@@ -33,7 +33,6 @@ const Navbar = ({ isLoggedIn, handleClick }) => {
       padding: "0 4px",
     },
   }))(Badge);
-
   return (
     <nav id="navbar">
       {isLoggedIn ? (
@@ -51,7 +50,11 @@ const Navbar = ({ isLoggedIn, handleClick }) => {
                   <Button>Home</Button>
                 </Link>
               </Typography>
-
+              <Typography variant="h4" className={classes.title}>
+                <Link to={`/users/${userId}`}>
+                  <Button>Profile</Button>
+                </Link>
+              </Typography>
               <Typography variant="h4" className={classes.title}>
                 <Link to="/">
                   <Button href="#" onClick={handleClick}>
@@ -59,8 +62,6 @@ const Navbar = ({ isLoggedIn, handleClick }) => {
                   </Button>
                 </Link>
               </Typography>
-
-              {/* <Button color="inherit">Login</Button> */}
             </Toolbar>
           </AppBar>
         </div>
@@ -77,6 +78,11 @@ const Navbar = ({ isLoggedIn, handleClick }) => {
               <Typography variant="h4" className={classes.title}>
                 <Link to="/">
                   <Button>Home</Button>
+                </Link>
+              </Typography>
+              <Typography variant="h4" className={classes.title}>
+                <Link to="/login">
+                  <Button>Play</Button>
                 </Link>
               </Typography>
               <Typography variant="h4" className={classes.title}>
@@ -102,6 +108,7 @@ const Navbar = ({ isLoggedIn, handleClick }) => {
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth._id,
+    userId: state.auth._id,
   };
 };
 
