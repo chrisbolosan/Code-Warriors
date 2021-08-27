@@ -26,6 +26,7 @@ app.use(morgan('dev'));
 app.use('/auth/me', require('./routes/auth/me'));
 app.use('/api/exercises', require('./routes/exercises'));
 app.use('/api/users', require('./routes/users'));
+app.use('/api/battles', require('./routes/battles'));
 
 app.get('/*', (req, res, next) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
@@ -33,9 +34,23 @@ app.get('/*', (req, res, next) => {
 
 // Run when client connects
 
+
+let rooms = [];
+
 io.on('connection', async (socket) => {
-  // await io.emit("message", socket.id)
-  //socket.broadcast.emit("message", "a user just joined the room")
+  socket.on('createGame', (roomId) => {
+    rooms.push(roomId);
+    socket.join(roomId);
+    // console.log('create room roomId', roomId)
+    io.emit('roomId', roomId);
+    io.emit('rooms', rooms);
+  });
+
+  socket.on('joinRoom', (roomId) => {
+    console.log('join room roomId', roomId);
+    socket.join(roomId);
+  });
+
 
   // listen for solution code
   socket.on('solution', async (solutionObj) => {

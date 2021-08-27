@@ -26,6 +26,7 @@ class Game extends React.Component {
   }
 
   async componentDidMount() {
+    // console.log(this.props.location.state.roomId)
     await this.props.fetchExercise("612716ca534e5239acb81ae6");
     //Listen for solution event, set solution obj to state
     clientSocket.on("solution", (solutionObject) => {
@@ -34,6 +35,7 @@ class Game extends React.Component {
   }
 
   render() {
+    const roomId = this.props.location.state.room
     const { exercise, testSolution } = this.props;
     const { result } = this;
 
@@ -46,11 +48,13 @@ class Game extends React.Component {
             testSolution={testSolution}
             result={result}
             enabled={true}
+            roomId={roomId}
           />
           <IDEOpponent
           //pass solution obj as props to dummy IDE
             solutionObject={this.state}
             exercise={exercise.exerciseBody}
+            roomId={roomId}
           />
         </div>
       );

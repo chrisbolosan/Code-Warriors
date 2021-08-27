@@ -35,21 +35,33 @@ const Navbar = ({ isLoggedIn }) => {
 
   return (
     <nav id="navbar">
-      {isLoggedIn ? (
-        <div className={classes.root}>
-          <AppBar position="static">
-            <Toolbar>
-              <IconButton
-                edge="start"
-                className={classes.menuButton}
-                color="inherit"
-                aria-label="menu"
-              ></IconButton>
-              <Typography variant="h4" className={classes.title}>
-                <Link to="/">
-                  <Button>Home</Button>
-                </Link>
-              </Typography>
+
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+            >
+            </IconButton>
+            <Typography variant="h4" className={classes.title}>
+            <Link to="/"><Button>Home</Button></Link>
+            </Typography>
+            <Typography variant="h4" className={classes.title}>
+            <Link to="/login"><Button>Login</Button></Link>
+            </Typography>
+            <Typography variant="h4" className={classes.title}>
+            <Link to="/signup"><Button>Signup</Button></Link>
+            </Typography>
+
+            {/* <Button color="inherit">Login</Button> */}
+          </Toolbar>
+        </AppBar>
+        </div>
+           </nav>
+
 
               <Typography variant="h4" className={classes.title}>
                 <Link to="/IDE">
