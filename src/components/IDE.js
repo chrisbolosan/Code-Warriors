@@ -30,7 +30,7 @@ class IDE extends React.Component {
   async handleSubmit(event) {
     event.preventDefault()
     if(this.props.enabled){
-      await this.props.testSolution("612716ca534e5239acb81ae6", this.state.input);
+      await this.props.testSolution("6128f53f83a4ca7174a10b3b", this.state.input);
       this.props.result()
     }
   }

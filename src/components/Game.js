@@ -27,7 +27,7 @@ class Game extends React.Component {
 
   async componentDidMount() {
     // console.log(this.props.location.state.roomId)
-    await this.props.fetchExercise("612716ca534e5239acb81ae6");
+    await this.props.fetchExercise("6128f53f83a4ca7174a10b3b");
     //Listen for solution event, set solution obj to state
     clientSocket.on("solution", (solutionObject) => {
       this.setState(solutionObject);

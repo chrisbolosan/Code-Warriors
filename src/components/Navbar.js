@@ -35,92 +35,31 @@ const Navbar = ({ isLoggedIn }) => {
 
   return (
     <nav id="navbar">
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+          >
+          </IconButton>
+          <Typography variant="h4" className={classes.title}>
+          <Link to="/"><Button>Home</Button></Link>
+          </Typography>
+          <Typography variant="h4" className={classes.title}>
+          <Link to="/login"><Button>Login</Button></Link>
+          </Typography>
+          <Typography variant="h4" className={classes.title}>
+          <Link to="/signup"><Button>Signup</Button></Link>
+          </Typography>
 
-      <div className={classes.root}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-            >
-            </IconButton>
-            <Typography variant="h4" className={classes.title}>
-            <Link to="/"><Button>Home</Button></Link>
-            </Typography>
-            <Typography variant="h4" className={classes.title}>
-            <Link to="/login"><Button>Login</Button></Link>
-            </Typography>
-            <Typography variant="h4" className={classes.title}>
-            <Link to="/signup"><Button>Signup</Button></Link>
-            </Typography>
-
-            {/* <Button color="inherit">Login</Button> */}
-          </Toolbar>
-        </AppBar>
-        </div>
-           </nav>
-
-
-              <Typography variant="h4" className={classes.title}>
-                <Link to="/IDE">
-                  <Button>Play</Button>
-                </Link>
-              </Typography>
-              <Typography variant="h4" className={classes.title}>
-                <Link to="/IDE">
-                  <Button>IDE</Button>
-                </Link>
-              </Typography>
-              <Typography variant="h4" className={classes.title}>
-                <Button>Profile</Button>
-              </Typography>
-              <Typography variant="h4" className={classes.title}>
-                <Link to="/">
-                  <Button color="primary" href="#">
-                    Logout
-                  </Button>
-                </Link>
-              </Typography>
-            </Toolbar>
-          </AppBar>
-        </div>
-      ) : (
-        <div className={classes.root}>
-          <AppBar position="static">
-            <Toolbar>
-              <IconButton
-                edge="start"
-                className={classes.menuButton}
-                color="inherit"
-                aria-label="menu"
-              ></IconButton>
-              <Typography variant="h4" className={classes.title}>
-                <Link to="/">
-                  <Button>Home</Button>
-                </Link>
-              </Typography>
-              <Typography variant="h4" className={classes.title}>
-                <Link to="/login">
-                  <Button>Login</Button>
-                </Link>
-              </Typography>
-              <Typography variant="h4" className={classes.title}>
-                <Link to="/signup">
-                  <Button>Signup</Button>
-                </Link>
-              </Typography>
-              <Typography variant="h4" className={classes.title}>
-                <Link to="/IDE">
-                  <Button>IDE</Button>
-                </Link>
-              </Typography>
-            </Toolbar>
-          </AppBar>
-        </div>
-      )}
-    </nav>
+          {/* <Button color="inherit">Login</Button> */}
+        </Toolbar>
+      </AppBar>
+      </div>
+         </nav>
   );
 };
 
