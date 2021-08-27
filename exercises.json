@@ -3,5 +3,25 @@
     "exerciseBody": "function twoSum(a, b) {}",
     "test": "function checkTest(func, target) {return func(2, 3) === 5} checkTest(twoSum, 5)",
     "problemDescription": "Given a function that receives two arguments return the sum of those"
+  },
+  {
+    "exerciseBody": "function loopArr(arr, direction, steps) {}",
+    "test": "function checkTest(func, target) {return func([1, 5, 87, 45, 8, 8], 'left', 2) === [87, 45, 8, 8, 1, 5]} checkTest(loopArr, [87, 45, 8, 8, 1, 5])}",
+    "problemDescription": "Write a function loopArr that loops array in a specified direction by some number of steps. By 'looping array' it means removing elements from start and adding them to end of array one-by-one (if direction is 'left') or removing from end and adding them to start one by-one (if direction is 'right')."
+  },
+  {
+    "exerciseBody": "function reverseWords(str) {}",
+    "test": "function checkTest(func, target) {return func('The quick brown fox jumps over the lazy dog') === 'ehT kciuq nworb xof spmuj revo eht yzal .god'} checkTest(reverseWords, 'ehT kciuq nworb xof spmuj revo eht yzal .god')",
+    "problemDescription": "Complete the function that accepts a string parameter, and reverses each word in the string. All spaces in the string should be retained."
+  },
+  {
+    "exerciseBody": "function getCount(str) {}",
+    "test": "function checkTest(func, target) {return func('abracadabra') === 5} checkTest(getCount, 5)",
+    "problemDescription": "Return the number (count) of vowels in the given string. We will consider a, e, i, o, u as vowels for this Kata (but not y). The input string will only consist of lower case letters and/or spaces."
+  },
+  {
+    "exerciseBody": "function fizzbuzz(n) {} // fizzbuzz(3) --> [1, 2, 'Fizz']",
+    "test": "function checkTest(func, target) {return JSON.stringify(func(10)) === JSON.stringify([1, 2, 'Fizz', 4, 'Buzz', 'Fizz', 7, 8, 'Fizz', 'Buzz'])} checkTest(fizzbuzz, [1,2,'Fizz',4,'Buzz','Fizz',7,8,'Fizz','Buzz'])",
+    "problemDescription": "Return an array containing the numbers from 1 to N, where N is the parametered value. Replace certain values however if any of the following conditions are met: If the value is a multiple of 3: use the value 'Fizz' instead. If the value is a multiple of 5: use the value 'Buzz' instead. If the value is a multiple of 3 & 5: use the value 'FizzBuzz' instead. N will never be less than 1."
   }
 ]

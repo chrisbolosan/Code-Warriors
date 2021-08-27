@@ -1,32 +1,25 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
-const BattleSchema = new mongoose.Schema(
-  {
-    _id: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    exercise_id: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    completed: {
-      type: Boolean,
-      default: false,
-    },
-    players: {
-      type: Array,
-    },
-    createdDate: {
-      type: Date,
-      default: Date.now(),
-    },
+const BattleSchema = new mongoose.Schema({
+  _id: Number,
+  exercise_id: {
+    type: String,
+    required: true,
+    unique: true,
   },
-  { _id: false }
-);
+  completed: {
+    type: Boolean,
+    default: false,
+  },
+  players: {
+    type: Array,
+  },
+  createdDate: {
+    type: Date,
+    default: Date.now(),
+  },
+});
 
 BattleSchema.plugin(uniqueValidator);
 
