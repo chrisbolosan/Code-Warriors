@@ -3,6 +3,7 @@ import axios from "axios"
 // ACTION TYPES
 const SET_ROOMS = "SET_ROOMS"
 const ADD_ROOM = "ADD_ROOM"
+const UPDATE_ROOM = "UPDATE_ROOM"
 
 // ACTION CREATORS
 export const _setRooms = (rooms) => {
@@ -15,6 +16,13 @@ export const _setRooms = (rooms) => {
 export const _addRoom = (room) => {
   return {
     type: ADD_ROOM,
+    room
+  }
+}
+
+export const _updateRoom = (room) => {
+  return {
+    type: UPDATE_ROOM,
     room
   }
 }
@@ -42,6 +50,17 @@ export const addRoom = (roomToAdd) => {
   }
 }
 
+export const updateRoom = (room, roomId) => {
+  return async (dispatch) => {
+    try {
+      const { data: updatedRoom } = await axios.put(`/api/battles/${roomId}`, room)
+      dispatch(_updateRoom(room))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 // REDUCER
 export default function battlesReducer(state = [], action) {
   switch (action.type) {
@@ -49,6 +68,10 @@ export default function battlesReducer(state = [], action) {
       return action.rooms
     case ADD_ROOM:
       return [...state, action.room]
+    case UPDATE_ROOM:
+      return state.map((room) => (
+        room._id === action.room._id ? action.room : room
+        ))
     default:
       return state
   }

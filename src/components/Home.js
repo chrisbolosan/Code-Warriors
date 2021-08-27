@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react"
 import clientSocket from "../socket/socket"
 import { useHistory, Link } from "react-router-dom";
 import { connect } from "react-redux"
-import { setRooms, addRoom } from "../store/rooms"
+import { setRooms, addRoom, updateRoom } from "../store/rooms"
 import { getRandomExercise } from "../store/exercise"
 
 const Home = (props) => {
 
-  const { fetchRooms, addRoom, getExercise } = props
+  const { fetchRooms, addRoom, getExercise, updateRoom } = props
   const [rooms, setRooms] = useState([])
 
   useEffect(()=> {
@@ -41,7 +41,24 @@ const Home = (props) => {
 
   // when a user clicks join game
   function joinRoom(event) {
-    clientSocket.emit('joinRoom', event.target.value)
+    const roomId = event.target.value
+    clientSocket.emit('joinRoom', roomId)
+
+    const player1 = props.rooms.filter(roomObject => {
+      return Number(roomObject._id) === Number(roomId)
+    })[0].players[0]
+
+    updateRoom({
+      players: [
+        player1,
+        {
+          id: props.auth._id,
+          username: props.auth.username,
+          rank: props.auth.rank,
+          points: props.auth.totalPoints
+        }
+      ]
+    }, roomId)
   }
 
   return (
@@ -67,7 +84,6 @@ const Home = (props) => {
           <button onClick={joinRoom} value={room._id} key={room._id} type='button'>{`${room.players[0].username}'s room`}</button>
         </Link>
        )
-
       })}
       </div>
 
@@ -93,6 +109,9 @@ const mapDispatch = dispatch => {
     },
     getExercise: () => {
       dispatch(getRandomExercise())
+    },
+    updateRoom: (room, roomId) => {
+      dispatch(updateRoom(room, roomId))
     }
   }
 }
