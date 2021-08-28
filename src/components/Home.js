@@ -9,12 +9,18 @@ const Home = (props) => {
   const { fetchRooms, addRoom, getExercise, updateRoom } = props;
   const [rooms, setRooms] = useState([]);
 
+  // const [room, setRoom] = useState({})
+
   useEffect(() => {
     fetchRooms();
     clientSocket.on("rooms", (rooms) => {
       setRooms(rooms);
     });
   }, [fetchRooms, rooms]);
+
+  // useEffect(() => {
+  //   setRoom(props.battle);
+  // }, [props.battle]);
 
   useEffect(() => {
     getExercise();
@@ -24,11 +30,10 @@ const Home = (props) => {
   const roomId = Math.floor(Math.random() * 10000000);
 
   // when a user clicks creates a game
-  function handleClick() {
-    clientSocket.emit("createGame", roomId);
-    addRoom({
-      _id: Number(roomId),
-      exercise_id: props.exercise._id,
+  async function handleClick() {
+    await addRoom({
+      roomId: roomId,
+      ref: props.exercise._id,
       players: [
         {
           id: props.auth._id,
@@ -38,15 +43,20 @@ const Home = (props) => {
         },
       ],
     });
+    // console.log(room)
+    clientSocket.emit("createGame", roomId);
+
   }
 
   // when a user clicks join game
   function joinRoom(event) {
     const roomId = event.target.value;
     clientSocket.emit("joinRoom", roomId);
+    console.log('roomID', roomId)
+    console.log('battles', props.battles)
 
-    const player1 = props.rooms.filter((roomObject) => {
-      return Number(roomObject._id) === Number(roomId);
+    const player1 = props.battles.filter((battle) => {
+      return battle.roomId === roomId;
     })[0].players[0];
 
     updateRoom(
@@ -66,6 +76,7 @@ const Home = (props) => {
     );
   }
 
+
   return (
     <div>
       <h1>This is the logged in user homepage</h1>
@@ -82,7 +93,7 @@ const Home = (props) => {
         </button>
       </Link>
       <div>
-        {props.rooms.map((room) => {
+        {props.battles.map((room) => {
           return (
             <Link
               to={{
@@ -94,7 +105,7 @@ const Home = (props) => {
             >
               <button
                 onClick={joinRoom}
-                value={room._id}
+                value={room.roomId}
                 key={room._id}
                 type="button"
               >{`${room.players[0].username}'s room`}</button>
@@ -108,9 +119,10 @@ const Home = (props) => {
 
 const mapState = (state) => {
   return {
-    rooms: state.rooms,
+    battles: state.battles,
     exercise: state.exercise,
     auth: state.auth,
+    // battle: state.battle
   };
 };
 

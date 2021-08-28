@@ -53,7 +53,6 @@ class IDE extends React.Component {
 
   componentDidMount() {
     //sets state to the exercise body and client socket Id
-    console.log(this.props);
     this.setState({
       input: this.props.exercise.exerciseBody,
       playerId: clientSocket.id,
