@@ -40,44 +40,13 @@ class Game extends React.Component {
       this.setState(solutionObject);
     });
   }
-
   render() {
     const roomId = this.props.location.state.roomId
-<<<<<<< HEAD
-    const { exercise, testSolution } = this.props;
-    console.log(exercise)
-    const { result } = this;
-
+    const { exercise, submitSolution } = this.props
+    const { result, runTestIDE} = this
     if (exercise.problemDescription) {
       return (
         <div className="game-container">
-          {exercise ? (
-            <div className="exercise-description">
-              {exercise.problemDescription}
-            </div>
-           ) : null}
-          <div className="ide-container">
-            <IDE
-              exercise={exercise}
-              testSolution={testSolution}
-              result={result}
-              enabled={true}
-              roomId={roomId}
-            />
-            <IDEOpponent
-            //pass solution obj as props to dummy IDE
-              solutionObject={this.state}
-              exercise={exercise.exerciseBody}
-              roomId={roomId}
-            />
-          </div>
-=======
-    const { exercise, submitSolution } = this.props;
-    const { result, runTestIDE } = this;
-
-    if (exercise.problemDescription) {
-      return (
-        <div className="Game">
           <div>{exercise ? exercise.problemDescription : null}</div>
           <div>
           <IDE
@@ -100,7 +69,6 @@ class Game extends React.Component {
             exercise={exercise.exerciseBody}
             roomId={roomId}
           />
->>>>>>> ca2868ecdcd341c065c4ccd0eae08d0b2c29026b
         </div>
       );
     } else {
