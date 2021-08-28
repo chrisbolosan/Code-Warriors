@@ -40,8 +40,8 @@ export const authenticate =
         password,
       });
       window.localStorage.setItem(TOKEN, res.data.token);
-      dispatch(me());
       history.push("/");
+      dispatch(me());
       toast.success(`Welcome, ${username}`, {
         position: "top-center",
         autoClose: 5000,
