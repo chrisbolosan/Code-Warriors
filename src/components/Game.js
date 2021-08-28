@@ -7,12 +7,15 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IDEOpponent from "./IDEOpponent";
 import clientSocket from "../socket/socket";
+import { runTest } from "../helpers/testRunner";
+
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
     this.result = this.result.bind(this);
+    this.runTestIDE = this.runTestIDE.bind(this)
   }
 
   result() {
@@ -24,6 +27,14 @@ class Game extends React.Component {
     });
   }
 
+ async runTestIDE(test, input) {
+    const res =  await runTest(test, input)
+    this.setState({
+      result: res
+    })
+    console.log(this.state)
+  }
+
   async componentDidMount() {
     clientSocket.on("solution", (solutionObject) => {
       this.setState(solutionObject);
@@ -33,19 +44,27 @@ class Game extends React.Component {
   render() {
     const roomId = this.props.location.state.roomId
     const { exercise, submitSolution } = this.props;
-    const { result } = this;
+    const { result, runTestIDE } = this;
 
     if (exercise.problemDescription) {
       return (
         <div className="Game">
           <div>{exercise ? exercise.problemDescription : null}</div>
+          <div>
           <IDE
             exercise={exercise}
             submitSolution={submitSolution}
             result={result}
             enabled={true}
             roomId={roomId}
+            runTestIDE={runTestIDE}
           />
+          <div>
+            <h3>Test Results</h3>
+            <div>{this.state.result ? this.state.result.message : 'please run your test' }</div>
+          </div>
+          </div>
+
           <IDEOpponent
           //pass solution obj as props to dummy IDE
             solutionObject={this.state}
