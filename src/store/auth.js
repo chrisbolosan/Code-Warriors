@@ -1,5 +1,7 @@
 import axios from "axios";
 import history from "../history";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const TOKEN = "token";
 
@@ -40,8 +42,25 @@ export const authenticate =
       window.localStorage.setItem(TOKEN, res.data.token);
       dispatch(me());
       history.push("/");
+      toast.success(`Welcome, ${username}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } catch (authError) {
-      return dispatch(setAuth({ error: authError }));
+      toast.error(`${authError.response.data.message}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
@@ -55,9 +74,27 @@ export const signUpThunk =
       });
       window.localStorage.setItem(TOKEN, res.data.token);
       dispatch(me());
+      toast.success(`Welcome, ${username}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       history.push("/");
     } catch (error) {
-      return dispatch(signUp({ error: error }));
+      // console.error("storeerror", error.response);
+      toast.error(`${error.response.data.message}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
