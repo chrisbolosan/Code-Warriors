@@ -2,17 +2,20 @@ import React from "react";
 import IDE from "./IDE";
 import { connect } from "react-redux";
 //import { fetchExercise } from "../store/exercise";
-import { testSolution } from "../store/solution";
+import { submitSolution, testSolution } from "../store/solution";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IDEOpponent from "./IDEOpponent";
 import clientSocket from "../socket/socket";
+import { runTest } from "../helpers/testRunner";
+
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
     this.result = this.result.bind(this);
+    this.runTestIDE = this.runTestIDE.bind(this)
   }
 
   result() {
@@ -24,6 +27,14 @@ class Game extends React.Component {
     });
   }
 
+ async runTestIDE(test, input) {
+    const res =  await runTest(test, input)
+    this.setState({
+      result: res
+    })
+    console.log(this.state)
+  }
+
   async componentDidMount() {
     clientSocket.on("solution", (solutionObject) => {
       this.setState(solutionObject);
@@ -32,6 +43,7 @@ class Game extends React.Component {
 
   render() {
     const roomId = this.props.location.state.roomId
+<<<<<<< HEAD
     const { exercise, testSolution } = this.props;
     console.log(exercise)
     const { result } = this;
@@ -59,6 +71,36 @@ class Game extends React.Component {
               roomId={roomId}
             />
           </div>
+=======
+    const { exercise, submitSolution } = this.props;
+    const { result, runTestIDE } = this;
+
+    if (exercise.problemDescription) {
+      return (
+        <div className="Game">
+          <div>{exercise ? exercise.problemDescription : null}</div>
+          <div>
+          <IDE
+            exercise={exercise}
+            submitSolution={submitSolution}
+            result={result}
+            enabled={true}
+            roomId={roomId}
+            runTestIDE={runTestIDE}
+          />
+          <div>
+            <h3>Test Results</h3>
+            <div>{this.state.result ? this.state.result.message : 'please run your test' }</div>
+          </div>
+          </div>
+
+          <IDEOpponent
+          //pass solution obj as props to dummy IDE
+            solutionObject={this.state}
+            exercise={exercise.exerciseBody}
+            roomId={roomId}
+          />
+>>>>>>> ca2868ecdcd341c065c4ccd0eae08d0b2c29026b
         </div>
       );
     } else {
@@ -76,7 +118,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    testSolution: (id, solution) => dispatch(testSolution(id, solution)),
+    submitSolution: (id, solution) => dispatch(submitSolution(id, solution)),
+
     //fetchExercise: (id) => dispatch(fetchExercise(id)),
   };
 };

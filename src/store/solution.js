@@ -12,7 +12,7 @@ export const testExercise = (output) => {
 };
 
 // THUNKS
-export const testSolution = (id, solution) => {
+export const submitSolution = (id, solution) => {
   return async (dispatch) => {
     const { data: output } = await axios.post('/api/exercises/solution', {
       id,
@@ -21,6 +21,18 @@ export const testSolution = (id, solution) => {
     dispatch(testExercise(output));
   };
 };
+
+
+// export const testSolution = (id, solution) => {
+//   return async (dispatch) => {
+//     const { data: output } = await axios.get('/api/exercises/solution', {
+//       id,
+//       solution,
+//     });
+//     dispatch(testExercise(output));
+//   };
+// };
+
 
 // REDUCER
 export default function exerciseReducer(state = {}, action) {

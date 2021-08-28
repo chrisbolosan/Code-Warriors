@@ -83,7 +83,7 @@ exports.deleteExercise = async (req, res, next) => {
 
 // POST body: {id: "Problem ID", solution: "User solution"}
 // Response: {success: "true", message: "Tests passed!"}
-exports.testExercise = async (req, res, next) => {
+exports.submitSolution = async (req, res, next) => {
   try {
     const { test } = await Exercise.findById(req.body.id);
     let userSolution = req.body.solution;
@@ -117,6 +117,7 @@ exports.testExercise = async (req, res, next) => {
     next(err);
   }
 };
+
 
 // @desc    Get random exercise
 // @route   GET /api/exercises/random

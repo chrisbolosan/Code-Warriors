@@ -8,7 +8,6 @@ import { Controlled } from "react-codemirror2";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import clientSocket from "../socket/socket"
-import axios from "axios"
 
 class IDE extends React.Component {
   constructor(props) {
@@ -21,33 +20,36 @@ class IDE extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleRun = this.handleRun.bind(this)
   }
 
- async handleChange(userInput) {
-    await this.setState({ input: userInput });
+
+ handleChange(userInput) {
+    this.setState({ input: userInput });
 
     //Emit the solution and clientId in an object
     clientSocket.emit(`solution`, this.state)
   }
 
-  // // when user clicks "RUN"
-  // async handleRun(event) {
-  //   const testResults = await axios.post
-  // }
-
-  async handleSubmit(event) {
+  // when a user clicks "RUN"
+  async handleRun(event) {
     event.preventDefault()
     if(this.props.enabled){
-      await this.props.testSolution(this.props.exercise._id, this.state.input);
-      this.props.result()
+    await this.props.runTestIDE(this.props.exercise.test, this.state.input)
     }
   }
 
-  // when user clicks "SUBMIT"
-  // async handleSubmit(event) {
-  //   event.preventDefault()
+  // when a user clicks "SUBMIT"
+  async handleSubmit(event) {
+    this.setState({ submitted: true })
+    event.preventDefault()
+    if(this.props.enabled){
+      await this.props.submitSolution(this.props.exercise._id, this.state.input);
+      this.props.result()
 
-  // }
+    }
+  }
+
 
   componentDidMount() {
     //sets state to the exercise body and client socket Id
@@ -62,7 +64,6 @@ class IDE extends React.Component {
   render() {
     const me = this.props.me
 
-    // console.log("IDE props", this.props)
     const {enabled} = this.props;
     let options;
     if(!enabled){
@@ -87,6 +88,7 @@ class IDE extends React.Component {
     }
     return (
       <div className="IDE">
+
         <div className="user-info">
           <small>{me.username}</small>
           <small>Rank: {me.rank}</small>
@@ -107,10 +109,10 @@ class IDE extends React.Component {
           />
             {this.state.submitted === false ? (
               <div>
-                <button type="submit" onClick={this.handleSubmit} disabled={!enabled}>
+                <button type="submit" onClick={this.handleRun} disabled={!enabled}>
                   Run
                 </button>
-                <button type="submit" onClick={this.handleSubmit2} disabled={!enabled}>
+                <button type="submit" onClick={this.handleSubmit} disabled={!enabled}>
                   Submit
                 </button>
                 <ToastContainer />
@@ -129,4 +131,5 @@ const mapState = (state) => {
     exercise: state.exercise
   }
 }
+
 export default connect(mapState, null)(IDE);
