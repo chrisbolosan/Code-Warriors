@@ -51,9 +51,8 @@ const Home = (props) => {
   // when a user clicks join game
   function joinRoom(event) {
     const roomId = event.target.value;
+    const battleId = event.target.name
     clientSocket.emit("joinRoom", roomId);
-    console.log('roomID', roomId)
-    console.log('battles', props.battles)
 
     const player1 = props.battles.filter((battle) => {
       return battle.roomId === roomId;
@@ -72,7 +71,7 @@ const Home = (props) => {
         ],
         open: false,
       },
-      roomId
+      battleId
     );
   }
 
@@ -106,6 +105,7 @@ const Home = (props) => {
               <button
                 onClick={joinRoom}
                 value={room.roomId}
+                name={room._id}
                 key={room._id}
                 type="button"
               >{`${room.players[0].username}'s room`}</button>
