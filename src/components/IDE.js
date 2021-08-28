@@ -59,6 +59,8 @@ class IDE extends React.Component {
   }
 
   render() {
+    const me = this.props.me
+
     // console.log("IDE props", this.props)
     const {enabled} = this.props;
     let options;
@@ -83,8 +85,13 @@ class IDE extends React.Component {
       }
     }
     return (
-
       <div className="IDE">
+        <div className="user-info">
+          <small>{me.username}</small>
+          <small>Rank: {me.rank}</small>
+          <small>Points: {me.totalPoints}</small>
+        </div>
+
         <div className="editor-container">
           {/* This is the IDE component from codemirror */}
           <Controlled
@@ -113,6 +120,7 @@ class IDE extends React.Component {
 }
 const mapState = (state) => {
   return {
+    me: state.auth,
     solution: state.solution,
     exercise: state.exercise
   }
