@@ -7,7 +7,8 @@ const {
   updateExercise,
   getExercise,
   deleteExercise,
-  testExercise,
+  submitSolution,
+  testSolution,
   getRandomExercise,
 } = require('../controllers/exercises');
 
@@ -16,7 +17,7 @@ const authHandler = require('../middleware/auth');
 
 router.route('/').get(getExercises).post(authHandler, createExercise);
 router.route('/random').get(getRandomExercise);
-router.route('/solution').post(testExercise);
+router.route('/solution').post(submitSolution);
 
 router
   .route('/:id')

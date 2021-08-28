@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import clientSocket from "../socket/socket"
 import axios from "axios"
+import { runTest } from "../helpers/testRunner";
 
 class IDE extends React.Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class IDE extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
 
  async handleChange(userInput) {
     await this.setState({ input: userInput });
@@ -37,8 +39,10 @@ class IDE extends React.Component {
   async handleSubmit(event) {
     event.preventDefault()
     if(this.props.enabled){
-      await this.props.testSolution(this.props.exercise._id, this.state.input);
+      await this.props.submitSolution(this.props.exercise._id, this.state.input);
       this.props.result()
+      const res = runTest(this.props.exercise.test, this.state.input)
+      console.log(res)
     }
   }
 
@@ -120,4 +124,5 @@ const mapState = (state) => {
     exercise: state.exercise
   }
 }
+
 export default connect(mapState, null)(IDE);

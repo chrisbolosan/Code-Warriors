@@ -2,7 +2,7 @@ import React from "react";
 import IDE from "./IDE";
 import { connect } from "react-redux";
 //import { fetchExercise } from "../store/exercise";
-import { testSolution } from "../store/solution";
+import { submitSolution, testSolution } from "../store/solution";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IDEOpponent from "./IDEOpponent";
@@ -32,7 +32,7 @@ class Game extends React.Component {
 
   render() {
     const roomId = this.props.location.state.roomId
-    const { exercise, testSolution } = this.props;
+    const { exercise, submitSolution } = this.props;
     const { result } = this;
 
     if (exercise.problemDescription) {
@@ -41,7 +41,7 @@ class Game extends React.Component {
           <div>{exercise ? exercise.problemDescription : null}</div>
           <IDE
             exercise={exercise}
-            testSolution={testSolution}
+            submitSolution={submitSolution}
             result={result}
             enabled={true}
             roomId={roomId}
@@ -69,7 +69,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    testSolution: (id, solution) => dispatch(testSolution(id, solution)),
+    submitSolution: (id, solution) => dispatch(submitSolution(id, solution)),
+
     //fetchExercise: (id) => dispatch(fetchExercise(id)),
   };
 };
