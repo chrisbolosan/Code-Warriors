@@ -6,10 +6,8 @@ import "codemirror/addon/edit/closebrackets";
 import "codemirror/mode/javascript/javascript";
 import { Controlled } from "react-codemirror2";
 import { ToastContainer } from "react-toastify";
-import Button from "@material-ui/core/Button";
 import "react-toastify/dist/ReactToastify.css";
 import clientSocket from "../socket/socket";
-import Timer from "./Timer.js";
 
 class IDE extends React.Component {
   constructor(props) {
@@ -33,7 +31,7 @@ class IDE extends React.Component {
     event.preventDefault();
     if (this.props.enabled) {
       await this.props.testSolution(
-        "612944926ccba247ad8a47c5",
+        "612ab27fe41f91d227d58c67",
         this.state.input
       );
       this.props.result();
@@ -78,7 +76,6 @@ class IDE extends React.Component {
       <div className="IDE">
         <div className="editor-container">
           {/* This is the IDE component from codemirror */}
-
           <Controlled
             // this is the onChange equivilent of the imported component
             // callback sets the input to the state as code
@@ -89,21 +86,16 @@ class IDE extends React.Component {
             className="code-mirror-wrapper"
             options={options}
           />
-          <Button variant="inherit" color="secondary">
-            <Timer />
-          </Button>
-
-          <Button
-            id="Run"
-            variant="contained"
-            color="primary"
-            type="submit"
-            onClick={this.handleSubmit}
-            disabled={!enabled}
-          >
-            Run
-          </Button>
-          <ToastContainer />
+          <div>
+            <button
+              type="submit"
+              onClick={this.handleSubmit}
+              disabled={!enabled}
+            >
+              Run
+            </button>
+            <ToastContainer />
+          </div>
         </div>
         <div id="testing"></div>
       </div>

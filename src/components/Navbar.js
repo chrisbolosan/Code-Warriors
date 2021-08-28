@@ -95,8 +95,6 @@ const Navbar = ({ isLoggedIn, handleClick, userId }) => {
                   <Button>Signup</Button>
                 </Link>
               </Typography>
-
-              {/* <Button color="inherit">Login</Button> */}
             </Toolbar>
           </AppBar>
         </div>

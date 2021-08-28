@@ -56,7 +56,7 @@ export default class Timer extends React.Component {
             variant="contained"
             color="primary"
             onClick={() => {
-              toast.success("Code Challenge Goooo!!", {
+              toast.success("Code Challenge Begin", {
                 position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -68,7 +68,7 @@ export default class Timer extends React.Component {
               this.startTime();
             }}
           >
-            Fight
+            Start Battle
           </Button>
         </div>
       </div>
