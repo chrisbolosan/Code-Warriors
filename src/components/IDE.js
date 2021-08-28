@@ -16,7 +16,8 @@ class IDE extends React.Component {
     this.state = {
       input: "",
       playerId: "",
-      roomId: ""
+      roomId: "",
+      submitted: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -104,15 +105,18 @@ class IDE extends React.Component {
             className="code-mirror-wrapper"
             options={ options }
           />
-          <div>
-            <button type="submit" onClick={this.handleSubmit} disabled={!enabled}>
-              Run
-            </button>
-            <button type="submit" onClick={this.handleSubmit2} disabled={!enabled}>
-              Submit
-            </button>
-            <ToastContainer />
-          </div>
+            {this.state.submitted === false ? (
+              <div>
+                <button type="submit" onClick={this.handleSubmit} disabled={!enabled}>
+                  Run
+                </button>
+                <button type="submit" onClick={this.handleSubmit2} disabled={!enabled}>
+                  Submit
+                </button>
+                <ToastContainer />
+              </div>
+            ) : ( null
+            )}
         </div>
       </div>
     );
