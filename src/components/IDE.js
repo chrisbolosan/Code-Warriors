@@ -48,14 +48,14 @@ class IDE extends React.Component {
 
   // }
 
- componentDidMount() {
-   //sets state to the exercise body and client socket Id
-   console.log(this.props)
-  this.setState({
-    input: this.props.exercise.exerciseBody,
-    playerId: clientSocket.id,
-    roomId: this.props.roomId
-  })
+  componentDidMount() {
+    //sets state to the exercise body and client socket Id
+    console.log(this.props)
+    this.setState({
+      input: this.props.exercise.exerciseBody,
+      playerId: clientSocket.id,
+      roomId: this.props.roomId
+    })
   }
 
   render() {
@@ -85,7 +85,6 @@ class IDE extends React.Component {
     return (
 
       <div className="IDE">
-
         <div className="editor-container">
           {/* This is the IDE component from codemirror */}
           <Controlled
@@ -99,16 +98,14 @@ class IDE extends React.Component {
             options={ options }
           />
           <div>
-          <button type="submit" onClick={this.handleSubmit} disabled={!enabled}>
-            Run
-          </button>
-          <button type="submit" onClick={this.handleSubmit2} disabled={!enabled}>
-            Submit
-          </button>
+            <button type="submit" onClick={this.handleSubmit} disabled={!enabled}>
+              Run
+            </button>
+            <button type="submit" onClick={this.handleSubmit2} disabled={!enabled}>
+              Submit
+            </button>
             <ToastContainer />
           </div>
-        </div>
-        <div id="testing">
         </div>
       </div>
     );

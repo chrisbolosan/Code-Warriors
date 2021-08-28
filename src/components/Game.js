@@ -38,21 +38,27 @@ class Game extends React.Component {
 
     if (exercise.problemDescription) {
       return (
-        <div className="Game">
-          <div>{exercise ? exercise.problemDescription : null}</div>
-          <IDE
-            exercise={exercise}
-            testSolution={testSolution}
-            result={result}
-            enabled={true}
-            roomId={roomId}
-          />
-          <IDEOpponent
-          //pass solution obj as props to dummy IDE
-            solutionObject={this.state}
-            exercise={exercise.exerciseBody}
-            roomId={roomId}
-          />
+        <div className="game-container">
+          {exercise ? (
+            <div className="exercise-description">
+              {exercise.problemDescription}
+            </div>
+           ) : null}
+          <div className="ide-container">
+            <IDE
+              exercise={exercise}
+              testSolution={testSolution}
+              result={result}
+              enabled={true}
+              roomId={roomId}
+            />
+            <IDEOpponent
+            //pass solution obj as props to dummy IDE
+              solutionObject={this.state}
+              exercise={exercise.exerciseBody}
+              roomId={roomId}
+            />
+          </div>
         </div>
       );
     } else {
