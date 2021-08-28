@@ -7,7 +7,7 @@ import "codemirror/mode/javascript/javascript";
 import { Controlled } from "react-codemirror2";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import clientSocket from "../socket/socket"
+import clientSocket from "../socket/socket";
 
 class IDE extends React.Component {
   constructor(props) {
@@ -16,57 +16,57 @@ class IDE extends React.Component {
       input: "",
       playerId: "",
       roomId: "",
-      submitted: false
+      submitted: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleRun = this.handleRun.bind(this)
+    this.handleRun = this.handleRun.bind(this);
   }
 
-
- handleChange(userInput) {
-    this.setState({ input: userInput });
+  async handleChange(userInput) {
+    await this.setState({ input: userInput });
 
     //Emit the solution and clientId in an object
-    clientSocket.emit(`solution`, this.state)
+    clientSocket.emit(`solution`, this.state);
   }
 
   // when a user clicks "RUN"
   async handleRun(event) {
-    event.preventDefault()
-    if(this.props.enabled){
-    await this.props.runTestIDE(this.props.exercise.test, this.state.input)
+    event.preventDefault();
+    if (this.props.enabled) {
+      await this.props.runTestIDE(this.props.exercise.test, this.state.input);
     }
   }
 
   // when a user clicks "SUBMIT"
   async handleSubmit(event) {
-    this.setState({ submitted: true })
-    event.preventDefault()
-    if(this.props.enabled){
-      await this.props.submitSolution(this.props.exercise._id, this.state.input);
-      this.props.result()
-
+    this.setState({ submitted: true });
+    event.preventDefault();
+    if (this.props.enabled) {
+      await this.props.submitSolution(
+        this.props.exercise._id,
+        this.state.input
+      );
+      this.props.result();
     }
   }
 
-
   componentDidMount() {
     //sets state to the exercise body and client socket Id
-    console.log(this.props)
+    console.log(this.props);
     this.setState({
       input: this.props.exercise.exerciseBody,
       playerId: clientSocket.id,
-      roomId: this.props.roomId
-    })
+      roomId: this.props.roomId,
+    });
   }
 
   render() {
-    const me = this.props.me
+    const me = this.props.me;
 
-    const {enabled} = this.props;
+    const { enabled } = this.props;
     let options;
-    if(!enabled){
+    if (!enabled) {
       options = {
         lineWrapping: true,
         lint: true,
@@ -75,7 +75,7 @@ class IDE extends React.Component {
         theme: "material",
         autoCloseBrackets: true,
         readOnly: true,
-      }
+      };
     } else {
       options = {
         lineWrapping: true,
@@ -84,11 +84,10 @@ class IDE extends React.Component {
         lineNumbers: true,
         theme: "material",
         autoCloseBrackets: true,
-      }
+      };
     }
     return (
       <div className="IDE">
-
         <div className="user-info">
           <small>{me.username}</small>
           <small>Rank: {me.rank}</small>
@@ -105,20 +104,27 @@ class IDE extends React.Component {
             }}
             value={this.state.input}
             className="code-mirror-wrapper"
-            options={ options }
+            options={options}
           />
-            {this.state.submitted === false ? (
-              <div>
-                <button type="submit" onClick={this.handleRun} disabled={!enabled}>
-                  Run
-                </button>
-                <button type="submit" onClick={this.handleSubmit} disabled={!enabled}>
-                  Submit
-                </button>
-                <ToastContainer />
-              </div>
-            ) : ( null
-            )}
+          {this.state.submitted === false ? (
+            <div>
+              <button
+                type="submit"
+                onClick={this.handleRun}
+                disabled={!enabled}
+              >
+                Run
+              </button>
+              <button
+                type="submit"
+                onClick={this.handleSubmit}
+                disabled={!enabled}
+              >
+                Submit
+              </button>
+              <ToastContainer />
+            </div>
+          ) : null}
         </div>
       </div>
     );
@@ -128,8 +134,8 @@ const mapState = (state) => {
   return {
     me: state.auth,
     solution: state.solution,
-    exercise: state.exercise
-  }
-}
+    exercise: state.exercise,
+  };
+};
 
 export default connect(mapState, null)(IDE);
