@@ -1,6 +1,5 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
-//middleware for try/catch
 
 // @desc    Get users
 // @route   GET /api/users
@@ -51,9 +50,6 @@ exports.getUser = async (req, res, next) => {
 // @access Public
 exports.signup = async (req, res, next) => {
   try {
-    //   const user = await User.create(req.body);
-    //   res.status(201).json({ data: user });
-    // });
     const { username, password, email } = req.body;
 
     //create user
@@ -66,7 +62,6 @@ exports.signup = async (req, res, next) => {
     const token = user.getSignedJwtToken();
     res.status(200).json({ success: true, token });
   } catch (error) {
-    // console.log(error.message);
     res.status(404).json({ success: false, message: `${error}` });
     next();
   }
@@ -87,12 +82,12 @@ exports.login = async (req, res, next) => {
     //Check for user plus validation password
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(401).send("Invalid credentials");
+      return res.status(401).send("Invalid username");
     }
     //Check if password matches
     const isMatch = await user.matchPassword(password);
     if (!isMatch) {
-      res.status(401).send("Invalid credentials");
+      res.status(401).send("Invalid Password");
     }
     //create token
     const token = user.getSignedJwtToken();

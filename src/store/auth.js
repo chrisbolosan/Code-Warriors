@@ -52,7 +52,7 @@ export const authenticate =
         progress: undefined,
       });
     } catch (authError) {
-      toast.error(`${authError.response.data.message}`, {
+      toast.error(`${authError.response.data}`, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
