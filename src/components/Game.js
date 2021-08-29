@@ -10,13 +10,17 @@ import { runTest } from "../helpers/testRunner";
 import Timer from "./timer";
 import Button from "@material-ui/core/Button";
 import { getExercise } from "../store/exercise"
+import axios from "axios"
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      room: {}
+    };
     this.result = this.result.bind(this);
     this.runTestIDE = this.runTestIDE.bind(this);
+    this.handleStart = this.handleStart.bind(this)
   }
 
   result() {
@@ -33,6 +37,15 @@ class Game extends React.Component {
     this.setState({
       result: res,
     });
+  }
+
+  async handleStart() {
+    const roomId = String(this.props.location.state.roomId)
+    const { data } = await axios.get(`/api/battles/${roomId}`)
+
+    await this.setState({
+      room: data[0]
+    })
   }
 
   async componentDidMount() {
@@ -59,6 +72,7 @@ class Game extends React.Component {
               enabled={true}
               roomId={roomId}
               runTestIDE={runTestIDE}
+              room={this.state.room}
             />
             <div>
               <h3>Test Results</h3>
@@ -68,7 +82,7 @@ class Game extends React.Component {
                   : "please run your test"}
               </div>
             </div>
-            <Button variant="inherit" color="secondary">
+            <Button onClick={this.handleStart} variant="inherit" color="secondary">
               <Timer />
             </Button>
           </div>
@@ -91,6 +105,7 @@ const mapState = (state) => {
   return {
     exercise: state.exercise,
     solution: state.solution,
+
   };
 };
 
