@@ -8,7 +8,7 @@ import { getRandomExercise } from "../store/exercise";
 const Home = (props) => {
   const { fetchRooms, addRoom, getRandomExercise, updateRoom } = props;
   const [rooms, setRooms] = useState([]);
-  const [roomId, setRoomId] = useState('')
+  const [roomId, setRoomId] = useState(0);
 
 
   useEffect(() => {
@@ -28,8 +28,11 @@ const Home = (props) => {
   // when a user clicks creates a game
   async function handleClick() {
   // generate a random roomId
-  const roomId = Math.floor(Math.random() * 10000000);
-  setRoomId(roomId)
+  const randomRoomId = Math.floor(Math.random() * 10000000);
+  console.log("randomRoomID", randomRoomId)
+
+  await setRoomId(randomRoomId)
+  console.log("roomId from handleclick", roomId)
   // console.log("create roomId",typeof roomId)
 
     await addRoom({
@@ -81,11 +84,12 @@ const Home = (props) => {
   return (
     <div>
       <h1>This is the logged in user homepage</h1>
+      {/* Create Game */}
       <Link
         to={{
           pathname: "/game",
           state: {
-            roomId: Number(roomId),
+            roomId: roomId,
             exerciseId: props.exercise._id
           },
         }}
@@ -97,12 +101,14 @@ const Home = (props) => {
       <div>
         {props.battles.map((room) => {
           // console.log(room)
+
           return (
+            // JOIN GAME
             <Link
               to={{
                 pathname: "/game",
                 state: {
-                  roomId: Number(room.roomId),
+                  roomId: room.roomId,
                   exerciseId: room.ref
                 },
               }}

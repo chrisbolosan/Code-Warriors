@@ -44,7 +44,8 @@ class Game extends React.Component {
   }
 
   render() {
-    const { roomId } = Number(this.props.location.state);
+    const { roomId } = this.props.location.state;
+    console.log("roomId from GAME", roomId)
     const { submitSolution, exercise } = this.props;
     const { result, runTestIDE } = this;
     if (exercise.problemDescription) {
