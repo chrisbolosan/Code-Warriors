@@ -7,7 +7,7 @@ import "codemirror/mode/javascript/javascript";
 import { Controlled } from "react-codemirror2";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import clientSocket from "../socket/socket"
+import clientSocket from "../socket/socket";
 
 class IDE extends React.Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class IDE extends React.Component {
     this.setState({ input: userInput });
 
     //Emit the solution and clientId in an object
-    clientSocket.emit(`solution`, this.state)
+    clientSocket.emit(`solution`, this.state);
   }
 
   // when a user clicks "RUN"
@@ -66,7 +66,7 @@ class IDE extends React.Component {
 
     const {enabled} = this.props;
     let options;
-    if(!enabled){
+    if (!enabled) {
       options = {
         lineWrapping: true,
         lint: true,
@@ -75,7 +75,7 @@ class IDE extends React.Component {
         theme: "material",
         autoCloseBrackets: true,
         readOnly: true,
-      }
+      };
     } else {
       options = {
         lineWrapping: true,
@@ -84,7 +84,7 @@ class IDE extends React.Component {
         lineNumbers: true,
         theme: "material",
         autoCloseBrackets: true,
-      }
+      };
     }
     return (
       <div className="IDE">
@@ -105,7 +105,7 @@ class IDE extends React.Component {
             }}
             value={this.state.input}
             className="code-mirror-wrapper"
-            options={ options }
+            options={options}
           />
             {this.state.submitted === false ? (
               <div>

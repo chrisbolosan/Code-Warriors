@@ -1,5 +1,7 @@
 import axios from "axios";
 import history from "../history";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const TOKEN = "token";
 
@@ -38,28 +40,63 @@ export const authenticate =
         password,
       });
       window.localStorage.setItem(TOKEN, res.data.token);
-      console.log("i authenticated", res);
-      dispatch(me());
       history.push("/");
+      dispatch(me());
+      toast.success(`Welcome, ${username}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } catch (authError) {
-      return dispatch(setAuth({ error: authError }));
+      toast.error(`${authError.response.data}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
-export const signUpThunk = (username, password, email) => async (dispatch) => {
-  try {
-    const res = await axios.get(`/api/auth/me`, {
-      username,
-      password,
-      email,
-    });
-    window.localStorage.setItem(TOKEN, res.data.token);
-    dispatch(me());
-    history.push("/");
-  } catch (error) {
-    return dispatch(signUp({ error }));
-  }
-};
+export const signUpThunk =
+  (username, password, email, method) => async (dispatch) => {
+    try {
+      const res = await axios.post(`/api/users/${method}`, {
+        username,
+        password,
+        email,
+      });
+      window.localStorage.setItem(TOKEN, res.data.token);
+      dispatch(me());
+      toast.success(`Welcome, ${username}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      history.push("/");
+    } catch (error) {
+      // console.error("storeerror", error.response);
+      toast.error(`${error.response.data.message}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
 
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);

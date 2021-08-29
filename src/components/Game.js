@@ -64,7 +64,7 @@ class Game extends React.Component {
           </div>
 
           <IDEOpponent
-          //pass solution obj as props to dummy IDE
+            //pass solution obj as props to dummy IDE
             solutionObject={this.state}
             exercise={exercise.exerciseBody}
             roomId={roomId}

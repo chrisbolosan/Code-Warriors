@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react"
-import clientSocket from "../socket/socket"
+import React, { useState, useEffect } from "react";
+import clientSocket from "../socket/socket";
 import { useHistory, Link } from "react-router-dom";
 import { connect } from "react-redux"
 import { setRooms, addRoom, updateRoom } from "../store/rooms"
@@ -65,32 +65,46 @@ const Home = (props) => {
   return (
     <div>
       <h1>This is the logged in user homepage</h1>
-      <Link to={{
-          pathname: '/game',
+      <Link
+        to={{
+          pathname: "/game",
           state: {
-            room: roomId
-          }
-        }}>
-        <button type='button' onClick={handleClick}>Create Game</button>
+            room: roomId,
+          },
+        }}
+      >
+        <button type="button" onClick={handleClick}>
+          Create Game
+        </button>
       </Link>
       <div>
-      {props.rooms.map((room) => {
-       return  (
-        <Link to={{
-          pathname: '/game',
-          state: {
-            roomId: room._id
-          }
-        }}>
-          <button onClick={joinRoom} value={room._id} key={room._id} type='button'>{`${room.players[0].username}'s room`}</button>
-        </Link>
-       )
-      })}
+        {rooms &&
+          rooms.map((room) => {
+            return (
+              <Link
+                to={{
+                  pathname: "/game",
+                  state: {
+                    room: room,
+                  },
+                }}
+              >
+                <button
+                  onClick={joinRoom}
+                  value={room}
+                  key={room}
+                  type="button"
+                >
+                  {room}
+                </button>
+              </Link>
+            );
+          })}
+        <Leaderboard />
       </div>
-
     </div>
-  )
-}
+  );
+};
 
 const mapState = state => {
   return {
