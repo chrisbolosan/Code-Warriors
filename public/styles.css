@@ -4,11 +4,7 @@
   padding: 10px;
 }
 
-<<<<<<< HEAD
 .game-container {
-=======
-.Game {
->>>>>>> 1f04b3befd615ab96b911fc7ecb1cb27d6188f1c
   display: flex;
   flex-direction: column;
   justify-content: space-around;
