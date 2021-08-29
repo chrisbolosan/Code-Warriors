@@ -8,6 +8,7 @@ import { getRandomExercise } from "../store/exercise";
 const Home = (props) => {
   const { fetchRooms, addRoom, getExercise, updateRoom } = props;
   const [rooms, setRooms] = useState([]);
+  const [roomId, setRoomId] = useState('')
 
   // const [room, setRoom] = useState({})
 
@@ -27,10 +28,13 @@ const Home = (props) => {
   }, []);
 
   // generate a random roomId
-  const roomId = Math.floor(Math.random() * 10000000);
 
   // when a user clicks creates a game
   async function handleClick() {
+  const roomId = Math.floor(Math.random() * 10000000);
+  setRoomId(roomId)
+  // console.log("create roomId",typeof roomId)
+
     await addRoom({
       roomId: roomId,
       ref: props.exercise._id,
@@ -43,14 +47,15 @@ const Home = (props) => {
         },
       ],
     });
-    // console.log(room)
     clientSocket.emit("createGame", roomId);
 
   }
 
   // when a user clicks join game
   function joinRoom(event) {
-    const roomId = event.target.value;
+    const roomId = Number(event.target.value);
+
+
     const battleId = event.target.name
     clientSocket.emit("joinRoom", roomId);
 
@@ -83,7 +88,8 @@ const Home = (props) => {
         to={{
           pathname: "/game",
           state: {
-            room: roomId,
+            roomId: Number(roomId),
+            exerciseId: props.exercise._id
           },
         }}
       >
@@ -93,12 +99,14 @@ const Home = (props) => {
       </Link>
       <div>
         {props.battles.map((room) => {
+          // console.log(room)
           return (
             <Link
               to={{
                 pathname: "/game",
                 state: {
-                  roomId: room._id,
+                  roomId: Number(room.roomId),
+                  exerciseId: room.ref
                 },
               }}
             >
@@ -122,7 +130,6 @@ const mapState = (state) => {
     battles: state.battles,
     exercise: state.exercise,
     auth: state.auth,
-    // battle: state.battle
   };
 };
 

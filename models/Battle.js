@@ -8,7 +8,7 @@ const BattleSchema = new mongoose.Schema({
 
   },
   roomId: {
-    type: String
+    type: Number
   },
   completed: {
     type: Boolean,

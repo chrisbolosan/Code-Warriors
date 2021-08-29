@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 // ACTION TYPES
-const GET_RANDOM_EXERCISE = "GET_RANDOM_EXERCISE"
+const GET_RANDOM_EXERCISE = "GET_RANDOM_EXERCISE";
+const GET_EXERCISE = "GET_EXERCISE";
 
 // ACTION CREATORS
 export const _getRandomExercise = (exercise) => {
@@ -11,11 +12,25 @@ export const _getRandomExercise = (exercise) => {
   };
 };
 
+export const _getExercise = (exercise) => {
+  return {
+    type: GET_EXERCISE,
+    exercise
+  };
+};
+
 // THUNKS
 export const getRandomExercise = (exercise) => {
   return async (dispatch) => {
     const { data: randomExercise } = await axios.get("/api/exercises/random");
     dispatch(_getRandomExercise(randomExercise));
+  };
+};
+
+export const getExercise = (exerciseId) => {
+  return async (dispatch) => {
+    const { data: exercise } = await axios.get(`/api/exercises/${exerciseId}`);
+    dispatch(_getExercise(exercise));
   };
 };
 

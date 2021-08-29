@@ -9,6 +9,7 @@ import clientSocket from "../socket/socket";
 import { runTest } from "../helpers/testRunner";
 import Timer from "./timer";
 import Button from "@material-ui/core/Button";
+import { getExercise } from "../store/exercise"
 
 class Game extends React.Component {
   constructor(props) {
@@ -35,14 +36,18 @@ class Game extends React.Component {
   }
 
   async componentDidMount() {
+    const { exerciseId } = this.props.location.state;
+    await this.props.getExercise(exerciseId)
+    // console.log("exercise", this.props.exercise)
     clientSocket.on("solution", (solutionObject) => {
       this.setState(solutionObject);
     });
   }
 
   render() {
-    const roomId = this.props.location.state.roomId;
-    const { exercise, submitSolution } = this.props;
+    const { roomId } = Number(this.props.location.state);
+    // console.log("exercise from game", exercise)
+    const { submitSolution, exercise } = this.props;
     const { result, runTestIDE } = this;
     if (exercise.problemDescription) {
       return (
@@ -94,8 +99,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     submitSolution: (id, solution) => dispatch(submitSolution(id, solution)),
-
-    //fetchExercise: (id) => dispatch(fetchExercise(id)),
+    getExercise: (exerciseId) => dispatch(getExercise(exerciseId))
   };
 };
 

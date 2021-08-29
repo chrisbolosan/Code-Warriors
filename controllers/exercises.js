@@ -131,3 +131,5 @@ exports.getRandomExercise = async (req, res, next) => {
     next(e);
   }
 };
+
+
