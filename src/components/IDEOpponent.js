@@ -16,10 +16,11 @@ class IDEOpponent extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-
     if (prevProps.solutionObject.input !== this.props.solutionObject.input) {
       //Check if current socket id is same as sender socket id which is on the solution obj
       if (this.props.solutionObject.playerId !== clientSocket.id) {
+        // console.log("this.props.solutionObject.roomId", this.props.solutionObject.roomId)
+        // console.log("this.props.roomId", this.props.roomId)
         if(this.props.roomId === this.props.solutionObject.roomId) {
           this.setState({ functionText: this.props.solutionObject.input });
         } else {
@@ -35,6 +36,8 @@ class IDEOpponent extends React.Component {
   }
 
   render() {
+    // console.log("roomId from OPPO IDE", this.props.roomId)
+
     // console.log("oppo props", this.props)
     const options = {
       lineWrapping: true,

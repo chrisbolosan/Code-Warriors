@@ -20,6 +20,8 @@ const Home = (props) => {
 
 
   useEffect(() => {
+    const randomRoomId = Math.floor(Math.random() * 10000000);
+    setRoomId(randomRoomId)
     getRandomExercise();
   }, []);
 
@@ -28,12 +30,10 @@ const Home = (props) => {
   // when a user clicks creates a game
   async function handleClick() {
   // generate a random roomId
-  const randomRoomId = Math.floor(Math.random() * 10000000);
-  console.log("randomRoomID", randomRoomId)
 
-  await setRoomId(randomRoomId)
-  console.log("roomId from handleclick", roomId)
+  // console.log("roomId from handleclick", roomId)
   // console.log("create roomId",typeof roomId)
+  console.log("roomID", roomId)
 
     await addRoom({
       roomId: roomId,
