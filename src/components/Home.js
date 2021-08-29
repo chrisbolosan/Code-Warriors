@@ -1,75 +1,96 @@
 import React, { useState, useEffect } from "react";
 import clientSocket from "../socket/socket";
-import { useHistory, Link } from "react-router-dom";
-import { connect } from "react-redux"
-import { setRooms, addRoom, updateRoom } from "../store/rooms"
-import { getRandomExercise } from "../store/exercise"
+import {  Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { setRooms, addRoom, updateRoom } from "../store/rooms";
+import { getRandomExercise } from "../store/exercise";
+
 
 const Home = (props) => {
+  const { fetchRooms, addRoom, getRandomExercise, updateRoom } = props;
+  const [rooms, setRooms] = useState([]);
+  const [roomId, setRoomId] = useState(0);
 
-  const { fetchRooms, addRoom, getExercise, updateRoom } = props
-  const [rooms, setRooms] = useState([])
-
-  useEffect(()=> {
-    fetchRooms()
-    clientSocket.on("rooms", (rooms) => {
-      setRooms(rooms)
-    });
-  }, [fetchRooms, rooms])
 
   useEffect(() => {
-    getExercise()
-  }, [])
+    fetchRooms();
+    clientSocket.on("rooms", (rooms) => {
+      setRooms(rooms);
+    });
+  }, [fetchRooms, rooms]);
 
-  // generate a random roomId
-  const roomId = Math.floor(Math.random() * 10000000);
+
+  useEffect(() => {
+    const randomRoomId = Math.floor(Math.random() * 10000000);
+    setRoomId(randomRoomId)
+    getRandomExercise();
+  }, []);
+
+
 
   // when a user clicks creates a game
-  function handleClick() {
-    clientSocket.emit('createGame', roomId);
-    addRoom({
-      _id: Number(roomId),
-      exercise_id: props.exercise._id,
-      players: [{
-        id: props.auth._id,
-        username: props.auth.username,
-        rank: props.auth.rank,
-        points: props.auth.totalPoints
-      }]
-    })
-  }
+  async function handleClick() {
+  // generate a random roomId
 
-  // when a user clicks join game
-  function joinRoom(event) {
-    const roomId = event.target.value
-    clientSocket.emit('joinRoom', roomId)
+  console.log("roomID", roomId)
 
-    const player1 = props.rooms.filter(roomObject => {
-      return Number(roomObject._id) === Number(roomId)
-    })[0].players[0]
-
-    updateRoom({
+    await addRoom({
+      roomId: roomId,
+      ref: props.exercise._id,
       players: [
-        player1,
         {
           id: props.auth._id,
           username: props.auth.username,
           rank: props.auth.rank,
-          points: props.auth.totalPoints
-        }
+          points: props.auth.totalPoints,
+        },
       ],
-      open: false
-    }, roomId)
+    });
+    clientSocket.emit("createGame", roomId);
+
   }
+
+  // when a user clicks join game
+  function joinRoom(event) {
+    const roomId = Number(event.target.value);
+
+
+    const battleId = event.target.name
+    clientSocket.emit("joinRoom", roomId);
+
+    const player1 = props.battles.filter((battle) => {
+      return battle.roomId === roomId;
+    })[0].players[0];
+
+    updateRoom(
+      {
+        players: [
+          player1,
+          {
+            id: props.auth._id,
+            username: props.auth.username,
+            rank: props.auth.rank,
+            points: props.auth.totalPoints,
+          },
+        ],
+        open: false,
+      },
+      battleId
+    );
+  }
+
 
   return (
     <div>
       <h1>This is the logged in user homepage</h1>
+      {/* Create Game */}
       <Link
         to={{
           pathname: "/game",
           state: {
-            room: roomId,
+            roomId: roomId,
+            exerciseId: props.exercise._id
+
           },
         }}
       >
@@ -78,57 +99,57 @@ const Home = (props) => {
         </button>
       </Link>
       <div>
-        {rooms &&
-          rooms.map((room) => {
-            return (
-              <Link
-                to={{
-                  pathname: "/game",
-                  state: {
-                    room: room,
-                  },
-                }}
-              >
-                <button
-                  onClick={joinRoom}
-                  value={room}
-                  key={room}
-                  type="button"
-                >
-                  {room}
-                </button>
-              </Link>
-            );
-          })}
-        <Leaderboard />
+        {props.battles.map((room) => {
+          return (
+            // JOIN GAME
+            <Link
+              to={{
+                pathname: "/game",
+                state: {
+                  roomId: room.roomId,
+                  exerciseId: room.ref
+                },
+              }}
+            >
+              <button
+                onClick={joinRoom}
+                value={room.roomId}
+                name={room._id}
+                key={room._id}
+                type="button"
+              >{`${room.players[0].username}'s room`}</button>
+            </Link>
+          );
+        })}
+
       </div>
     </div>
   );
 };
 
-const mapState = state => {
+const mapState = (state) => {
   return {
-    rooms: state.rooms,
+    battles: state.battles,
     exercise: state.exercise,
-    auth: state.auth
-  }
-}
+    auth: state.auth,
+  };
+};
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
     fetchRooms: () => {
-      dispatch(setRooms())
+      dispatch(setRooms());
     },
     addRoom: (room) => {
-      dispatch(addRoom(room))
+      dispatch(addRoom(room));
     },
-    getExercise: () => {
-      dispatch(getRandomExercise())
+    getRandomExercise: () => {
+      dispatch(getRandomExercise());
     },
     updateRoom: (room, roomId) => {
-      dispatch(updateRoom(room, roomId))
-    }
-  }
-}
+      dispatch(updateRoom(room, roomId));
+    },
+  };
+};
 
-export default connect(mapState, mapDispatch)(Home)
+export default connect(mapState, mapDispatch)(Home);

@@ -1,21 +1,22 @@
 import React from "react";
 import IDE from "./IDE";
 import { connect } from "react-redux";
-//import { fetchExercise } from "../store/exercise";
-import { submitSolution, testSolution } from "../store/solution";
+import { submitSolution } from "../store/solution";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IDEOpponent from "./IDEOpponent";
 import clientSocket from "../socket/socket";
 import { runTest } from "../helpers/testRunner";
-
+import Timer from "./timer";
+import Button from "@material-ui/core/Button";
+import { getExercise } from "../store/exercise"
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
     this.result = this.result.bind(this);
-    this.runTestIDE = this.runTestIDE.bind(this)
+    this.runTestIDE = this.runTestIDE.bind(this);
   }
 
   result() {
@@ -27,40 +28,49 @@ class Game extends React.Component {
     });
   }
 
- async runTestIDE(test, input) {
-    const res =  await runTest(test, input)
+  async runTestIDE(test, input) {
+    const res = await runTest(test, input);
     this.setState({
-      result: res
-    })
-    console.log(this.state)
+      result: res,
+    });
   }
 
   async componentDidMount() {
+    const { exerciseId } = this.props.location.state;
+    await this.props.getExercise(exerciseId)
     clientSocket.on("solution", (solutionObject) => {
       this.setState(solutionObject);
     });
   }
+
   render() {
-    const roomId = this.props.location.state.roomId
-    const { exercise, submitSolution } = this.props
-    const { result, runTestIDE} = this
+    const { roomId } = this.props.location.state;
+    const { submitSolution, exercise } = this.props;
+    const { result, runTestIDE } = this;
     if (exercise.problemDescription) {
       return (
         <div className="game-container">
           <div>{exercise ? exercise.problemDescription : null}</div>
           <div>
-          <IDE
-            exercise={exercise}
-            submitSolution={submitSolution}
-            result={result}
-            enabled={true}
-            roomId={roomId}
-            runTestIDE={runTestIDE}
-          />
-          <div>
-            <h3>Test Results</h3>
-            <div>{this.state.result ? this.state.result.message : 'please run your test' }</div>
-          </div>
+            <IDE
+              exercise={exercise}
+              submitSolution={submitSolution}
+              result={result}
+              enabled={true}
+              roomId={roomId}
+              runTestIDE={runTestIDE}
+            />
+            <div>
+              <h3>Test Results</h3>
+              <div>
+                {this.state.result
+                  ? this.state.result.message
+                  : "please run your test"}
+              </div>
+            </div>
+            <Button variant="inherit" color="secondary">
+              <Timer />
+            </Button>
           </div>
 
           <IDEOpponent
@@ -87,8 +97,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     submitSolution: (id, solution) => dispatch(submitSolution(id, solution)),
-
-    //fetchExercise: (id) => dispatch(fetchExercise(id)),
+    getExercise: (exerciseId) => dispatch(getExercise(exerciseId))
   };
 };
 

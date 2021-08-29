@@ -2,10 +2,13 @@ const mongoose = require('mongoose');
 // const uniqueValidator = require('mongoose-unique-validator');
 
 const BattleSchema = new mongoose.Schema({
-  _id: Number,
-  exercise_id: {
+  ref: {
     type: String,
-    required: true
+    required: true,
+
+  },
+  roomId: {
+    type: Number
   },
   completed: {
     type: Boolean,

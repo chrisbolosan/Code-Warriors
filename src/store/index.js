@@ -6,14 +6,14 @@ import exercise from './exercise.js';
 import solution from './solution';
 import leaderboard from "./leaderboard"
 import auth from "./auth"
-import rooms from "./rooms"
+import battles from "./rooms"
 
 const reducer = combineReducers({
   auth,
   exercise,
   solution,
   leaderboard,
-  rooms
+  battles
 });
 
 const middleware = composeWithDevTools(

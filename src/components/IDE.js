@@ -16,16 +16,15 @@ class IDE extends React.Component {
       input: "",
       playerId: "",
       roomId: "",
-      submitted: false
+      submitted: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleRun = this.handleRun.bind(this)
+    this.handleRun = this.handleRun.bind(this);
   }
 
-
- handleChange(userInput) {
-    this.setState({ input: userInput });
+  async handleChange(userInput) {
+    await this.setState({ input: userInput });
 
     //Emit the solution and clientId in an object
     clientSocket.emit(`solution`, this.state);
@@ -33,38 +32,46 @@ class IDE extends React.Component {
 
   // when a user clicks "RUN"
   async handleRun(event) {
-    event.preventDefault()
-    if(this.props.enabled){
-    await this.props.runTestIDE(this.props.exercise.test, this.state.input)
+    event.preventDefault();
+    if (this.props.enabled) {
+      await this.props.runTestIDE(this.props.exercise.test, this.state.input);
     }
   }
 
   // when a user clicks "SUBMIT"
   async handleSubmit(event) {
-    this.setState({ submitted: true })
-    event.preventDefault()
-    if(this.props.enabled){
-      await this.props.submitSolution(this.props.exercise._id, this.state.input);
-      this.props.result()
-
+    this.setState({ submitted: true });
+    event.preventDefault();
+    if (this.props.enabled) {
+      await this.props.submitSolution(
+        this.props.exercise._id,
+        this.state.input
+      );
+      this.props.result();
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.exercise.exerciseBody !== this.props.exercise.exerciseBody) {
+      this.setState({
+        input: this.props.exercise.exerciseBody,
+      })
+    }
+  }
 
   componentDidMount() {
     //sets state to the exercise body and client socket Id
-    console.log(this.props)
     this.setState({
       input: this.props.exercise.exerciseBody,
       playerId: clientSocket.id,
-      roomId: this.props.roomId
-    })
+      roomId: this.props.roomId,
+    });
   }
 
   render() {
-    const me = this.props.me
+    const me = this.props.me;
 
-    const {enabled} = this.props;
+    const { enabled } = this.props;
     let options;
     if (!enabled) {
       options = {
@@ -88,7 +95,6 @@ class IDE extends React.Component {
     }
     return (
       <div className="IDE">
-
         <div className="user-info">
           <small>{me.username}</small>
           <small>Rank: {me.rank}</small>
@@ -107,18 +113,24 @@ class IDE extends React.Component {
             className="code-mirror-wrapper"
             options={options}
           />
-            {this.state.submitted === false ? (
-              <div>
-                <button type="submit" onClick={this.handleRun} disabled={!enabled}>
-                  Run
-                </button>
-                <button type="submit" onClick={this.handleSubmit} disabled={!enabled}>
-                  Submit
-                </button>
-                <ToastContainer />
-              </div>
-            ) : ( null
-            )}
+
+            <div>
+              <button
+                type="submit"
+                onClick={this.handleRun}
+              >
+                Run
+              </button>
+              <button
+                type="submit"
+                onClick={this.handleSubmit}
+                disabled={this.state.submitted ? true : false}
+              >
+                Submit
+              </button>
+              <ToastContainer />
+            </div>
+
         </div>
       </div>
     );
@@ -128,8 +140,7 @@ const mapState = (state) => {
   return {
     me: state.auth,
     solution: state.solution,
-    exercise: state.exercise
-  }
-}
+  };
+};
 
 export default connect(mapState, null)(IDE);

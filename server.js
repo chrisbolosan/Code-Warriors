@@ -41,7 +41,7 @@ io.on('connection', async (socket) => {
   socket.on('createGame', (roomId) => {
     rooms.push(roomId);
     socket.join(roomId);
-    // console.log('create room roomId', roomId)
+    console.log('create room roomId', roomId)
     io.emit('roomId', roomId);
     io.emit('rooms', rooms);
   });
