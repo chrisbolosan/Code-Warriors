@@ -101,7 +101,7 @@ const Home = (props) => {
       <div>
         {props.battles.map((room) => {
           return (
-            // JOIN GAME
+            // JOIN GAME Button
             <Link
               to={{
                 pathname: "/game",
