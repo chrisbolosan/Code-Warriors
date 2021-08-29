@@ -6,11 +6,10 @@ import { setRooms, addRoom, updateRoom } from "../store/rooms";
 import { getRandomExercise } from "../store/exercise";
 
 const Home = (props) => {
-  const { fetchRooms, addRoom, getExercise, updateRoom } = props;
+  const { fetchRooms, addRoom, getRandomExercise, updateRoom } = props;
   const [rooms, setRooms] = useState([]);
   const [roomId, setRoomId] = useState('')
 
-  // const [room, setRoom] = useState({})
 
   useEffect(() => {
     fetchRooms();
@@ -19,18 +18,16 @@ const Home = (props) => {
     });
   }, [fetchRooms, rooms]);
 
-  // useEffect(() => {
-  //   setRoom(props.battle);
-  // }, [props.battle]);
 
   useEffect(() => {
-    getExercise();
+    getRandomExercise();
   }, []);
 
-  // generate a random roomId
+
 
   // when a user clicks creates a game
   async function handleClick() {
+  // generate a random roomId
   const roomId = Math.floor(Math.random() * 10000000);
   setRoomId(roomId)
   // console.log("create roomId",typeof roomId)
@@ -141,7 +138,7 @@ const mapDispatch = (dispatch) => {
     addRoom: (room) => {
       dispatch(addRoom(room));
     },
-    getExercise: () => {
+    getRandomExercise: () => {
       dispatch(getRandomExercise());
     },
     updateRoom: (room, roomId) => {

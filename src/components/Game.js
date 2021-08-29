@@ -38,7 +38,6 @@ class Game extends React.Component {
   async componentDidMount() {
     const { exerciseId } = this.props.location.state;
     await this.props.getExercise(exerciseId)
-    // console.log("exercise", this.props.exercise)
     clientSocket.on("solution", (solutionObject) => {
       this.setState(solutionObject);
     });
@@ -46,7 +45,6 @@ class Game extends React.Component {
 
   render() {
     const { roomId } = Number(this.props.location.state);
-    // console.log("exercise from game", exercise)
     const { submitSolution, exercise } = this.props;
     const { result, runTestIDE } = this;
     if (exercise.problemDescription) {

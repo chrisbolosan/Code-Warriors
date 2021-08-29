@@ -52,13 +52,20 @@ class IDE extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.exercise.exerciseBody !== this.props.exercise.exerciseBody) {
+      this.setState({
+        input: this.props.exercise.exerciseBody,
+      })
+    }
+  }
+
   componentDidMount() {
     //sets state to the exercise body and client socket Id
     this.setState({
       input: this.props.exercise.exerciseBody,
       playerId: clientSocket.id,
       roomId: this.props.roomId,
-      // funcFrame: this.props.exercise.exerciseBody
     });
   }
 
@@ -135,7 +142,6 @@ const mapState = (state) => {
   return {
     me: state.auth,
     solution: state.solution,
-    exercise: state.exercise,
   };
 };
 

@@ -20,7 +20,7 @@ export const _getExercise = (exercise) => {
 };
 
 // THUNKS
-export const getRandomExercise = (exercise) => {
+export const getRandomExercise = () => {
   return async (dispatch) => {
     const { data: randomExercise } = await axios.get("/api/exercises/random");
     dispatch(_getRandomExercise(randomExercise));
@@ -38,6 +38,8 @@ export const getExercise = (exerciseId) => {
 export default function exerciseReducer(state = {}, action) {
   switch (action.type) {
     case GET_RANDOM_EXERCISE:
+      return action.exercise;
+    case GET_EXERCISE:
       return action.exercise;
     default:
       return state;
