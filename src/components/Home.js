@@ -31,8 +31,6 @@ const Home = (props) => {
   async function handleClick() {
   // generate a random roomId
 
-  // console.log("roomId from handleclick", roomId)
-  // console.log("create roomId",typeof roomId)
   console.log("roomID", roomId)
 
     await addRoom({
@@ -100,7 +98,6 @@ const Home = (props) => {
       </Link>
       <div>
         {props.battles.map((room) => {
-          // console.log(room)
 
           return (
             // JOIN GAME

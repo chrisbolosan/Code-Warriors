@@ -17,7 +17,6 @@ class IDE extends React.Component {
       playerId: "",
       roomId: "",
       submitted: false,
-      // funcFrame: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
