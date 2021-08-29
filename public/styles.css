@@ -1,21 +1,26 @@
-
 .IDE {
   /* font-size: 1.25rem; */
   width: 75%;
   padding: 10px;
 }
 
-.Game{
+.Game {
   display: flex;
   justify-content: space-around;
 }
 
 #navbar {
-    display: flex;
-    justify-content: flex-end;
-    background-color: #e5e6e4;
-  }
+  display: flex;
+  justify-content: flex-end;
+  background-color: #e5e6e4;
+}
 
-  .opponent {
-    filter: blur(2px);
-  }
+.opponent {
+  filter: blur(2px);
+}
+
+/* IDE */
+
+#Run {
+  margin-top: 1.65em;
+}

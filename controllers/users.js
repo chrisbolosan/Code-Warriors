@@ -1,6 +1,5 @@
-const User = require('../models/User');
-const jwt = require('jsonwebtoken');
-//middleware for try/catch
+const User = require("../models/User");
+const jwt = require("jsonwebtoken");
 
 // @desc    Get users
 // @route   GET /api/users
@@ -9,16 +8,16 @@ exports.getUsers = async (req, res, next) => {
   try {
     if (req.admin) {
       const users = await User.find().select(
-        'username totalPoints rank isAdmin email'
+        "username totalPoints rank isAdmin email"
       );
       return res.status(200).json(users);
     } else {
       const user = await User.findById(req.id).select(
-        'rank totalPoints username email'
+        "rank totalPoints username email"
       );
       return res.status(200).json(user);
     }
-  } catch (e) {
+  } catch (error) {
     next();
   }
 };
@@ -31,17 +30,17 @@ exports.getUser = async (req, res, next) => {
   try {
     if (req.admin) {
       const user = await User.findById(req.params.id).select(
-        'username totalPoints rank email'
+        "username totalPoints rank email"
       );
       res.status(200).json(user);
       //if requestID matches userid, send response is information for the matching id
     } else {
       const user = await User.findById(req.params.id).select(
-        'username totalPoints rank email'
+        "username totalPoints rank email"
       );
       res.status(200).json(user);
     }
-  } catch (e) {
+  } catch (error) {
     next();
   }
 };
@@ -51,9 +50,6 @@ exports.getUser = async (req, res, next) => {
 // @access Public
 exports.signup = async (req, res, next) => {
   try {
-    //   const user = await User.create(req.body);
-    //   res.status(201).json({ data: user });
-    // });
     const { username, password, email } = req.body;
 
     //create user
@@ -65,7 +61,8 @@ exports.signup = async (req, res, next) => {
     });
     const token = user.getSignedJwtToken();
     res.status(200).json({ success: true, token });
-  } catch (e) {
+  } catch (error) {
+    res.status(404).json({ success: false, message: `${error}` });
     next();
   }
 };
@@ -80,22 +77,22 @@ exports.login = async (req, res, next) => {
     //Validate email & password
 
     if (!username || !password) {
-      return res.status(401).send('Please add both username and password');
+      return res.status(401).send("Please add both username and password");
     }
     //Check for user plus validation password
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(401).send('Invalid credentials');
+      return res.status(401).send("Invalid username");
     }
     //Check if password matches
     const isMatch = await user.matchPassword(password);
     if (!isMatch) {
-      res.status(401).send('Invalid credentials');
+      res.status(401).send("Invalid Password");
     }
     //create token
     const token = user.getSignedJwtToken();
     res.status(200).json({ success: true, token });
-  } catch (e) {
+  } catch (error) {
     next();
   }
 };
@@ -112,9 +109,9 @@ exports.updateUser = async (req, res, next) => {
       const user = await User.findByIdAndUpdate(req.params.id, req.body);
       res.status(204).json(user);
     } else {
-      res.status(401).json({ success: false, message: 'Unauthorized request' });
+      res.status(401).json({ success: false, message: "Unauthorized request" });
     }
-  } catch (e) {
+  } catch (error) {
     next();
   }
 };
@@ -131,9 +128,9 @@ exports.deleteUser = async (req, res, next) => {
       const user = await User.findByIdAndDelete(req.params.id);
       res.status(200).json(user);
     } else {
-      res.status(401).json({ success: false, message: 'Unauthorized request' });
+      res.status(401).json({ success: false, message: "Unauthorized request" });
     }
-  } catch (e) {
+  } catch (error) {
     next();
   }
 };
@@ -146,9 +143,9 @@ exports.getLeaderboard = async (req, res, next) => {
     const leaderboard = await User.find()
       .sort({ totalPoints: -1 })
       .limit(10)
-      .select('username totalPoints');
+      .select("username totalPoints");
     res.status(200).json(leaderboard);
-  } catch (e) {
+  } catch (error) {
     next();
   }
 };
