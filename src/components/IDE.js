@@ -82,6 +82,8 @@ class IDE extends React.Component {
     const me = this.props.me;
     console.log("this is the local stte", this.state)
 
+    // This code checks the status of enabled and sets options based on whether it is
+    // enabled or not
     const { enabled } = this.props;
     let options;
     if (!enabled) {
