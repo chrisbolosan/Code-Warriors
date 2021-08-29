@@ -23,16 +23,6 @@ export const submitSolution = (id, solution) => {
 };
 
 
-// export const testSolution = (id, solution) => {
-//   return async (dispatch) => {
-//     const { data: output } = await axios.get('/api/exercises/solution', {
-//       id,
-//       solution,
-//     });
-//     dispatch(testExercise(output));
-//   };
-// };
-
 
 // REDUCER
 export default function exerciseReducer(state = {}, action) {

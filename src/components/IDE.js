@@ -114,25 +114,24 @@ class IDE extends React.Component {
             className="code-mirror-wrapper"
             options={options}
           />
-          {this.state.submitted === false ? (
+
             <div>
               <button
                 type="submit"
                 onClick={this.handleRun}
-                disabled={!enabled}
               >
                 Run
               </button>
               <button
                 type="submit"
                 onClick={this.handleSubmit}
-                disabled={!enabled}
+                disabled={this.state.submitted ? true : false}
               >
                 Submit
               </button>
               <ToastContainer />
             </div>
-          ) : null}
+
         </div>
       </div>
     );

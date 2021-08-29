@@ -1,7 +1,7 @@
 import React from "react";
 import IDE from "./IDE";
 import { connect } from "react-redux";
-import { submitSolution, testSolution } from "../store/solution";
+import { submitSolution } from "../store/solution";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IDEOpponent from "./IDEOpponent";
