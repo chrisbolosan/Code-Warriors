@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { setRooms, addRoom, updateRoom } from "../store/rooms";
 import { getRandomExercise } from "../store/exercise";
 
+
 const Home = (props) => {
   const { fetchRooms, addRoom, getRandomExercise, updateRoom } = props;
   const [rooms, setRooms] = useState([]);
@@ -89,6 +90,7 @@ const Home = (props) => {
           state: {
             roomId: roomId,
             exerciseId: props.exercise._id
+
           },
         }}
       >
@@ -98,7 +100,6 @@ const Home = (props) => {
       </Link>
       <div>
         {props.battles.map((room) => {
-
           return (
             // JOIN GAME
             <Link
@@ -120,6 +121,7 @@ const Home = (props) => {
             </Link>
           );
         })}
+
       </div>
     </div>
   );

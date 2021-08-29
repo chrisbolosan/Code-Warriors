@@ -1,10 +1,10 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { authenticate } from '../store';
+import React from "react";
+import { connect } from "react-redux";
+import { authenticate, signUpThunk } from "../store";
 
 const AuthForm = (props) => {
   const { name, displayName, handleSubmit, error } = props;
-  return displayName === 'Sign Up' ? (
+  return displayName === "Sign Up" ? (
     <div id="signup-container">
       <form onSubmit={handleSubmit} name={name} id={name}>
         <h1>Create an Account</h1>
@@ -54,16 +54,16 @@ const AuthForm = (props) => {
  */
 const mapLogin = (state) => {
   return {
-    name: 'login',
-    displayName: 'Login',
+    name: "login",
+    displayName: "Login",
     error: state.auth.error,
   };
 };
 
 const mapSignup = (state) => {
   return {
-    name: 'signup',
-    displayName: 'Sign Up',
+    name: "signup",
+    displayName: "Sign Up",
     error: state.auth.error,
   };
 };
@@ -73,7 +73,7 @@ const mapDispatch = (dispatch) => {
     handleSubmit(evt) {
       evt.preventDefault();
       const formName = evt.target.name;
-      if (formName === 'login') {
+      if (formName === "login") {
         const info = {
           username: evt.target.username.value,
           password: evt.target.password.value,
@@ -85,7 +85,9 @@ const mapDispatch = (dispatch) => {
           password: evt.target.password.value,
           email: evt.target.email.value,
         };
-        dispatch(authenticate(info.username, info.password, formName));
+        dispatch(
+          signUpThunk(info.username, info.password, info.email, formName)
+        );
       }
     },
   };

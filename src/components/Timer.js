@@ -4,35 +4,42 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
+
 export default class Timer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      secondsElapsed: 600000 / 1000, //time in seconds
+      secondsElapsed: 300000 / 1000, //time in seconds
     };
   }
+  
   getHours() {
     return ('0' + Math.floor(this.state.secondsElapsed / 3600)).slice(-2);
   }
   getMinutes() {
     return ('0' + Math.floor((this.state.secondsElapsed % 3600) / 60)).slice(
+
       -2
     );
   }
   getSeconds() {
+
     return ('0' + (this.state.secondsElapsed % 60)).slice(-2);
   }
+
   startTime() {
     var _this = this;
     this.countdown = setInterval(function () {
       _this.setState({ secondsElapsed: _this.state.secondsElapsed - 1 });
     }, 1000);
   }
+
   resetTime() {
     this.reset = this.setState({
       secondsElapsed: (this.state.secondsElapsed = 0),
     });
   }
+
   pauseTime() {
     clearInterval(this.countdown);
   }
@@ -52,6 +59,7 @@ export default class Timer extends React.Component {
             onClick={() => {
               toast.success('Code Challenge Begin', {
                 position: 'top-center',
+
                 autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,

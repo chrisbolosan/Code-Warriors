@@ -1,15 +1,14 @@
-import React from "react"
-import { connect } from "react-redux"
-import { setLeaderboard } from "../store/leaderboard"
-import { Link } from "react-router-dom"
-
+import React from "react";
+import { connect } from "react-redux";
+import { setLeaderboard } from "../store/leaderboard";
+import { Link } from "react-router-dom";
 
 // thunk api/users/leaderboard
 class Leaderboard extends React.Component {
   componentDidMount() {
-    this.props.setLeaderboard()
+    this.props.setLeaderboard();
   }
-
+  //needs material ui/bootstrap card
   render() {
     return (
       <div id="leaderboard-container">
@@ -23,20 +22,20 @@ class Leaderboard extends React.Component {
           ))}
         </div>
       </div>
-    )
+    );
   }
 }
 
 const mapState = (state) => {
   return {
-    leaderboard: state.leaderboard
-  }
-}
+    leaderboard: state.leaderboard,
+  };
+};
 
 const mapDispatch = (dispatch) => {
   return {
-    setLeaderboard: (leaderboard) => dispatch(setLeaderboard(leaderboard))
-  }
-}
+    setLeaderboard: (leaderboard) => dispatch(setLeaderboard(leaderboard)),
+  };
+};
 
-export default connect(mapState, mapDispatch)(Leaderboard)
+export default connect(mapState, mapDispatch)(Leaderboard);
