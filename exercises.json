@@ -23,5 +23,40 @@
     "exerciseBody": "function fizzbuzz(n) {} // fizzbuzz(3) --> [1, 2, 'Fizz']",
     "test": "function checkTest(func, target) {return JSON.stringify(func(10)) === JSON.stringify([1, 2, 'Fizz', 4, 'Buzz', 'Fizz', 7, 8, 'Fizz', 'Buzz'])} checkTest(fizzbuzz, [1,2,'Fizz',4,'Buzz','Fizz',7,8,'Fizz','Buzz'])",
     "problemDescription": "Return an array containing the numbers from 1 to N, where N is the parametered value. Replace certain values however if any of the following conditions are met: If the value is a multiple of 3: use the value 'Fizz' instead. If the value is a multiple of 5: use the value 'Buzz' instead. If the value is a multiple of 3 & 5: use the value 'FizzBuzz' instead. N will never be less than 1."
-  }
+  },
+  {
+    "exerciseBody": "function wordsToSentence(words) {return ''}",
+    "test": "function checkTest(func, target) {return func(['hello', 'world'] === target) checkTest(wordsToSentence, 'hello world')}",
+    "problemDescription": "Write function which will create a string from a list of strings, separated by space. Example: ['hello', 'world'] -> 'hello world'"
+  },
+  {
+    "exerciseBody": "function moveTen(s) {}",
+    "test": "function checkTest(func, target) {return func('exampletesthere') === target} checkTest(moveTen, 'ohkwzvodocdrobo')",
+    "problemDescription": "Move every letter in the provided string forward 10 letters through the alphabet. If it goes past 'z', start again at 'a'. Input will be a string with length > 0."
+  },
+  {
+    "exerciseBody": "function filterLongWords(sentence, n) {}",
+    "test": "function checkTest(func, target) {return func('The quick brown fox jumps over the lazy dog', 4) === target} checkTest(filterLongWords, ['quick', 'brown', 'jumps'])",
+    "problemDescription": "Write a function filterLongWords that takes a string sentence and an integer n. Return a list of all words that are longer than n. Example: filterLongWords('The quick brown fox jumps over the lazy dog', 4) = ['quick', 'brown', 'jumps']"
+  },
+  {
+    "exerciseBody": "function password(str) {}",
+    "test": "function checkTest(func, target) {return func('AbcdefGhijKlmnopQRsTuvwxyZ1234567890') === target} checkTest(password, true)",
+    "problemDescription": "Your job is to create a simple password validation function, as seen on many websites. The rules for a valid password are as follows: There needs to be at least 1 uppercase letter. There needs to be at least 1 lowercase letter. There needs to be at least 1 number. The password needs to be at least 8 characters long. You are permitted to use any methods to validate the password."
+  },
+  {
+    "exerciseBody": "function isPangram(string) {}",
+    "test": "function checkTest(func, target) {return func('The quick brown fox jumps over the lazy dog.') === target} checkTest(isPangram, true)",
+    "problemDescription": "A pangram is a sentence that contains every single letter of the alphabet at least once. For example, the sentence 'The quick brown fox jumps over the lazy dog' is a pangram, because it uses the letters A-Z at least once (case is irrelevant). Given a string, detect whether or not it is a pangram. Return True if it is, False if not. Ignore numbers and punctuation."
+  },
+  {
+    "exerciseBody": "function max() {}",
+    "test": "function checkTest(func, target) {return func([5, 3, 2, 1, 8, 0]) === target} checkTest(max, 8)",
+    "problemDescription": "Write a function that returns the max number from a given array, you are not allowed to use Math.max()"
+  },
+  {
+    "exerciseBody": "function min() {}",
+    "test": "function checkTest(func, target) {return func([5, 1, 9, 10, 3, 0] === target) checkTest(min, 0)}",
+    "problemDescription": "Write a function that returns the min number from a given array, you are not allowed to use Math.min()"
+  },
 ]
