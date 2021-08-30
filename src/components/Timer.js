@@ -2,47 +2,57 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { setTime } from '../store/timer'
+import { connect } from "react-redux";
 
 
-
-export default class Timer extends React.Component {
+export class Timer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      secondsElapsed: 300000 / 1000, //time in seconds
+      secondsRemaining: 5000 / 1000, //time in seconds
     };
+    this.resetTime = this.resetTime.bind(this)
   }
-  
+
   getHours() {
-    return ('0' + Math.floor(this.state.secondsElapsed / 3600)).slice(-2);
+    return ('0' + Math.floor(this.state.secondsRemaining / 3600)).slice(-2);
   }
   getMinutes() {
-    return ('0' + Math.floor((this.state.secondsElapsed % 3600) / 60)).slice(
+    return ('0' + Math.floor((this.state.secondsRemaining % 3600) / 60)).slice(
 
       -2
     );
   }
   getSeconds() {
+    return ('0' + (this.state.secondsRemaining % 60)).slice(-2);
+  }
 
-    return ('0' + (this.state.secondsElapsed % 60)).slice(-2);
+  resetTime() {
+    var _this = this;
+
+    this.reset = this.setState({
+      secondsRemaining: (_this.state.secondsRemaining = 0),
+    });
   }
 
   startTime() {
     var _this = this;
     this.countdown = setInterval(function () {
-      _this.setState({ secondsElapsed: _this.state.secondsElapsed - 1 });
+      _this.props.setTime(_this.state.secondsRemaining - 1)
+      _this.setState({ secondsRemaining: _this.state.secondsRemaining - 1 });
+      if (!_this.state.secondsRemaining) {
+        clearInterval(_this.countdown)
+      }
     }, 1000);
+
   }
 
-  resetTime() {
-    this.reset = this.setState({
-      secondsElapsed: (this.state.secondsElapsed = 0),
-    });
-  }
 
   pauseTime() {
     clearInterval(this.countdown);
   }
+
   render() {
     return (
       <div className='App'>
@@ -77,3 +87,20 @@ export default class Timer extends React.Component {
     );
   }
 }
+
+
+const mapState = (state) => {
+  return {
+    timer: state.timer
+  };
+};
+
+const mapDispatch = (dispatch) => {
+  return {
+    setTime: (time) => {
+      dispatch(setTime(time));
+    },
+  }
+};
+
+export default connect(mapState, mapDispatch)(Timer);

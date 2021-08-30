@@ -7,13 +7,15 @@ import solution from './solution';
 import leaderboard from "./leaderboard"
 import auth from "./auth"
 import battles from "./rooms"
+import timer from './timer'
 
 const reducer = combineReducers({
   auth,
   exercise,
   solution,
   leaderboard,
-  battles
+  battles,
+  timer
 });
 
 const middleware = composeWithDevTools(
