@@ -23,6 +23,7 @@ class IDE extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRun = this.handleRun.bind(this);
+    this.getWinner = this.getWinner.bind(this)
   }
 
   async handleChange(userInput) {
@@ -38,6 +39,13 @@ class IDE extends React.Component {
     if (this.props.enabled) {
       await this.props.runTestIDE(this.props.exercise.test, this.state.input);
     }
+  }
+
+  getWinner(player, opponant) {
+    let playerScore = 0;
+    if (player.time > opponant.time) playerScore += 5;
+    if (player.solution) playerScore += 5
+    return playerScore
   }
 
   // when a user clicks "SUBMIT"
@@ -78,15 +86,26 @@ class IDE extends React.Component {
       this.state.room._id
     );
 
-    console.log('players', updatedPlayers)
-
     const res = updatedPlayers.some(player => {
       return player.submitted === false
     })
 
+    const [player1, player2] = updatedPlayers;
+
+
+    console.log(player2)
+    console.log(player1)
+
+
     if (!res) {
-      alert("GAME OVER")
+      const p1Score = this.getWinner(player1, player2);
+      const p2Score = this.getWinner(player2, player1)
+      const winner = p1Score > p2Score ? player1 : player2
+      alert(winner.username)
+
     }
+
+    console.log("players", updatedPlayers)
 
 
   }
