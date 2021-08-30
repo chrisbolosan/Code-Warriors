@@ -8,6 +8,7 @@ import { Controlled } from "react-codemirror2";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import clientSocket from "../socket/socket";
+import axios from "axios"
 
 class IDE extends React.Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class IDE extends React.Component {
       input: "",
       playerId: "",
       roomId: "",
-      submitted: false,
+      submitted: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,7 +41,10 @@ class IDE extends React.Component {
 
   // when a user clicks "SUBMIT"
   async handleSubmit(event) {
-    this.setState({ submitted: true });
+    this.setState({
+      submitted: true
+    });
+
     event.preventDefault();
     if (this.props.enabled) {
       await this.props.submitSolution(
@@ -51,26 +55,35 @@ class IDE extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps) {
     if (prevProps.exercise.exerciseBody !== this.props.exercise.exerciseBody) {
       this.setState({
-        input: this.props.exercise.exerciseBody,
+        input: this.props.exercise.exerciseBody
+      })
+    }
+    if (prevProps.room !== this.props.room) {
+      this.setState({
+        room: this.props.room
       })
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     //sets state to the exercise body and client socket Id
-    this.setState({
+    await this.setState({
       input: this.props.exercise.exerciseBody,
       playerId: clientSocket.id,
-      roomId: this.props.roomId,
+      roomId: this.props.roomId
     });
+
   }
 
   render() {
     const me = this.props.me;
+    console.log("this is the local stte", this.state)
 
+    // This code checks the status of enabled and sets options based on whether it is
+    // enabled or not
     const { enabled } = this.props;
     let options;
     if (!enabled) {
@@ -140,6 +153,7 @@ const mapState = (state) => {
   return {
     me: state.auth,
     solution: state.solution,
+    battles: state.battles
   };
 };
 

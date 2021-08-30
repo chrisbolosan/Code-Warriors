@@ -50,7 +50,8 @@ exports.getOpenBattles = async (req, res, next) => {
 
 exports.getBattle = async (req, res, next) => {
   try {
-    const battle = await Battle.findById(req.params.roomID);
+    const battle = await Battle.find({
+      roomId: req.params.roomID});
     res.status(200).json(battle);
   } catch (e) {
     next(e);

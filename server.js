@@ -57,6 +57,13 @@ io.on('connection', async (socket) => {
     //Emit solution object back to front end
     await io.emit('solution', solutionObj);
   });
+
+  //listen for leave room
+  socket.on('leaveRoom', (roomId) => {
+    socket.leave(roomId);
+  })
+
+  
 });
 
 server.listen(PORT, console.log(`Running on port ${PORT}`));
