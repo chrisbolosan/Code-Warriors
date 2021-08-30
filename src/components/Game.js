@@ -3,8 +3,6 @@ import { Redirect } from 'react-router-dom';
 import IDE from './IDE';
 import { connect } from 'react-redux';
 import { submitSolution } from '../store/solution';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import IDEOpponent from './IDEOpponent';
 import clientSocket from '../socket/socket';
 import { runTest } from '../helpers/testRunner';
@@ -22,19 +20,11 @@ class Game extends React.Component {
       started: false,
     };
 
-    this.result = this.result.bind(this);
     this.runTestIDE = this.runTestIDE.bind(this);
     this.handleStart = this.handleStart.bind(this);
   }
 
-  result() {
-    toast(this.props.solution.message, {
-      position: 'top-center',
-      style: {
-        color: this.props.solution.success ? 'green' : 'red',
-      },
-    });
-  }
+
 
   // run the test in the IDE
   async runTestIDE(test, input) {
@@ -113,7 +103,6 @@ class Game extends React.Component {
               exercise={this.props.exercise}
               funcFrame={this.state.funcFrame}
               submitSolution={submitSolution}
-              result={result}
               enabled={true}
               roomId={roomId}
               runTestIDE={runTestIDE}
