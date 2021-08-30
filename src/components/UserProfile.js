@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 // import { me } from '../store';
 
-const UserProfile = (userId) => {
+const UserProfile = (props) => {
   // const {
   //   match: {
   //     params: { id },
@@ -10,7 +10,9 @@ const UserProfile = (userId) => {
   //   userId,
   // } = props;
 
-  console.log("giveuspleaseid", userId);
+  const { user } = props.location.state;
+  console.log(user)
+  //console.log("giveuspleaseid", userId);
   return (
     <div>
       <div>This is the user profile page.</div>
