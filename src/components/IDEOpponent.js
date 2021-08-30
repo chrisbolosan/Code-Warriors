@@ -11,16 +11,24 @@ class IDEOpponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      functionText: this.props.exercise,
+      functionText: this.props.funcFrame,
     };
   }
 
   componentDidUpdate(prevProps) {
+    if (prevProps.funcFrame !== this.props.funcFrame) {
+      this.setState({
+        functionText: this.props.funcFrame
+      })
+    }
+
     if (prevProps.solutionObject.input !== this.props.solutionObject.input) {
       //Check if current socket id is same as sender socket id which is on the solution obj
       if (this.props.solutionObject.playerId !== clientSocket.id) {
         if(this.props.roomId === this.props.solutionObject.roomId) {
-          this.setState({ functionText: this.props.solutionObject.input });
+          this.setState({
+            functionText: this.props.solutionObject.input,
+          });
         } else {
           console.log('WRONG ROOM')
         }
@@ -29,7 +37,6 @@ class IDEOpponent extends React.Component {
         //Do nothing
         return
       }
-
     }
   }
 
@@ -44,8 +51,13 @@ class IDEOpponent extends React.Component {
       readOnly: true,
     };
     return (
-      <div className="IDE opponent">
-        <div className="editor-container">
+      <div className="IDE IDE2">
+        <div className="user-info">
+          <small>Opponent's name</small>
+          <small>Opponent's Rank</small>
+          <small>Opponent's points</small>
+        </div>
+        <div className="editor-container opponent">
           {/* This is the IDE component from codemirror */}
           <Controlled
             // this is the onChange equivilent of the imported component

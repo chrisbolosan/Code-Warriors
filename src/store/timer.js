@@ -1,15 +1,13 @@
-//ACTION CONSTS
+// ACTION CONSTS
 const SET_TIME = "SET_TIME"
 
-
-//ACTION CREATORS
+// ACTION CREATORS
 export const _setTime = (time) => {
   return {
     type: SET_TIME,
     time
   }
 }
-
 
 // THUNKS
 export const setTime = (time) => {
@@ -21,8 +19,6 @@ export const setTime = (time) => {
     }
   }
 }
-
-
 
 // REDUCERS
 export default function timeReducer(state = "", action) {
