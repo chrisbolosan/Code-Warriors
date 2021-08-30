@@ -8,6 +8,8 @@ import { Controlled } from "react-codemirror2";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import clientSocket from "../socket/socket";
+import { updateRoom } from "../store/rooms";
+
 import axios from "axios"
 
 class IDE extends React.Component {
@@ -41,6 +43,29 @@ class IDE extends React.Component {
 
   // when a user clicks "SUBMIT"
   async handleSubmit(event) {
+    const players =  this.state.room.players
+    const currentPlayerId = this.props.me._id;
+    const updatedPlayers = players.map(player => {
+      if (player.id === currentPlayerId) {
+        return {
+          ...player,
+          time: this.props.timer,
+          submitted: true
+        }
+      } else {
+        return player
+      }
+    })
+
+    await this.props.updateRoom(
+      {
+        players: updatedPlayers
+      },
+      this.state.room._id
+    );
+
+
+
     this.setState({
       submitted: true
     });
@@ -80,8 +105,6 @@ class IDE extends React.Component {
 
   render() {
     const me = this.props.me;
-    console.log("this is the local stte", this.state)
-
     // This code checks the status of enabled and sets options based on whether it is
     // enabled or not
     const { enabled } = this.props;
@@ -153,8 +176,17 @@ const mapState = (state) => {
   return {
     me: state.auth,
     solution: state.solution,
-    battles: state.battles
+    battles: state.battles,
+    timer: state.timer
   };
 };
 
-export default connect(mapState, null)(IDE);
+const mapDispatch = (dispatch) => {
+  return {
+    updateRoom: (room, roomId) => {
+      dispatch(updateRoom(room, roomId));
+    },
+  };
+};
+
+export default connect(mapState, mapDispatch)(IDE);

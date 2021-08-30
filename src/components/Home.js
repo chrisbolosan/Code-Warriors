@@ -43,6 +43,7 @@ const Home = (props) => {
           username: props.auth.username,
           rank: props.auth.rank,
           points: props.auth.totalPoints,
+          submitted: false
         },
       ],
     });
@@ -71,6 +72,7 @@ const Home = (props) => {
             username: props.auth.username,
             rank: props.auth.rank,
             points: props.auth.totalPoints,
+            submitted: false
           },
         ],
         open: false,
