@@ -8,7 +8,7 @@ import IDEOpponent from "./IDEOpponent";
 import clientSocket from "../socket/socket";
 import { runTest } from "../helpers/testRunner";
 import Timer from "./Timer";
-import Button from "@material-ui/core/Button";
+//import Button from "@material-ui/core/Button";
 import { getExercise } from "../store/exercise"
 import { deleteRoom, setRooms } from "../store/rooms"
 import axios from "axios"
@@ -79,10 +79,11 @@ class Game extends React.Component {
     ))[0]
 
     // if the user who creates a game leaves the game when it's still open, the room gets deleted
-    if (battleToDelete.open === true) {
+    if (battleToDelete.open === true && this.state.started === false) {
       deleteBattle(battleToDelete.roomId)
       setRooms()
     } else {
+      // this logic should be: if the game started and a user leaves, the opponent wins the game and the room gets deleted
       return
     }
   }
@@ -122,7 +123,7 @@ class Game extends React.Component {
             this.state.started === false ? (
               <button onClick={this.handleStart}>START</button>
             ) : (
-              <p>Timer</p>
+              <Timer />
             )
           }
           <div id="test">
