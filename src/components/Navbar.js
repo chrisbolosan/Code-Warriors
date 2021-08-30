@@ -25,7 +25,7 @@ const Navbar = ({ isLoggedIn, handleClick, userId, auth }) => {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon"></span>
+          <span className="dropdown">+</span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">

@@ -53,6 +53,11 @@ p {
   color: #64485c;
 }
 
+.dropdown {
+  color: #83677b;
+  font-size: 45px;
+}
+
 #leaderboard-header {
   color: white;
 }
@@ -66,6 +71,7 @@ p {
   border-radius: 15px;
   width: 400px;
   height: 400px;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 #leaderboard-container {
@@ -73,6 +79,7 @@ p {
   padding: 30px;
   border-radius: 25px;
   background-color: #83677b;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .leaderboard-box {
