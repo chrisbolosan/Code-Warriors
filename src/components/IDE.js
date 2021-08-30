@@ -123,6 +123,7 @@ class IDE extends React.Component {
 
   render() {
     const me = this.props.me;
+
     // This code checks the status of enabled and sets options based on whether it is
     // enabled or not
     const { enabled } = this.props;
