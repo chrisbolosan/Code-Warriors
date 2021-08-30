@@ -18,6 +18,7 @@ class Game extends React.Component {
     this.state = {
       room: {},
       started: false,
+      startDisabled: true
     };
 
     this.runTestIDE = this.runTestIDE.bind(this);
@@ -60,9 +61,17 @@ class Game extends React.Component {
       this.setState(solutionObject);
     });
 
-    clientSocket.on('timer', (secondsRemaining) => {
-      const div = document.getElementById('seconds-remaining');
-      div.innerHTML = secondsRemaining;
+    // clientSocket.on('timer', (secondsRemaining) => {
+    //   const div = document.getElementById('seconds-remaining');
+    //   div.innerHTML = secondsRemaining;
+    // });
+
+    clientSocket.on('roomFull', (value) => {
+      console.log("a user joined")
+        this.setState({
+          startDisabled: value
+        })
+
     });
   }
 
@@ -87,7 +96,7 @@ class Game extends React.Component {
   render() {
     const { roomId } = this.props.location.state;
     const { submitSolution, exercise } = this.props;
-    const { result, runTestIDE } = this;
+    const { runTestIDE } = this;
 
     if (exercise.problemDescription) {
       return (
@@ -117,7 +126,10 @@ class Game extends React.Component {
           </div>
           <div id="start-match">
             {this.state.started === false ? (
-              <button onClick={this.handleStart}>START</button>
+              <button
+              onClick={this.handleStart}
+              disabled={this.state.startDisabled}
+              >START</button>
             ) : (
               <>
                 <Timer roomId={this.props.location.state.roomId} />

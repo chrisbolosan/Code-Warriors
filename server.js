@@ -47,9 +47,13 @@ io.on('connection', async (socket) => {
     io.emit('rooms', rooms);
   });
 
-  socket.on('joinRoom', (roomId) => {
+  socket.on('joinRoom', async (roomId) => {
     console.log('join room roomId', roomId);
-    socket.join(roomId);
+    roomId = toString(roomId)
+
+    await socket.join(roomId);
+    // io.in(roomId).emit('roomFull', false)
+    await io.in(roomId).emit('roomFull', false);
   });
 
 
@@ -59,14 +63,14 @@ io.on('connection', async (socket) => {
     await io.emit('solution', solutionObj);
   });
 
-  // listen for timer started
-  socket.on("timer", async (roomId) => {
-    console.log(roomId.roomId)
-    await socket.to(roomId.roomId).emit({
-      minutes: getMinutes(),
-      seconds: getSeconds()
-    })
-  })
+  // // listen for timer started
+  // socket.on("timer", async (roomId) => {
+  //   console.log(roomId.roomId)
+  //   await socket.to(roomId.roomId).emit({
+  //     minutes: getMinutes(),
+  //     seconds: getSeconds()
+  //   })
+  // })
 
   //listen for leave room
   socket.on('leaveRoom', (roomId) => {
