@@ -1,7 +1,7 @@
-import React from "react";
-import { connect } from "react-redux";
-import { setLeaderboard } from "../store/leaderboard";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { connect } from 'react-redux';
+import { setLeaderboard } from '../store/leaderboard';
+import { Link } from 'react-router-dom';
 
 // thunk api/users/leaderboard
 class Leaderboard extends React.Component {
@@ -12,13 +12,13 @@ class Leaderboard extends React.Component {
   render() {
     return (
       <div id="leaderboard-container">
-        <h1>LEADERBOARD</h1>
+        <h1 id="leaderboard-header">LEADERBOARD</h1>
         <div>
           {this.props.leaderboard.map((user) => (
-            <>
-              <Link to={`users/${user._id}`}>{user.username}</Link>
+            <div className="leaderboard-box">
+              <Link to={`user/${user._id}`}>{user.username}</Link>
               <p>Points: {user.totalPoints}</p>
-            </>
+            </div>
           ))}
         </div>
       </div>

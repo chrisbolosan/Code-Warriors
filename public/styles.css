@@ -1,3 +1,12 @@
+body {
+  background-color: #ffffff;
+  background-image: url('https://www.transparenttextures.com/patterns/gplay.png');
+}
+
+p {
+  margin: 0;
+}
+
 .IDE {
   /* font-size: 1.25rem; */
   width: 55%;
@@ -13,14 +22,89 @@
   display: flex;
 }
 
-#navbar {
-  display: flex;
-  justify-content: flex-end;
-  background-color: #e5e6e4;
-}
-
 .opponent {
   filter: blur(2px);
+}
+
+#navbarNav {
+  justify-content: flex-end;
+}
+
+.navbar-brand {
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+  font-style: oblique;
+}
+
+.navbar {
+  background-color: #2e1114;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.nav-item p {
+  color: #83677b;
+}
+
+.nav-item a {
+  color: #64485c;
+}
+
+.dropdown {
+  color: #83677b;
+  font-size: 45px;
+}
+
+#leaderboard-header {
+  color: white;
+}
+
+#left-panel {
+  text-align: center;
+}
+
+#left-panel img {
+  margin-top: 30px;
+  border-radius: 15px;
+  width: 400px;
+  height: 400px;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+#leaderboard-container {
+  border-style: solid;
+  padding: 30px;
+  border-radius: 25px;
+  background-color: #83677b;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+.leaderboard-box {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  border-style: solid;
+  padding: 15px;
+  border-color: #83677b;
+  border-width: 5px;
+  background-color: #64485c;
+  border-radius: 25px;
+}
+
+.leaderboard-box p {
+  color: white;
+}
+
+.leaderboard-box a {
+  color: #d1d1d1;
+}
+
+#guest {
+  display: flex;
+  margin-top: 30px;
+  justify-content: space-evenly;
 }
 
 #exercise-problem {
