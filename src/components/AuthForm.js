@@ -7,7 +7,7 @@ const AuthForm = (props) => {
   return displayName === "Sign Up" ? (
     <div id="signup-container">
       <form onSubmit={handleSubmit} name={name} id={name}>
-        <h1>Create an Account</h1>
+        <h2>Create an Account</h2>
         <label htmlFor="username">
           <p>Username</p>
         </label>
@@ -27,8 +27,8 @@ const AuthForm = (props) => {
   ) : (
     <div className="login-container">
       <form onSubmit={handleSubmit} name={name} id={name}>
-        <h1>Sign-In</h1>
-        <div>
+        <h2>Sign-In</h2>
+        <div id="login-form">
           <label htmlFor="username">
             <p>Username</p>
           </label>

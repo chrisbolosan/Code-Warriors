@@ -31,7 +31,7 @@ const Navbar = ({ isLoggedIn, handleClick, userId, auth }) => {
           <ul className="navbar-nav">
             <li className="nav-item">
               <Link to="/">
-                <p className="nav-link">Home</p>
+                <p className="nav-link home">Home</p>
               </Link>
             </li>
             {isLoggedIn ? (
@@ -43,12 +43,12 @@ const Navbar = ({ isLoggedIn, handleClick, userId, auth }) => {
                       state: { user: user },
                     }}
                   >
-                    <p className="nav-link">Profile</p>
+                    <p className="nav-link profile">Profile</p>
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/">
-                    <p className="nav-link" onClick={handleClick}>
+                    <p className="nav-link logout" onClick={handleClick}>
                       Logout
                     </p>
                   </Link>
@@ -58,12 +58,12 @@ const Navbar = ({ isLoggedIn, handleClick, userId, auth }) => {
               <>
                 <li className="nav-item">
                   <Link to="/login">
-                    <p className="nav-link">Login</p>
+                    <p className="nav-link login-nav">Login</p>
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/signup">
-                    <p className="nav-link">Signup</p>
+                    <p className="nav-link signup-nav">Signup</p>
                   </Link>
                 </li>
               </>
