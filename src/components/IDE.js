@@ -80,7 +80,7 @@ class IDE extends React.Component {
 
   render() {
     const me = this.props.me;
-    console.log("this is the local stte", this.state)
+    console.log("this is the local state", this.state)
 
     // This code checks the status of enabled and sets options based on whether it is
     // enabled or not
