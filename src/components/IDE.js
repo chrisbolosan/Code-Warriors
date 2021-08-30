@@ -34,6 +34,7 @@ class IDE extends React.Component {
 
   // when a user clicks "RUN"
   async handleRun(event) {
+    console.log("on run", this.state.input)
     event.preventDefault();
     if (this.props.enabled) {
       await this.props.runTestIDE(this.props.exercise.test, this.state.input);
@@ -49,6 +50,8 @@ class IDE extends React.Component {
 
   // when a user clicks "SUBMIT"
   async handleSubmit(event) {
+    console.log("on submit", this.state.input)
+
     this.setState({
       submitted: true,
     });

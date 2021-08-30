@@ -111,6 +111,7 @@ class Game extends React.Component {
 
           <div id="ide-container">
             <IDE
+              exercise={this.props.exercise}
               funcFrame={this.state.funcFrame}
               submitSolution={submitSolution}
               result={result}
