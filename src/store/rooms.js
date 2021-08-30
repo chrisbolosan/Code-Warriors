@@ -81,6 +81,7 @@ export const deleteRoom = (roomId) => {
     }
   }
 }
+
 // REDUCERS
 export default function battleReducer(state = [], action) {
   switch (action.type) {

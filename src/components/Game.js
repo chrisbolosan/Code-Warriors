@@ -10,6 +10,7 @@ import { runTest } from "../helpers/testRunner";
 import Timer from "./Timer";
 import Button from "@material-ui/core/Button";
 import { getExercise } from "../store/exercise"
+import { deleteRoom, setRooms } from "../store/rooms"
 import axios from "axios"
 
 class Game extends React.Component {
@@ -24,7 +25,6 @@ class Game extends React.Component {
     this.runTestIDE = this.runTestIDE.bind(this);
     this.handleStart = this.handleStart.bind(this)
   }
-
   result() {
     toast(this.props.solution.message, {
       position: "top-center",
@@ -68,6 +68,23 @@ class Game extends React.Component {
     clientSocket.on("solution", (solutionObject) => {
       this.setState(solutionObject);
     });
+  }
+
+  componentWillUnmount() {
+    const { deleteBattle, battles } = this.props
+    const { roomId } = this.props.location.state;
+
+    const battleToDelete = battles.filter((battle) => (
+      battle.roomId !== roomId
+    ))[0]
+
+    // if the user who creates a game leaves the game when it's still open, the room gets deleted
+    if (battleToDelete.open === true) {
+      deleteBattle(battleToDelete.roomId)
+      setRooms()
+    } else {
+      return
+    }
   }
 
   render() {
@@ -128,14 +145,15 @@ const mapState = (state) => {
   return {
     exercise: state.exercise,
     solution: state.solution,
-
+    battles: state.battles
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
     submitSolution: (id, solution) => dispatch(submitSolution(id, solution)),
-    getExercise: (exerciseId) => dispatch(getExercise(exerciseId))
+    getExercise: (exerciseId) => dispatch(getExercise(exerciseId)),
+    deleteBattle: (roomId) => dispatch(deleteRoom(roomId))
   };
 };
 

@@ -11,7 +11,6 @@ const Home = (props) => {
   const [rooms, setRooms] = useState([]);
   const [roomId, setRoomId] = useState(0);
 
-
   useEffect(() => {
     fetchRooms();
     clientSocket.on("rooms", (rooms) => {
@@ -19,14 +18,11 @@ const Home = (props) => {
     });
   }, [fetchRooms, rooms]);
 
-
   useEffect(() => {
     const randomRoomId = Math.floor(Math.random() * 10000000);
     setRoomId(randomRoomId)
     getRandomExercise();
   }, []);
-
-
 
   // when a user clicks creates a game
   async function handleClick() {
