@@ -104,9 +104,8 @@ class Game extends React.Component {
         <div id="game-container">
           <div id="exercise-problem">
             {/* show the problem once game has started */}
-            {/* {this.state.started === true ? exercise.problemDescription : null} */}
             <h4>Description</h4>
-            <p> {exercise.problemDescription}</p>
+            {this.state.started === true ? <p>{exercise.problemDescription}</p> : null}
           </div>
 
           <div id="ide-container">
