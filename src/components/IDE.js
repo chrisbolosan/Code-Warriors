@@ -61,7 +61,6 @@ class IDE extends React.Component {
         this.props.exercise._id,
         this.state.input
       );
-      this.props.result();
     }
 
     const players = this.state.room.players;
