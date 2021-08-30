@@ -10,7 +10,6 @@ import "react-toastify/dist/ReactToastify.css";
 import clientSocket from "../socket/socket";
 import { updateRoom } from "../store/rooms";
 
-import axios from "axios"
 
 class IDE extends React.Component {
   constructor(props) {
@@ -43,27 +42,6 @@ class IDE extends React.Component {
 
   // when a user clicks "SUBMIT"
   async handleSubmit(event) {
-    const players =  this.state.room.players
-    const currentPlayerId = this.props.me._id;
-    const updatedPlayers = players.map(player => {
-      if (player.id === currentPlayerId) {
-        return {
-          ...player,
-          time: this.props.timer,
-          submitted: true
-        }
-      } else {
-        return player
-      }
-    })
-
-    await this.props.updateRoom(
-      {
-        players: updatedPlayers
-      },
-      this.state.room._id
-    );
-
 
 
     this.setState({
@@ -78,6 +56,32 @@ class IDE extends React.Component {
       );
       this.props.result();
     }
+
+
+    const players =  this.state.room.players
+    const currentPlayerId = this.props.me._id;
+    console.log("solution", this.props.solution)
+    const updatedPlayers = players.map(player => {
+      if (player.id === currentPlayerId) {
+        return {
+          ...player,
+          time: this.props.timer,
+          submitted: true,
+          solution: this.props.solution.success
+        }
+      } else {
+        return player
+      }
+    })
+
+    await this.props.updateRoom(
+      {
+        players: updatedPlayers
+      },
+      this.state.room._id
+    );
+
+
   }
 
   async componentDidUpdate(prevProps) {
@@ -100,7 +104,6 @@ class IDE extends React.Component {
       playerId: clientSocket.id,
       roomId: this.props.roomId
     });
-
   }
 
   render() {
