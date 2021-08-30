@@ -81,8 +81,8 @@ class Game extends React.Component {
     const { roomId } = this.props.location.state;
 
     const battleToDelete = battles.filter(
-      (battle) => battle.roomId !== roomId
-    )[0];
+      (battle) => battle.roomId === roomId
+    )[0]
 
     // if the user who creates a game leaves the game when it's still open, the room gets deleted
     if (battleToDelete.open === true && this.state.started === false) {
