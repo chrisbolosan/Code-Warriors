@@ -18,6 +18,7 @@ class Game extends React.Component {
     this.state = {
       room: {},
       started: false,
+      startDisabled: true
     };
 
     this.runTestIDE = this.runTestIDE.bind(this);
@@ -56,14 +57,35 @@ class Game extends React.Component {
     const { exerciseId } = this.props.location.state;
     await this.props.getExercise(exerciseId);
 
+
     clientSocket.on('solution', (solutionObject) => {
       this.setState(solutionObject);
     });
 
-    clientSocket.on('timer', (secondsRemaining) => {
-      const div = document.getElementById('seconds-remaining');
-      div.innerHTML = secondsRemaining;
+    // clientSocket.on('timer', (secondsRemaining) => {
+    //   const div = document.getElementById('seconds-remaining');
+    //   div.innerHTML = secondsRemaining;
+    // });
+
+    clientSocket.on('roomFull', (value) => {
+      this.setState({
+        startDisabled: value
+      })
+      alert('room is full')
     });
+
+    // current player
+    const currentPlayer = this.props.me._id
+    // player who created the game
+    this.props.battles.forEach((battle) => {
+      if (battle.roomId === this.props.location.state.roomId) {
+        if (battle.players[0]._id !== currentPlayer) {
+          clientSocket.emit('joinRoom', this.props.location.state.roomId);
+        }
+      }
+    })
+
+
   }
 
   componentWillUnmount() {
@@ -87,7 +109,7 @@ class Game extends React.Component {
   render() {
     const { roomId } = this.props.location.state;
     const { submitSolution, exercise } = this.props;
-    const { result, runTestIDE } = this;
+    const { runTestIDE } = this;
 
     if (exercise.problemDescription) {
       return (
@@ -117,7 +139,10 @@ class Game extends React.Component {
           </div>
           <div id="start-match">
             {this.state.started === false ? (
-              <button onClick={this.handleStart}>START</button>
+              <button
+              onClick={this.handleStart}
+              disabled={this.state.startDisabled}
+              >START</button>
             ) : (
               <>
                 <Timer roomId={this.props.location.state.roomId} />
@@ -147,6 +172,7 @@ const mapState = (state) => {
     solution: state.solution,
     battles: state.battles,
     timer: state.timer,
+    me: state.auth
   };
 };
 

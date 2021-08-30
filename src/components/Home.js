@@ -26,9 +26,6 @@ const Home = (props) => {
   // when a user clicks creates a game
   async function handleClick() {
     // generate a random roomId
-
-    console.log('roomID', roomId);
-
     await addRoom({
       roomId: roomId,
       ref: props.exercise._id,
@@ -50,7 +47,6 @@ const Home = (props) => {
     const roomId = Number(event.target.value);
 
     const battleId = event.target.name;
-    clientSocket.emit('joinRoom', roomId);
 
     const player1 = props.battles.filter((battle) => {
       return battle.roomId === roomId;
