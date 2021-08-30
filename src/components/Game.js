@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import IDEOpponent from "./IDEOpponent";
 import clientSocket from "../socket/socket";
 import { runTest } from "../helpers/testRunner";
-import Timer from "./timer";
+import Timer from "./Timer";
 import Button from "@material-ui/core/Button";
 import { getExercise } from "../store/exercise"
 import axios from "axios"
