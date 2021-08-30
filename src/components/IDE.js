@@ -100,9 +100,9 @@ class IDE extends React.Component {
   }
 
   async componentDidUpdate(prevProps) {
-    if (prevProps.exercise.exerciseBody !== this.props.exercise.exerciseBody) {
+    if (prevProps.funcFrame !== this.props.funcFrame) {
       this.setState({
-        input: this.props.exercise.exerciseBody
+        input: this.props.funcFrame
       })
     }
     if (prevProps.room !== this.props.room) {
@@ -115,7 +115,7 @@ class IDE extends React.Component {
   async componentDidMount() {
     //sets state to the exercise body and client socket Id
     await this.setState({
-      input: this.props.exercise.exerciseBody,
+      input: this.props.funcFrame,
       playerId: clientSocket.id,
       roomId: this.props.roomId
     });
@@ -149,7 +149,7 @@ class IDE extends React.Component {
       };
     }
     return (
-      <div className="IDE">
+      <div className="IDE IDE1">
         <div className="user-info">
           <small>{me.username}</small>
           <small>Rank: {me.rank}</small>

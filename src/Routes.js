@@ -8,16 +8,15 @@ import UserProfile from './components/UserProfile';
 import GuestHome from './components/GuestHome';
 import { Login, SignUp } from './components/AuthForm';
 import Game from './components/Game';
+import Score from './components/Score'
 
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
   }
+
   render() {
-
     const { isLoggedIn } = this.props;
-    // console.log(isLoggedIn);
-
 
     return (
       <div>
@@ -27,10 +26,10 @@ class Routes extends Component {
             <Route exact path="/game" component={Game} />
             <Route exact path="/user/:userId" component={UserProfile} />
             <Route exact path="/leaderboard" component={Leaderboard} />
+            <Route exact path="/score" component={Score} />
           </Switch>
         ) : (
           <Switch>
-            {/* <Route exact path="/IDE" component={Game} /> */}
             <Route exact path="/" component={GuestHome} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={SignUp} />

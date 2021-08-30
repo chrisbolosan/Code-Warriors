@@ -20,7 +20,9 @@ exports.updateBattle = async (req, res, next) => {
 
 exports.deleteBattle = async (req, res, next) => {
   try {
-    const battle = await Battle.findByIdAndDelete(req.params.roomID);
+    const battle = await Battle.deleteOne({
+      roomId: req.params.roomID
+    });
     res.status(200).json(battle);
   } catch (e) {
     next(e);
