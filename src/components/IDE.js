@@ -8,7 +8,8 @@ import { Controlled } from "react-codemirror2";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import clientSocket from "../socket/socket";
-import axios from "axios"
+import { updateRoom } from "../store/rooms";
+
 
 class IDE extends React.Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class IDE extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRun = this.handleRun.bind(this);
+    this.getWinner = this.getWinner.bind(this)
   }
 
   async handleChange(userInput) {
@@ -39,12 +41,18 @@ class IDE extends React.Component {
     }
   }
 
+  getWinner(player, opponant) {
+    let playerScore = 0;
+    if (player.time > opponant.time) playerScore += 5;
+    if (player.solution) playerScore += 7
+    return playerScore
+  }
+
   // when a user clicks "SUBMIT"
   async handleSubmit(event) {
     this.setState({
       submitted: true
     });
-
     event.preventDefault();
     if (this.props.enabled) {
       await this.props.submitSolution(
@@ -52,6 +60,42 @@ class IDE extends React.Component {
         this.state.input
       );
       this.props.result();
+    }
+
+
+    const players =  this.state.room.players
+    const currentPlayerId = this.props.me._id;
+    const updatedPlayers = players.map(player => {
+      if (player.id === currentPlayerId) {
+        return {
+          ...player,
+          time: this.props.timer,
+          submitted: true,
+          solution: this.props.solution.success
+        }
+      } else {
+        return player
+      }
+    })
+
+    await this.props.updateRoom(
+      {
+        players: updatedPlayers
+      },
+      this.state.room._id
+    );
+
+    const res = updatedPlayers.some(player => {
+      return player.submitted === false
+    })
+
+    const [player1, player2] = updatedPlayers;
+
+    if (!res) {
+      const p1Score = this.getWinner(player1, player2);
+      const p2Score = this.getWinner(player2, player1)
+      const winner = p1Score > p2Score ? player1 : player2
+      alert(`${winner.username} is the winner!`)
     }
   }
 
@@ -75,12 +119,10 @@ class IDE extends React.Component {
       playerId: clientSocket.id,
       roomId: this.props.roomId
     });
-
   }
 
   render() {
     const me = this.props.me;
-    console.log("this is the local state", this.state)
 
     // This code checks the status of enabled and sets options based on whether it is
     // enabled or not
@@ -153,8 +195,17 @@ const mapState = (state) => {
   return {
     me: state.auth,
     solution: state.solution,
-    battles: state.battles
+    battles: state.battles,
+    timer: state.timer
   };
 };
 
-export default connect(mapState, null)(IDE);
+const mapDispatch = (dispatch) => {
+  return {
+    updateRoom: (room, roomId) => {
+      dispatch(updateRoom(room, roomId));
+    },
+  };
+};
+
+export default connect(mapState, mapDispatch)(IDE);

@@ -10,7 +10,7 @@ export class Timer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      secondsRemaining: 5000 / 1000, //time in seconds
+      secondsRemaining: 300000 / 1000, //time in seconds
     };
     this.resetTime = this.resetTime.bind(this)
   }
