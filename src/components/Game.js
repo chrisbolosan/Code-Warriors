@@ -1,7 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom"
 import IDE from "./IDE";
-import Score from "./Score"
 import { connect } from "react-redux";
 import { submitSolution } from "../store/solution";
 import { toast } from "react-toastify";
@@ -96,9 +95,6 @@ class Game extends React.Component {
     const { submitSolution, exercise } = this.props;
     const { result, runTestIDE } = this;
 
-    if (this.props.timer === 0 ) {
-      return <Redirect to="/score"/>
-    }
     if (exercise.problemDescription) {
       return (
         <div id="game-container">

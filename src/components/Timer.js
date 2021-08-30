@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from "react-router-dom"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { setTime } from '../store/timer'
@@ -9,13 +10,19 @@ export class Timer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      secondsRemaining: 30000 / 1000, //time in seconds
+      secondsRemaining: 300000 / 1000, //time in seconds
     };
     this.resetTime = this.resetTime.bind(this)
   }
   componentDidMount() {
     this.startTime()
   }
+
+  componentWillUnmount() {
+    var _this = this;
+    clearInterval(_this.countdown)
+  }
+
   getHours() {
     return ('0' + Math.floor(this.state.secondsRemaining / 3600)).slice(-2);
   }
@@ -46,7 +53,6 @@ export class Timer extends React.Component {
         clearInterval(_this.countdown)
       }
     }, 1000);
-
   }
 
 
@@ -60,7 +66,8 @@ export class Timer extends React.Component {
       <div className='App'>
         {
           timer === 0 ? (
-            <p>DONE!</p>
+
+            <Redirect to="/score" />
           ) : (
             <div className='timer-container'>
               <span className='bloc-timer'>
