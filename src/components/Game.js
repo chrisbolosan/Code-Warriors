@@ -70,6 +70,11 @@ class Game extends React.Component {
     clientSocket.on("solution", (solutionObject) => {
       this.setState(solutionObject);
     });
+
+    clientSocket.on("timer", (secondsRemaining) => {
+      const div = document.getElementById("seconds-remaining")
+      div.innerHTML = secondsRemaining
+    })
   }
 
   componentWillUnmount() {
@@ -125,7 +130,10 @@ class Game extends React.Component {
             this.state.started === false ? (
               <button onClick={this.handleStart}>START</button>
             ) : (
-              <Timer />
+              <>
+                <Timer roomId={this.props.location.state.roomId}/>
+                <div id="seconds-remaining"></div>
+              </>
             )
           }
           <div id="test">

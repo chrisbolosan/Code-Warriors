@@ -4,7 +4,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { setTime } from '../store/timer'
 import { connect } from "react-redux";
-
+import clientSocket from "../socket/socket";
+import { useEffect, useState } from "react"
 
 export class Timer extends React.Component {
   constructor(props) {
@@ -12,10 +13,19 @@ export class Timer extends React.Component {
     this.state = {
       secondsRemaining: 300000 / 1000, //time in seconds
     };
-    this.resetTime = this.resetTime.bind(this)
   }
+
   componentDidMount() {
+    const { roomId } = this.props
     this.startTime()
+    // clientSocket.emit("timer", {
+    //   roomId: String(roomId)
+    // })
+
+    // clientSocket.on("timer", (time) => {
+    //   const div = document.getElementById("timer")
+    //   div.innerHTML = <><span>minutes</span><span>seconds</span></>
+    // })
   }
 
   componentWillUnmount() {
@@ -23,25 +33,12 @@ export class Timer extends React.Component {
     clearInterval(_this.countdown)
   }
 
-  getHours() {
-    return ('0' + Math.floor(this.state.secondsRemaining / 3600)).slice(-2);
-  }
   getMinutes() {
-    return ('0' + Math.floor((this.state.secondsRemaining % 3600) / 60)).slice(
-
-      -2
-    );
+    return ('0' + Math.floor((this.state.secondsRemaining % 3600) / 60)).slice(-2)
   }
+
   getSeconds() {
     return ('0' + (this.state.secondsRemaining % 60)).slice(-2);
-  }
-
-  resetTime() {
-    var _this = this;
-
-    this.reset = this.setState({
-      secondsRemaining: (_this.state.secondsRemaining = 0),
-    });
   }
 
   startTime() {
@@ -55,18 +52,12 @@ export class Timer extends React.Component {
     }, 1000);
   }
 
-
-  pauseTime() {
-    clearInterval(this.countdown);
-  }
-
   render() {
     const { timer } = this.props
     return (
       <div className='App'>
         {
           timer === 0 ? (
-
             <Redirect to="/score" />
           ) : (
             <div className='timer-container'>

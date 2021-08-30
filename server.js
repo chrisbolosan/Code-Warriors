@@ -5,6 +5,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 const http = require('http');
 const socket = require('socket.io');
+const { getMinutes, getSeconds } = require("./utils/socketfunctions")
 
 dotenv.config({ path: './config/config.env' });
 
@@ -58,12 +59,19 @@ io.on('connection', async (socket) => {
     await io.emit('solution', solutionObj);
   });
 
+  // listen for timer started
+  socket.on("timer", async (roomId) => {
+    console.log(roomId.roomId)
+    await socket.to(roomId.roomId).emit({
+      minutes: getMinutes(),
+      seconds: getSeconds()
+    })
+  })
+
   //listen for leave room
   socket.on('leaveRoom', (roomId) => {
     socket.leave(roomId);
   })
-
-  
 });
 
 server.listen(PORT, console.log(`Running on port ${PORT}`));
