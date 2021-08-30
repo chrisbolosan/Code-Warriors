@@ -12,13 +12,13 @@ class Leaderboard extends React.Component {
   render() {
     return (
       <div id="leaderboard-container">
-        <h1>LEADERBOARD</h1>
+        <h1 id="leaderboard-header">LEADERBOARD</h1>
         <div>
           {this.props.leaderboard.map((user) => (
-            <>
+            <div className="leaderboard-box">
               <Link to={`user/${user._id}`}>{user.username}</Link>
               <p>Points: {user.totalPoints}</p>
-            </>
+            </div>
           ))}
         </div>
       </div>
