@@ -9,7 +9,7 @@ export class Timer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      secondsRemaining: 300000 / 1000, //time in seconds
+      secondsRemaining: 30000 / 1000, //time in seconds
     };
     this.resetTime = this.resetTime.bind(this)
   }
@@ -55,19 +55,25 @@ export class Timer extends React.Component {
   }
 
   render() {
+    const { timer } = this.props
     return (
       <div className='App'>
-        <div className='timer-container'>
-          <span className='bloc-timer'>
-            Time Remaining : {this.getMinutes()}
-          </span>
-          <span className='bloc-timer'> :{this.getSeconds()}</span>
-        </div>
+        {
+          timer === 0 ? (
+            <p>DONE!</p>
+          ) : (
+            <div className='timer-container'>
+              <span className='bloc-timer'>
+                Time Remaining : {this.getMinutes()}
+              </span>
+              <span className='bloc-timer'> :{this.getSeconds()}</span>
+            </div>
+          )
+        }
       </div>
     );
   }
 }
-
 
 const mapState = (state) => {
   return {

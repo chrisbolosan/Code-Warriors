@@ -1,5 +1,7 @@
 import React from "react";
+import { Redirect } from "react-router-dom"
 import IDE from "./IDE";
+import Score from "./Score"
 import { connect } from "react-redux";
 import { submitSolution } from "../store/solution";
 import { toast } from "react-toastify";
@@ -25,6 +27,7 @@ class Game extends React.Component {
     this.runTestIDE = this.runTestIDE.bind(this);
     this.handleStart = this.handleStart.bind(this)
   }
+
   result() {
     toast(this.props.solution.message, {
       position: "top-center",
@@ -93,6 +96,9 @@ class Game extends React.Component {
     const { submitSolution, exercise } = this.props;
     const { result, runTestIDE } = this;
 
+    if (this.props.timer === 0 ) {
+      return <Redirect to="/score"/>
+    }
     if (exercise.problemDescription) {
       return (
         <div id="game-container">
@@ -146,7 +152,8 @@ const mapState = (state) => {
   return {
     exercise: state.exercise,
     solution: state.solution,
-    battles: state.battles
+    battles: state.battles,
+    timer: state.timer
   };
 };
 
