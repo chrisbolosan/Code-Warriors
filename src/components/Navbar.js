@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../store";
@@ -22,8 +22,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Navbar = ({ isLoggedIn, handleClick, userId }) => {
+const Navbar = ({ isLoggedIn, handleClick, userId, auth}) => {
   const classes = useStyles();
+  const [user, setUser] = useState()
 
   const StyledBadge = withStyles((theme) => ({
     badge: {
@@ -33,6 +34,11 @@ const Navbar = ({ isLoggedIn, handleClick, userId }) => {
       padding: "0 4px",
     },
   }))(Badge);
+
+ useEffect(() => {
+    setUser(auth)
+  }, [auth]);
+  console.log('Navbar: ', user);
   return (
     <nav id="navbar">
       {isLoggedIn ? (
@@ -51,7 +57,12 @@ const Navbar = ({ isLoggedIn, handleClick, userId }) => {
                 </Link>
               </Typography>
               <Typography variant="h4" className={classes.title}>
-                <Link to={`/users/${userId}`}>
+                <Link to={{
+                    pathname: `/user/${user._id}`,
+                    state: {
+                     user: user
+                  },
+                }}>
                   <Button>Profile</Button>
                 </Link>
               </Typography>
@@ -107,6 +118,7 @@ const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth._id,
     userId: state.auth._id,
+    auth: state.auth,
   };
 };
 
