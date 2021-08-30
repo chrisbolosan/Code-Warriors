@@ -44,7 +44,7 @@ class IDE extends React.Component {
   getWinner(player, opponant) {
     let playerScore = 0;
     if (player.time > opponant.time) playerScore += 5;
-    if (player.solution) playerScore += 5
+    if (player.solution) playerScore += 7
     return playerScore
   }
 
@@ -65,7 +65,6 @@ class IDE extends React.Component {
 
     const players =  this.state.room.players
     const currentPlayerId = this.props.me._id;
-    console.log("solution", this.props.solution)
     const updatedPlayers = players.map(player => {
       if (player.id === currentPlayerId) {
         return {
@@ -92,22 +91,12 @@ class IDE extends React.Component {
 
     const [player1, player2] = updatedPlayers;
 
-
-    console.log(player2)
-    console.log(player1)
-
-
     if (!res) {
       const p1Score = this.getWinner(player1, player2);
       const p2Score = this.getWinner(player2, player1)
       const winner = p1Score > p2Score ? player1 : player2
-      alert(winner.username)
-
+      alert(`${winner.username} is the winner!`)
     }
-
-    console.log("players", updatedPlayers)
-
-
   }
 
   async componentDidUpdate(prevProps) {
