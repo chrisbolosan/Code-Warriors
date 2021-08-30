@@ -42,12 +42,9 @@ class IDE extends React.Component {
 
   // when a user clicks "SUBMIT"
   async handleSubmit(event) {
-
-
     this.setState({
       submitted: true
     });
-
     event.preventDefault();
     if (this.props.enabled) {
       await this.props.submitSolution(
@@ -80,6 +77,16 @@ class IDE extends React.Component {
       },
       this.state.room._id
     );
+
+    console.log('players', updatedPlayers)
+
+    const res = updatedPlayers.some(player => {
+      return player.submitted === false
+    })
+
+    if (!res) {
+      alert("GAME OVER")
+    }
 
 
   }
