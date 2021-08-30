@@ -1,16 +1,15 @@
 .IDE {
   /* font-size: 1.25rem; */
   width: 55%;
-  padding: 10px;
 }
 
-.game-container {
+#game-container {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
 }
 
-.ide-container {
+#ide-container {
   display: flex;
 }
 
@@ -24,6 +23,20 @@
   filter: blur(2px);
 }
 
+#exercise-problem {
+  margin: auto;
+  padding: 20px 0px;
+  height: 100px;
+  width: 600px;
+}
+
+.IDE1 {
+  margin-right: 100px;
+}
+
+.IDE2 {
+  margin-left: 100px;
+}
 /* IDE */
 
 #Run {

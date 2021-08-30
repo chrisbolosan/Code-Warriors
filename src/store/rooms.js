@@ -4,6 +4,7 @@ import axios from "axios"
 const SET_ROOMS = "SET_ROOMS"
 const ADD_ROOM = "ADD_ROOM"
 const UPDATE_ROOM = "UPDATE_ROOM"
+const DELETE_ROOM = "DELETE_ROOM"
 // const SET_ROOM = "SET_ROOM"
 
 
@@ -15,15 +16,6 @@ export const _setRooms = (rooms) => {
   }
 }
 
-
-// export const _setRoom = (room) => {
-//   return {
-//     type: SET_ROOM,
-//     room
-//   }
-// }
-
-
 export const _addRoom = (room) => {
   return {
     type: ADD_ROOM,
@@ -34,6 +26,13 @@ export const _addRoom = (room) => {
 export const _updateRoom = (room) => {
   return {
     type: UPDATE_ROOM,
+    room
+  }
+}
+
+export const _deleteRoom = (room) => {
+  return {
+    type: DELETE_ROOM,
     room
   }
 }
@@ -54,7 +53,6 @@ export const addRoom = (roomToAdd) => {
   return async (dispatch) => {
     try {
       const { data: newRoom } = await axios.post("/api/battles", roomToAdd)
-      // dispatch(_setRoom(newRoom))
       dispatch(_addRoom(newRoom))
     } catch (error) {
       console.log(error)
@@ -73,7 +71,16 @@ export const updateRoom = (room, roomId) => {
   }
 }
 
-
+export const deleteRoom = (roomId) => {
+  return async (dispatch) => {
+    try {
+      const { data: deletedRoom } = await axios.delete(`/api/battles/${roomId}`)
+      dispatch(_deleteRoom(deletedRoom))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
 // REDUCERS
 export default function battleReducer(state = [], action) {
   switch (action.type) {
@@ -85,6 +92,10 @@ export default function battleReducer(state = [], action) {
       return state.map((room) => (
         room._id === action.room._id ? action.room : room
         ))
+    case DELETE_ROOM:
+      return state.filter((room) => (
+        room.roomId !== action.room.roomId
+      ))
     default:
       return state
   }

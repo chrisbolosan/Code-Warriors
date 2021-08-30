@@ -149,7 +149,7 @@ class IDE extends React.Component {
       };
     }
     return (
-      <div className="IDE">
+      <div className="IDE IDE1">
         <div className="user-info">
           <small>{me.username}</small>
           <small>Rank: {me.rank}</small>

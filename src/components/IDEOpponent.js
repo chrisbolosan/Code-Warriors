@@ -51,8 +51,13 @@ class IDEOpponent extends React.Component {
       readOnly: true,
     };
     return (
-      <div className="IDE opponent">
-        <div className="editor-container">
+      <div className="IDE IDE2">
+        <div className="user-info">
+          <small>Opponent's name</small>
+          <small>Opponent's Rank</small>
+          <small>Opponent's points</small>
+        </div>
+        <div className="editor-container opponent">
           {/* This is the IDE component from codemirror */}
           <Controlled
             // this is the onChange equivilent of the imported component

@@ -19,6 +19,7 @@ class Game extends React.Component {
       room: {},
       started: false,
     };
+
     this.result = this.result.bind(this);
     this.runTestIDE = this.runTestIDE.bind(this);
     this.handleStart = this.handleStart.bind(this)
@@ -33,6 +34,7 @@ class Game extends React.Component {
     });
   }
 
+  // run the test in the IDE
   async runTestIDE(test, input) {
     const res = await runTest(test, input);
     this.setState({
@@ -40,6 +42,7 @@ class Game extends React.Component {
     });
   }
 
+  // when user clicks the START button
   async handleStart() {
 
     // game has started
@@ -56,27 +59,32 @@ class Game extends React.Component {
     await this.setState({
       room: data[0]
     })
-    console.log("this is the state after clicking start", this.state)
   }
 
   async componentDidMount() {
     const { exerciseId } = this.props.location.state;
     await this.props.getExercise(exerciseId)
+
     clientSocket.on("solution", (solutionObject) => {
       this.setState(solutionObject);
     });
   }
 
   render() {
-    console.log(this.state)
     const { roomId } = this.props.location.state;
     const { submitSolution, exercise } = this.props;
     const { result, runTestIDE } = this;
+
     if (exercise.problemDescription) {
       return (
-        <div className="game-container">
-          <div id="exercise-problem">{this.state.started === true ? exercise.problemDescription : null}</div>
-          <div>
+        <div id="game-container">
+
+          <div id="exercise-problem">
+            {/* show the problem once game has started */}
+            { this.state.started === true ? exercise.problemDescription : null }
+          </div>
+
+          <div id="ide-container">
             <IDE
               funcFrame={this.state.funcFrame}
               submitSolution={submitSolution}
@@ -100,14 +108,14 @@ class Game extends React.Component {
               <p>Timer</p>
             )
           }
-          <div>
-              <h3>Test Results</h3>
-              <div>
-                {this.state.result
-                  ? this.state.result.message
-                  : "please run your test"}
-              </div>
+          <div id="test">
+            <h3>Test Results</h3>
+            <div id="test-results">
+              {this.state.result
+                ? this.state.result.message
+                : "please run your test"}
             </div>
+          </div>
         </div>
       );
     } else {
