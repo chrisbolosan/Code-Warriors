@@ -57,6 +57,7 @@ class Game extends React.Component {
     const { exerciseId } = this.props.location.state;
     await this.props.getExercise(exerciseId);
 
+
     clientSocket.on('solution', (solutionObject) => {
       this.setState(solutionObject);
     });
@@ -67,12 +68,24 @@ class Game extends React.Component {
     // });
 
     clientSocket.on('roomFull', (value) => {
-      console.log("a user joined")
-        this.setState({
-          startDisabled: value
-        })
-
+      this.setState({
+        startDisabled: value
+      })
+      alert('room is full')
     });
+
+    // current player
+    const currentPlayer = this.props.me._id
+    // player who created the game
+    this.props.battles.forEach((battle) => {
+      if (battle.roomId === this.props.location.state.roomId) {
+        if (battle.players[0]._id !== currentPlayer) {
+          clientSocket.emit('joinRoom', this.props.location.state.roomId);
+        }
+      }
+    })
+
+
   }
 
   componentWillUnmount() {
@@ -159,6 +172,7 @@ const mapState = (state) => {
     solution: state.solution,
     battles: state.battles,
     timer: state.timer,
+    me: state.auth
   };
 };
 

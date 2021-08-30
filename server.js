@@ -47,13 +47,11 @@ io.on('connection', async (socket) => {
     io.emit('rooms', rooms);
   });
 
-  socket.on('joinRoom', async (roomId) => {
+  socket.on('joinRoom', (roomId) => {
     console.log('join room roomId', roomId);
-    roomId = toString(roomId)
-
-    await socket.join(roomId);
-    // io.in(roomId).emit('roomFull', false)
-    await io.in(roomId).emit('roomFull', false);
+    socket.join(roomId);
+    console.log("roomID", roomId)
+    io.in(roomId).emit('roomFull', false)
   });
 
 
