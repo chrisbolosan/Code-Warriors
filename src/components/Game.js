@@ -75,7 +75,7 @@ class Game extends React.Component {
     if (exercise.problemDescription) {
       return (
         <div className="game-container">
-          <div>{exercise ? exercise.problemDescription : null}</div>
+          <div id="exercise-problem">{this.state.started === true ? exercise.problemDescription : null}</div>
           <div>
             <IDE
               funcFrame={this.state.funcFrame}
