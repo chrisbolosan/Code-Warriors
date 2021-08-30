@@ -16,7 +16,8 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      room: {}
+      room: {},
+      started: false,
     };
     this.result = this.result.bind(this);
     this.runTestIDE = this.runTestIDE.bind(this);
@@ -40,12 +41,22 @@ class Game extends React.Component {
   }
 
   async handleStart() {
+
+    // game has started
+    this.setState({
+      started: true,
+      funcFrame: this.props.exercise.exerciseBody
+    })
+
+    // get the room from the database
     const roomId = String(this.props.location.state.roomId)
     const { data } = await axios.get(`/api/battles/${roomId}`)
 
+    // set it to local state
     await this.setState({
       room: data[0]
     })
+    console.log("this is the state after clicking start", this.state)
   }
 
   async componentDidMount() {
@@ -57,6 +68,7 @@ class Game extends React.Component {
   }
 
   render() {
+    console.log(this.state)
     const { roomId } = this.props.location.state;
     const { submitSolution, exercise } = this.props;
     const { result, runTestIDE } = this;
@@ -66,7 +78,7 @@ class Game extends React.Component {
           <div>{exercise ? exercise.problemDescription : null}</div>
           <div>
             <IDE
-              exercise={exercise}
+              funcFrame={this.state.funcFrame}
               submitSolution={submitSolution}
               result={result}
               enabled={true}
@@ -74,7 +86,21 @@ class Game extends React.Component {
               runTestIDE={runTestIDE}
               room={this.state.room}
             />
-            <div>
+            <IDEOpponent
+              //pass solution obj as props to dummy IDE
+              solutionObject={this.state}
+              funcFrame={this.state.funcFrame}
+              roomId={roomId}
+            />
+          </div>
+          {
+            this.state.started === false ? (
+              <button onClick={this.handleStart}>START</button>
+            ) : (
+              <p>Timer</p>
+            )
+          }
+          <div>
               <h3>Test Results</h3>
               <div>
                 {this.state.result
@@ -82,17 +108,6 @@ class Game extends React.Component {
                   : "please run your test"}
               </div>
             </div>
-            <Button onClick={this.handleStart} variant="inherit" color="secondary">
-              <Timer />
-            </Button>
-          </div>
-
-          <IDEOpponent
-            //pass solution obj as props to dummy IDE
-            solutionObject={this.state}
-            exercise={exercise.exerciseBody}
-            roomId={roomId}
-          />
         </div>
       );
     } else {
@@ -117,3 +132,5 @@ const mapDispatch = (dispatch) => {
 };
 
 export default connect(mapState, mapDispatch)(Game);
+
+// <Button onClick={this.handleStart} variant="inherit" color="secondary" ><Timer /></Button>
