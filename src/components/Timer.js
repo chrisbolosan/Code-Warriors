@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { setTime } from '../store/timer'
 import { connect } from "react-redux";
 import clientSocket from "../socket/socket";
-import { useEffect, useState } from "react"
 
 export class Timer extends React.Component {
   constructor(props) {
