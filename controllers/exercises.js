@@ -1,6 +1,6 @@
 const Exercise = require('../models/Exercise');
 const Jsrunner = require('javascript-code-runner');
-const babel = require("@babel/core")
+const babel = require('@babel/core');
 
 // @desc    Get Exercise
 // @route   GET /api/exercises
@@ -9,8 +9,8 @@ exports.getExercises = async (req, res, next) => {
   try {
     const exercises = await Exercise.find();
     res.status(200).json(exercises);
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -21,8 +21,8 @@ exports.getExercise = async (req, res, next) => {
   try {
     const exercise = await Exercise.findById(req.params.id);
     res.status(200).json(exercise);
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -37,8 +37,8 @@ exports.createExercise = async (req, res, next) => {
     } else {
       res.status(401).json({ success: false, message: 'Unauthorized access' });
     }
-  } catch (e) {
-    next(e);
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -56,8 +56,8 @@ exports.updateExercise = async (req, res, next) => {
     } else {
       res.status(401).json({ success: false, message: 'Unauthorized access' });
     }
-  } catch (e) {
-    next(e);
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -72,8 +72,8 @@ exports.deleteExercise = async (req, res, next) => {
     } else {
       res.status(401).json({ success: false, message: 'Unauthorized access' });
     }
-  } catch (e) {
-    next(e);
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -87,18 +87,17 @@ exports.submitSolution = async (req, res, next) => {
   try {
     const { test } = await Exercise.findById(req.body.id);
     let userSolution = req.body.solution;
-      babel.transform(
-        userSolution,
-        {
-          babelrc: true,
-          filename: "../.babelrc"
-        },
-        function (err, result) {
-          userSolution = result.code
-        }
-      )
+    babel.transform(
+      userSolution,
+      {
+        babelrc: true,
+        filename: '../.babelrc',
+      },
+      function (err, result) {
+        userSolution = result.code;
+      }
+    );
     const problem = `${userSolution} ${test}`;
-    console.log(problem)
     const { result, message } = Jsrunner(problem);
     if (result === 'false') {
       return res.json({
@@ -113,11 +112,10 @@ exports.submitSolution = async (req, res, next) => {
         message: 'tests passed',
       });
     }
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };
-
 
 // @desc    Get random exercise
 // @route   GET /api/exercises/random
@@ -127,9 +125,7 @@ exports.getRandomExercise = async (req, res, next) => {
   try {
     const exercise = await Exercise.getRandomExercise();
     res.status(200).json(exercise);
-  } catch (e) {
-    next(e);
+  } catch (error) {
+    next(error);
   }
 };
-
-

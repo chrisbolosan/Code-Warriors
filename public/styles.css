@@ -12,7 +12,7 @@ p {
 }
 
 .opponent {
-  filter: blur(2px);
+  filter: blur(3px);
 }
 
 #navbarNav {

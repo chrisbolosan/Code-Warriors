@@ -15,7 +15,9 @@ const Navbar = ({ isLoggedIn, handleClick, userId, auth }) => {
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
-        <p className="navbar-brand">Code Warriors</p>
+        <Link to="/" style={{ textDecoration: 'none' }}>
+          <p className="navbar-brand">Code Warriors</p>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
