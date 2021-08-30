@@ -7,21 +7,6 @@ p {
   margin: 0;
 }
 
-.IDE {
-  /* font-size: 1.25rem; */
-  width: 55%;
-}
-
-#game-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
-
-#ide-container {
-  display: flex;
-}
-
 .opponent {
   filter: blur(2px);
 }
@@ -45,6 +30,7 @@ p {
 }
 
 .nav-item p {
+  font-weight: 500;
   color: #83677b;
 }
 
@@ -95,6 +81,7 @@ p {
 
 .leaderboard-box p {
   color: white;
+  font-weight: 500;
 }
 
 .leaderboard-box a {
@@ -107,7 +94,6 @@ p {
   justify-content: space-evenly;
 }
 
-<<<<<<< HEAD
 .main-home {
   margin-top: 30px;
   display: flex;
@@ -148,27 +134,91 @@ p {
   background-color: #3a2a35;
 }
 
+.room-button {
+  color: white;
+  border-style: none;
+  background-color: #83677b;
+  padding: 15px;
+  border-radius: 15px;
+}
+
+.room-button:hover {
+  background-color: #6d5666;
+}
+
 /* IDE */
-=======
+
 #exercise-problem {
-  margin: auto;
-  padding: 20px 0px;
-  height: 100px;
-  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-style: dashed;
+  padding: 20px;
+  border-radius: 15px;
+  border-width: 5px;
 }
 
-.IDE1 {
-  margin-right: 100px;
+#exercise-problem > p {
+  width: 500px;
 }
 
-.IDE2 {
-  margin-left: 100px;
+#ide-container {
+  display: flex;
+  justify-content: space-evenly;
 }
->>>>>>> f63f77547560001a30b8516ee5f0d99131d41fcf
 
-/* IDE */
-#Run {
-  margin-top: 1.65em;
+#ide-container .IDE {
+  width: 400px;
+}
+
+.CodeMirror,
+.cm-s-material,
+.CodeMirror-wrap {
+  border-radius: 15px;
+}
+
+.user-info {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+}
+
+.user-info small {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.ide-buttons {
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-evenly;
+}
+
+.ide-buttons button {
+  padding: 15px 45px 15px 45px;
+  font-weight: 500;
+}
+
+#start-match {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+#start-match button {
+  padding: 20px 130px;
+  border-radius: 15px;
+  font-size: 20px;
+  font-weight: 500;
+  border-style: none;
+  background-color: #2e1114;
+  color: white;
+}
+
+#start-match button:hover {
+  background-color: #3a2a35;
 }
 
 /* login and signup forms */
@@ -181,8 +231,9 @@ p {
   border: black 2px solid;
   margin: auto;
   margin-top: 100px;
-  background-color: #83677B;
+  background-color: #83677b;
   border-radius: 15px;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 #signup {
@@ -194,35 +245,40 @@ p {
   margin-top: 100px;
   width: 320px;
   height: 400px;
-  background-color: #83677B;
+  background-color: #83677b;
   border-radius: 15px;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
-#login h2, #signup h2 {
+#login h2,
+#signup h2 {
   margin-top: 20px;
   color: white;
   margin-bottom: 20px;
 }
 
 #login-form {
-  display:flex;
+  display: flex;
   flex-direction: column;
 }
 
-#login p, #signup p {
+#login p,
+#signup p {
   font-weight: bolder;
   margin: 0px;
   color: white;
 }
 
-#login input, #signup input {
+#login input,
+#signup input {
   width: 200px;
   height: 30px;
   margin-bottom: 10px;
   border-radius: 8px;
 }
 
-#login button, #signup button {
+#login button,
+#signup button {
   width: 205px;
   height: 30px;
   border-radius: 8px;
@@ -232,11 +288,12 @@ p {
   font-weight: bolder;
 }
 
-#login button:active, #signup button:active {
-  background: #ADADAD;
+#login button:active,
+#signup button:active {
+  background: #adadad;
   -webkit-box-shadow: inset 0px 0px 5px #5d5c61;
-     -moz-box-shadow: inset 0px 0px 5px #5d5c61;
-          box-shadow: inset 0px 0px 5px #5d5c61;
+  -moz-box-shadow: inset 0px 0px 5px #5d5c61;
+  box-shadow: inset 0px 0px 5px #5d5c61;
   outline: none;
 }
 

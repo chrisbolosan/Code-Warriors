@@ -112,7 +112,7 @@ const Home = (props) => {
                   name={room._id}
                   key={room._id}
                   type="button"
-                  className="btn btn-primary"
+                  className="room-button"
                 >{`${room.players[0].username}'s room`}</button>
               </Link>
             </div>

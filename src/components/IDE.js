@@ -1,29 +1,28 @@
-import React from "react";
-import { connect } from "react-redux";
-import "codemirror/lib/codemirror.css";
-import "codemirror/theme/material.css";
-import "codemirror/addon/edit/closebrackets";
-import "codemirror/mode/javascript/javascript";
-import { Controlled } from "react-codemirror2";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import clientSocket from "../socket/socket";
-import { updateRoom } from "../store/rooms";
-
+import React from 'react';
+import { connect } from 'react-redux';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/material.css';
+import 'codemirror/addon/edit/closebrackets';
+import 'codemirror/mode/javascript/javascript';
+import { Controlled } from 'react-codemirror2';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import clientSocket from '../socket/socket';
+import { updateRoom } from '../store/rooms';
 
 class IDE extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: "",
-      playerId: "",
-      roomId: "",
-      submitted: false
+      input: '',
+      playerId: '',
+      roomId: '',
+      submitted: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRun = this.handleRun.bind(this);
-    this.getWinner = this.getWinner.bind(this)
+    this.getWinner = this.getWinner.bind(this);
   }
 
   async handleChange(userInput) {
@@ -44,14 +43,14 @@ class IDE extends React.Component {
   getWinner(player, opponant) {
     let playerScore = 0;
     if (player.time > opponant.time) playerScore += 5;
-    if (player.solution) playerScore += 7
-    return playerScore
+    if (player.solution) playerScore += 7;
+    return playerScore;
   }
 
   // when a user clicks "SUBMIT"
   async handleSubmit(event) {
     this.setState({
-      submitted: true
+      submitted: true,
     });
     event.preventDefault();
     if (this.props.enabled) {
@@ -62,53 +61,52 @@ class IDE extends React.Component {
       this.props.result();
     }
 
-
-    const players =  this.state.room.players
+    const players = this.state.room.players;
     const currentPlayerId = this.props.me._id;
-    const updatedPlayers = players.map(player => {
+    const updatedPlayers = players.map((player) => {
       if (player.id === currentPlayerId) {
         return {
           ...player,
           time: this.props.timer,
           submitted: true,
-          solution: this.props.solution.success
-        }
+          solution: this.props.solution.success,
+        };
       } else {
-        return player
+        return player;
       }
-    })
+    });
 
     await this.props.updateRoom(
       {
-        players: updatedPlayers
+        players: updatedPlayers,
       },
       this.state.room._id
     );
 
-    const res = updatedPlayers.some(player => {
-      return player.submitted === false
-    })
+    const res = updatedPlayers.some((player) => {
+      return player.submitted === false;
+    });
 
     const [player1, player2] = updatedPlayers;
 
     if (!res) {
       const p1Score = this.getWinner(player1, player2);
-      const p2Score = this.getWinner(player2, player1)
-      const winner = p1Score > p2Score ? player1 : player2
-      alert(`${winner.username} is the winner!`)
+      const p2Score = this.getWinner(player2, player1);
+      const winner = p1Score > p2Score ? player1 : player2;
+      alert(`${winner.username} is the winner!`);
     }
   }
 
   async componentDidUpdate(prevProps) {
     if (prevProps.funcFrame !== this.props.funcFrame) {
       this.setState({
-        input: this.props.funcFrame
-      })
+        input: this.props.funcFrame,
+      });
     }
     if (prevProps.room !== this.props.room) {
       this.setState({
-        room: this.props.room
-      })
+        room: this.props.room,
+      });
     }
   }
 
@@ -117,7 +115,7 @@ class IDE extends React.Component {
     await this.setState({
       input: this.props.funcFrame,
       playerId: clientSocket.id,
-      roomId: this.props.roomId
+      roomId: this.props.roomId,
     });
   }
 
@@ -132,9 +130,9 @@ class IDE extends React.Component {
       options = {
         lineWrapping: true,
         lint: true,
-        mode: "javascript",
+        mode: 'javascript',
         lineNumbers: true,
-        theme: "material",
+        theme: 'material',
         autoCloseBrackets: true,
         readOnly: true,
       };
@@ -142,9 +140,9 @@ class IDE extends React.Component {
       options = {
         lineWrapping: true,
         lint: true,
-        mode: "javascript",
+        mode: 'javascript',
         lineNumbers: true,
-        theme: "material",
+        theme: 'material',
         autoCloseBrackets: true,
       };
     }
@@ -169,23 +167,24 @@ class IDE extends React.Component {
             options={options}
           />
 
-            <div>
-              <button
-                type="submit"
-                onClick={this.handleRun}
-              >
-                Run
-              </button>
-              <button
-                type="submit"
-                onClick={this.handleSubmit}
-                disabled={this.state.submitted ? true : false}
-              >
-                Submit
-              </button>
-              <ToastContainer />
-            </div>
-
+          <div className="ide-buttons">
+            <button
+              className="btn btn-warning "
+              type="submit"
+              onClick={this.handleRun}
+            >
+              Run
+            </button>
+            <button
+              type="submit"
+              className="btn btn-success"
+              onClick={this.handleSubmit}
+              disabled={this.state.submitted ? true : false}
+            >
+              Submit
+            </button>
+            <ToastContainer />
+          </div>
         </div>
       </div>
     );
@@ -196,7 +195,7 @@ const mapState = (state) => {
     me: state.auth,
     solution: state.solution,
     battles: state.battles,
-    timer: state.timer
+    timer: state.timer,
   };
 };
 
