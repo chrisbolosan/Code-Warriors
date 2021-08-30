@@ -1,7 +1,7 @@
-import React from "react";
-import { connect } from "react-redux";
-import { setLeaderboard } from "../store/leaderboard";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { connect } from 'react-redux';
+import { setLeaderboard } from '../store/leaderboard';
+import { Link } from 'react-router-dom';
 
 // thunk api/users/leaderboard
 class Leaderboard extends React.Component {
@@ -16,7 +16,7 @@ class Leaderboard extends React.Component {
         <div>
           {this.props.leaderboard.map((user) => (
             <>
-              <Link to={`users/${user._id}`}>{user.username}</Link>
+              <Link to={`user/${user._id}`}>{user.username}</Link>
               <p>Points: {user.totalPoints}</p>
             </>
           ))}
