@@ -12,10 +12,10 @@ export const _setBattle = (battle) => {
 }
 
 // THUNKS
-export const setBattle = (battle) => {
+export const setBattle = (roomId) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/battles/${battle.roomId}`)
+      const { data } = await axios.get(`/api/battles/${roomId}`)
       dispatch(_setBattle(data))
     } catch (error) {
       console.log(error)
@@ -24,7 +24,7 @@ export const setBattle = (battle) => {
 }
 
 // REDUCER
-export function battle(state = {}, action) {
+export default function battle (state = {}, action) {
   switch (action.type) {
     case SET_BATTLE:
       return action.battle

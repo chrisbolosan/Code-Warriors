@@ -126,7 +126,7 @@ class Game extends React.Component {
   render() {
 
     if (this.state.gameOver === true ) {
-      return <Score battleId={this.state.battleId} />
+      return <Score roomId={this.state.room.roomId} />
     } else {
       const { roomId } = this.props.location.state;
       const { submitSolution, exercise } = this.props;
