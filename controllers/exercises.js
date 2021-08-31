@@ -87,16 +87,16 @@ exports.submitSolution = async (req, res, next) => {
   try {
     const { test } = await Exercise.findById(req.body.id);
     let userSolution = req.body.solution;
-    babel.transform(
-      userSolution,
-      {
-        babelrc: true,
-        filename: '../.babelrc',
-      },
-      function (err, result) {
-        userSolution = result.code;
-      }
-    );
+    // babel.transform(
+    //   userSolution,
+    //   {
+    //     babelrc: true,
+    //     filename: '../.babelrc',
+    //   },
+    //   function (err, result) {
+    //     userSolution = result.code;
+    //   }
+    // );
     const problem = `${userSolution} ${test}`;
     const { result, message } = Jsrunner(problem);
     if (result === 'false') {
