@@ -5,8 +5,7 @@ const SET_ROOMS = "SET_ROOMS"
 const ADD_ROOM = "ADD_ROOM"
 const UPDATE_ROOM = "UPDATE_ROOM"
 const DELETE_ROOM = "DELETE_ROOM"
-// const SET_ROOM = "SET_ROOM"
-
+const UPDATE_PLAYER = "UPDATE_PLAYER"
 
 // ACTION CREATORS
 export const _setRooms = (rooms) => {
@@ -34,6 +33,14 @@ export const _deleteRoom = (room) => {
   return {
     type: DELETE_ROOM,
     room
+  }
+}
+
+export const _updatePlayer = (player, battleId) => {
+  return {
+    type: UPDATE_PLAYER,
+    player,
+    battleId
   }
 }
 
@@ -82,6 +89,17 @@ export const deleteRoom = (roomId) => {
   }
 }
 
+export const updatePlayer = (battleId, player, playerIdx) => {
+  return async (dispatch) => {
+    try {
+      const { data: updatedPlayer } = await axios.put(`/api/battles/updatePlayer/${battleId}`, { battleId, player, playerIdx })
+      dispatch(_updatePlayer(updatedPlayer, battleId))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 // REDUCERS
 export default function battleReducer(state = [], action) {
   switch (action.type) {
@@ -97,17 +115,21 @@ export default function battleReducer(state = [], action) {
       return state.filter((room) => (
         room.roomId !== action.room.roomId
       ))
+    case UPDATE_PLAYER:
+      return state.map((room) => {
+        if (room._id === action.battleId) {
+          return room.players.map((player) => {
+            if (player._id === action.playerId) {
+              return action.player
+            } else {
+              return player
+            }
+          })
+        } else {
+          return room
+        }
+      })
     default:
       return state
   }
 }
-
-
-// export function battle(state = {}, action) {
-//   switch (action.type) {
-//     case SET_ROOM:
-//       return action.room
-//     default:
-//       return state
-//   }
-// }

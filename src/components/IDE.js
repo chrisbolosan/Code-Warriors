@@ -8,7 +8,8 @@ import { Controlled } from 'react-codemirror2';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import clientSocket from '../socket/socket';
-import { updateRoom } from '../store/rooms';
+import { updateRoom, updatePlayer } from '../store/rooms';
+import axios from "axios"
 
 class IDE extends React.Component {
   constructor(props) {
@@ -50,16 +51,16 @@ class IDE extends React.Component {
 
   // when a user clicks "SUBMIT"
   async handleSubmit(event) {
-
     // tell server client has submitted their solution
     clientSocket.emit("submitted", {
       roomId: this.state.roomId,
       playerId: this.props.me._id
     })
-
+    // submit button gets disabled
     this.setState({
       submitDisabled: true,
     });
+
     event.preventDefault();
     if (this.props.enabled) {
       await this.props.submitSolution(
@@ -67,38 +68,66 @@ class IDE extends React.Component {
         this.state.input
       );
     }
+    // all players in the room
+    let players = this.state.room.players;
 
-    const players = this.state.room.players;
-    const currentPlayerId = this.props.me._id;
-    const updatedPlayers = players.map((player) => {
+    // the current player
+    let currentPlayerId = this.props.me._id;
+
+    let updatedPlayerIdx = 0
+
+    // returns the updated player and their index.
+    const updatedPlayers = players.map((player , idx) => {
       if (player.id === currentPlayerId) {
-        return {
+        updatedPlayerIdx = idx
+        return ({
           ...player,
           time: this.props.timer,
           submitted: true,
-          solution: this.props.solution.success,
-        };
+          solution: this.props.solution.success
+        })
       } else {
-        return player;
+        return player
       }
-    });
+    })
 
-    await this.props.updateRoom(
-      { players: updatedPlayers }, this.state.room._id
-    );
+    const updatedPlayer = updatedPlayers[updatedPlayerIdx]
+    console.log("this is the updated player: ", updatedPlayer)
 
-    const res = updatedPlayers.some((player) => {
-      return player.submitted === false;
-    });
+    console.log("this is updated PLAYERS:", updatedPlayers)
 
-    const [player1, player2] = updatedPlayers;
+    const battleId = this.state.room._id
 
-    if (!res) {
-      const p1Score = this.getWinner(player1, player2);
-      const p2Score = this.getWinner(player2, player1);
-      const winner = p1Score > p2Score ? player1 : player2;
-      alert(`${winner.username} is the winner!`);
-    }
+    const { data } = await axios.put(`/api/battles/updatePlayer/${battleId}`, {
+      battleId,
+      updatedPlayer
+    })
+
+    console.log("this is the response from our api update route", data)
+
+
+    // await this.props.updatePlayer(battleId, updatedPlayer[0], playerIdx)
+
+    // await this.props.updateRoom({
+    //   $set: {
+    //     players.playerIdx.content : updatedPlayer[0]
+    //   }
+    // }, this.state.room._id)
+
+    // const res = updatedPlayers.some((player) => {
+    //   return player.submitted === false;
+    // });
+
+    // const [player1, player2] = updatedPlayers;
+
+
+    // // BUGGY RN.
+    // if (!res) {
+    //   const p1Score = this.getWinner(player1, player2);
+    //   const p2Score = this.getWinner(player2, player1);
+    //   const winner = p1Score > p2Score ? player1 : player2;
+    //   alert(`${winner.username} is the winner!`);
+    // }
   }
 
   async componentDidUpdate(prevProps) {
@@ -215,6 +244,9 @@ const mapDispatch = (dispatch) => {
     updateRoom: (room, roomId) => {
       dispatch(updateRoom(room, roomId));
     },
+    updatePlayer: (battleId, player, playerIdx) => {
+      dispatch(updatePlayer(battleId, player, playerIdx))
+    }
   };
 };
 

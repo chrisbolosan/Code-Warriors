@@ -10,26 +10,36 @@ export class Timer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      oneSubmission: false,
       secondsRemaining: 300000 / 1000, // time in seconds
     };
   }
 
   componentDidMount() {
-    var _this = this;
+    const { me, roomId } = this.props
 
-    const { me } = this.props
+    // start the timer
     this.startTime()
 
     // listen for when a user submits code to stop timer
     clientSocket.on("submitted", (info) => {
 
-      // the current user is the same as the user who submitted the code
+      // is the current user the same as the user who submitted the code
       if (me._id === info.playerId) {
-
+        this.setState({
+          oneSubmission: true
+        })
         // timer stops
+        var _this = this;
         clearInterval(_this.countdown)
+
       } else {
-        console.log("UR OPPONENT SUBMITTED THEIR SOLUTION!")
+        // if one person has already submitted
+        if (this.state.oneSubmission === true) {
+          clientSocket.emit("gameOver", roomId)
+        } else {
+          console.log("UR OPPONENT SUBMITTED THEIR SOLUTION!")
+        }
       }
     })
   }

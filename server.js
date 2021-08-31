@@ -5,7 +5,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 const http = require('http');
 const socket = require('socket.io');
-const { getMinutes, getSeconds } = require("./utils/socketfunctions")
+const Battle = require("./models/Battle")
 
 dotenv.config({ path: './config/config.env' });
 
@@ -63,6 +63,19 @@ io.on('connection', async (socket) => {
     io.in(info.roomId).emit("submitted", info)
   })
 
+  // listen for when the game is ovaaaaaa
+  socket.on("gameOver", async (roomId) => {
+    const battle = await Battle.findOne({roomId});
+    const updatedBattle = await Battle.findByIdAndUpdate(
+      { _id: battle._id },
+      { completed: "true" }
+    )
+    io.in(roomId).emit("players", {
+      players: updatedBattle.players
+    })
+
+    console.log("GAME OVER", roomId)
+  })
 
   // listen for solution code
   socket.on('solution', async (solutionObj) => {
