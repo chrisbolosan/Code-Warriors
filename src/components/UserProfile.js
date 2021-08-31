@@ -13,7 +13,6 @@ class UserProfile extends React.Component {
         <h1 className="user-header">User Profile</h1>
         <div id="userprofile">
           <hr />
-
           <div className="username">
             <h3>Username</h3>
             <p>{this.props.profile.username}</p>
