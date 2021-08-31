@@ -66,13 +66,11 @@ io.on('connection', async (socket) => {
   // listen for when the game is ovaaaaaa
   socket.on("gameOver", async (roomId) => {
     const battle = await Battle.findOne({roomId});
-    const updatedBattle = await Battle.findByIdAndUpdate(
+    await Battle.findByIdAndUpdate(
       { _id: battle._id },
       { completed: "true" }
     )
-    io.in(roomId).emit("players", {
-      players: updatedBattle.players
-    })
+    io.in(roomId).emit("endGame", battle._id)
 
     console.log("GAME OVER", roomId)
   })
