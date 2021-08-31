@@ -58,6 +58,11 @@ io.on('connection', async (socket) => {
     io.emit('gameStarted', true)
   })
 
+  // listen for when a user submits code
+  socket.on("submitted", async (info) => {
+    io.in(info.roomId).emit("submitted", info)
+  })
+
 
   // listen for solution code
   socket.on('solution', async (solutionObj) => {

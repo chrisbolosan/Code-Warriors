@@ -50,7 +50,12 @@ class IDE extends React.Component {
 
   // when a user clicks "SUBMIT"
   async handleSubmit(event) {
-    console.log("on submit", this.state.input)
+
+    // tell server client has submitted their solution
+    clientSocket.emit("submitted", {
+      roomId: this.state.roomId,
+      playerId: this.props.me._id
+    })
 
     this.setState({
       submitDisabled: true,
@@ -79,10 +84,7 @@ class IDE extends React.Component {
     });
 
     await this.props.updateRoom(
-      {
-        players: updatedPlayers,
-      },
-      this.state.room._id
+      { players: updatedPlayers }, this.state.room._id
     );
 
     const res = updatedPlayers.some((player) => {
