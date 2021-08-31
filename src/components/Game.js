@@ -162,8 +162,8 @@ class Game extends React.Component {
               </>
             )}
           </div>
-          <h3 id="test-header">Test Results</h3>
           <div id="test">
+            <h3 id="test-header">Test Results</h3>
             {this.state.result
               ? this.state.result.message
               : 'please run your test'}
