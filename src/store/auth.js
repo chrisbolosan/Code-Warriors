@@ -1,15 +1,15 @@
-import axios from "axios";
-import history from "../history";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import axios from 'axios';
+import history from '../history';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const TOKEN = "token";
+const TOKEN = 'token';
 
 /**
  * ACTION TYPES
  */
-const SET_AUTH = "SET_AUTH";
-const SIGN_UP = "SIGN_UP";
+const SET_AUTH = 'SET_AUTH';
+const SIGN_UP = 'SIGN_UP';
 
 /**
  * ACTION CREATORS
@@ -23,7 +23,7 @@ const signUp = (auth) => ({ type: SIGN_UP, auth });
 export const me = () => async (dispatch) => {
   const token = window.localStorage.getItem(TOKEN);
   if (token) {
-    const res = await axios.get("/auth/me", {
+    const res = await axios.get('/auth/me', {
       headers: {
         authorization: token,
       },
@@ -40,10 +40,11 @@ export const authenticate =
         password,
       });
       window.localStorage.setItem(TOKEN, res.data.token);
-      history.push("/");
+      history.push('/');
       dispatch(me());
+      window.location.reload();
       toast.success(`Welcome, ${username}`, {
-        position: "top-center",
+        position: 'top-center',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -53,7 +54,7 @@ export const authenticate =
       });
     } catch (authError) {
       toast.error(`${authError.response.data}`, {
-        position: "top-center",
+        position: 'top-center',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -75,7 +76,7 @@ export const signUpThunk =
       window.localStorage.setItem(TOKEN, res.data.token);
       dispatch(me());
       toast.success(`Welcome, ${username}`, {
-        position: "top-center",
+        position: 'top-center',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -83,11 +84,12 @@ export const signUpThunk =
         draggable: true,
         progress: undefined,
       });
-      history.push("/");
+      history.push('/');
+      window.location.reload();
     } catch (error) {
       // console.error("storeerror", error.response);
       toast.error(`${error.response.data.message}`, {
-        position: "top-center",
+        position: 'top-center',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -100,7 +102,7 @@ export const signUpThunk =
 
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
-  history.push("/login");
+  history.push('/login');
   return {
     type: SET_AUTH,
     auth: {},
