@@ -92,27 +92,10 @@ class IDE extends React.Component {
     })
 
     const updatedPlayer = updatedPlayers[updatedPlayerIdx]
-    console.log("this is the updated player: ", updatedPlayer)
-
-    console.log("this is updated PLAYERS:", updatedPlayers)
-
     const battleId = this.state.room._id
 
-    const { data } = await axios.put(`/api/battles/updatePlayer/${battleId}`, {
-      battleId,
-      updatedPlayer
-    })
-
-    console.log("this is the response from our api update route", data)
-
-
-    // await this.props.updatePlayer(battleId, updatedPlayer[0], playerIdx)
-
-    // await this.props.updateRoom({
-    //   $set: {
-    //     players.playerIdx.content : updatedPlayer[0]
-    //   }
-    // }, this.state.room._id)
+    const { updatePlayer } = this.props
+    updatePlayer(updatedPlayer, battleId)
 
     // const res = updatedPlayers.some((player) => {
     //   return player.submitted === false;
@@ -244,8 +227,8 @@ const mapDispatch = (dispatch) => {
     updateRoom: (room, roomId) => {
       dispatch(updateRoom(room, roomId));
     },
-    updatePlayer: (battleId, player, playerIdx) => {
-      dispatch(updatePlayer(battleId, player, playerIdx))
+    updatePlayer: (updatedPlayer, battleId) => {
+      dispatch(updatePlayer(updatedPlayer, battleId))
     }
   };
 };

@@ -36,10 +36,10 @@ export const _deleteRoom = (room) => {
   }
 }
 
-export const _updatePlayer = (player, battleId) => {
+export const _updatePlayer = (updatedPlayer, battleId) => {
   return {
     type: UPDATE_PLAYER,
-    player,
+    updatedPlayer,
     battleId
   }
 }
@@ -89,11 +89,14 @@ export const deleteRoom = (roomId) => {
   }
 }
 
-export const updatePlayer = (battleId, player, playerIdx) => {
+export const updatePlayer = (updatedPlayer, battleId) => {
   return async (dispatch) => {
     try {
-      const { data: updatedPlayer } = await axios.put(`/api/battles/updatePlayer/${battleId}`, { battleId, player, playerIdx })
-      dispatch(_updatePlayer(updatedPlayer, battleId))
+      const { data } = await axios.put(`/api/battles/updatePlayer/${battleId}`, {
+        battleId,
+        updatedPlayer
+      })
+      dispatch(_updatePlayer(data, battleId))
     } catch (error) {
       console.log(error)
     }
@@ -110,7 +113,7 @@ export default function battleReducer(state = [], action) {
     case UPDATE_ROOM:
       return state.map((room) => (
         room._id === action.room._id ? action.room : room
-        ))
+      ))
     case DELETE_ROOM:
       return state.filter((room) => (
         room.roomId !== action.room.roomId
@@ -118,11 +121,11 @@ export default function battleReducer(state = [], action) {
     case UPDATE_PLAYER:
       return state.map((room) => {
         if (room._id === action.battleId) {
-          return room.players.map((player) => {
-            if (player._id === action.playerId) {
-              return action.player
+          return room.players.map((updatedPlayer) => {
+            if (updatedPlayer._id === action.playerId) {
+              return action.updatedPlayer
             } else {
-              return player
+              return updatedPlayer
             }
           })
         } else {
