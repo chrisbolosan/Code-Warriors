@@ -16,7 +16,7 @@ class Leaderboard extends React.Component {
         <div>
           {this.props.leaderboard.map((user) => (
             <div className="leaderboard-box">
-              <Link to={`user/${user._id}`}>{user.username}</Link>
+              <Link to={`/user/${user._id}`}>{user.username}</Link>
               <p>Points: {user.totalPoints}</p>
             </div>
           ))}

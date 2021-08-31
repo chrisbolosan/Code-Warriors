@@ -9,6 +9,8 @@ import auth from "./auth"
 import battles from "./rooms"
 import timer from './timer'
 import battle from "./battle"
+import profile from './user';
+
 
 const reducer = combineReducers({
   auth,
@@ -17,7 +19,8 @@ const reducer = combineReducers({
   leaderboard,
   battles,
   timer,
-  battle
+  battle,
+  profile
 });
 
 const middleware = composeWithDevTools(
@@ -27,4 +30,4 @@ const middleware = composeWithDevTools(
 const store = createStore(reducer, middleware);
 
 export default store;
-export * from "./auth"
+export * from './auth';

@@ -1,5 +1,5 @@
-const User = require("../models/User");
-const jwt = require("jsonwebtoken");
+const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 
 // @desc    Get users
 // @route   GET /api/users
@@ -8,12 +8,12 @@ exports.getUsers = async (req, res, next) => {
   try {
     if (req.admin) {
       const users = await User.find().select(
-        "username totalPoints rank isAdmin email"
+        'username totalPoints rank isAdmin email'
       );
       return res.status(200).json(users);
     } else {
       const user = await User.findById(req.id).select(
-        "rank totalPoints username email"
+        'rank totalPoints username email'
       );
       return res.status(200).json(user);
     }
@@ -28,18 +28,10 @@ exports.getUsers = async (req, res, next) => {
 //if request is coming from admin token,  admin can see all params.
 exports.getUser = async (req, res, next) => {
   try {
-    if (req.admin) {
-      const user = await User.findById(req.params.id).select(
-        "username totalPoints rank email"
-      );
-      res.status(200).json(user);
-      //if requestID matches userid, send response is information for the matching id
-    } else {
-      const user = await User.findById(req.params.id).select(
-        "username totalPoints rank email"
-      );
-      res.status(200).json(user);
-    }
+    const user = await User.findById(req.params.id).select(
+      'username totalPoints rank email'
+    );
+    res.status(200).json(user);
   } catch (error) {
     next();
   }
@@ -77,17 +69,17 @@ exports.login = async (req, res, next) => {
     //Validate email & password
 
     if (!username || !password) {
-      return res.status(401).send("Please add both username and password");
+      return res.status(401).send('Please add both username and password');
     }
     //Check for user plus validation password
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(401).send("Invalid username");
+      return res.status(401).send('Invalid username');
     }
     //Check if password matches
     const isMatch = await user.matchPassword(password);
     if (!isMatch) {
-      res.status(401).send("Invalid Password");
+      res.status(401).send('Invalid Password');
     }
     //create token
     const token = user.getSignedJwtToken();
@@ -109,7 +101,7 @@ exports.updateUser = async (req, res, next) => {
       const user = await User.findByIdAndUpdate(req.params.id, req.body);
       res.status(204).json(user);
     } else {
-      res.status(401).json({ success: false, message: "Unauthorized request" });
+      res.status(401).json({ success: false, message: 'Unauthorized request' });
     }
   } catch (error) {
     next();
@@ -128,7 +120,7 @@ exports.deleteUser = async (req, res, next) => {
       const user = await User.findByIdAndDelete(req.params.id);
       res.status(200).json(user);
     } else {
-      res.status(401).json({ success: false, message: "Unauthorized request" });
+      res.status(401).json({ success: false, message: 'Unauthorized request' });
     }
   } catch (error) {
     next();
@@ -143,7 +135,7 @@ exports.getLeaderboard = async (req, res, next) => {
     const leaderboard = await User.find()
       .sort({ totalPoints: -1 })
       .limit(10)
-      .select("username totalPoints");
+      .select('username totalPoints');
     res.status(200).json(leaderboard);
   } catch (error) {
     next();

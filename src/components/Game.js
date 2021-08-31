@@ -1,13 +1,12 @@
-import React from "react";
-import { Redirect } from "react-router-dom";
-import IDE from "./IDE";
-import { connect } from "react-redux";
-import { submitSolution } from "../store/solution";
-import IDEOpponent from "./IDEOpponent";
-import clientSocket from "../socket/socket";
-import { runTest } from "../helpers/testRunner";
-import Timer from "./Timer";
-//import Button from "@material-ui/core/Button";
+import React from 'react';
+import { Redirect } from 'react-router-dom';
+import IDE from './IDE';
+import { connect } from 'react-redux';
+import { submitSolution } from '../store/solution';
+import IDEOpponent from './IDEOpponent';
+import clientSocket from '../socket/socket';
+import { runTest } from '../helpers/testRunner';
+import Timer from './Timer';
 import { getExercise } from "../store/exercise";
 import { deleteRoom, setRooms } from "../store/rooms";
 import axios from "axios";
@@ -47,7 +46,7 @@ class Game extends React.Component {
     const roomId = String(this.props.location.state.roomId);
     const { data } = await axios.get(`/api/battles/${roomId}`);
 
-    clientSocket.emit("startGame", roomId);
+    clientSocket.emit('startGame', roomId);
 
     // set it to local state
     this.setState({
@@ -56,7 +55,7 @@ class Game extends React.Component {
   }
 
   async componentDidMount() {
-    clientSocket.on("gameStarted", async (value) => {
+    clientSocket.on('gameStarted', async (value) => {
       this.setState({
         started: true,
         funcFrame: this.props.exercise.exerciseBody,
@@ -75,11 +74,11 @@ class Game extends React.Component {
     const { exerciseId } = this.props.location.state;
     await this.props.getExercise(exerciseId);
 
-    clientSocket.on("solution", (solutionObject) => {
+    clientSocket.on('solution', (solutionObject) => {
       this.setState(solutionObject);
     });
 
-    clientSocket.on("roomFull", (value) => {
+    clientSocket.on('roomFull', (value) => {
       this.setState({
         startDisabled: value,
       });
@@ -91,7 +90,7 @@ class Game extends React.Component {
     this.props.battles.forEach((battle) => {
       if (battle.roomId === this.props.location.state.roomId) {
         if (battle.players[0]._id !== currentPlayer) {
-          clientSocket.emit("joinRoom", this.props.location.state.roomId);
+          clientSocket.emit('joinRoom', this.props.location.state.roomId);
         }
       }
     });
@@ -184,6 +183,7 @@ class Game extends React.Component {
                   : "please run your test"}
               </div>
             </div>
+
           </div>
         );
       } else {
