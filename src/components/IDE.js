@@ -180,6 +180,7 @@ class IDE extends React.Component {
               className="btn btn-warning "
               type="submit"
               onClick={this.handleRun}
+              disabled={this.state.submitDisabled}
             >
               Run
             </button>
