@@ -1,16 +1,16 @@
-import React from 'react';
-import { Redirect } from 'react-router-dom';
-import IDE from './IDE';
-import { connect } from 'react-redux';
-import { submitSolution } from '../store/solution';
-import IDEOpponent from './IDEOpponent';
-import clientSocket from '../socket/socket';
-import { runTest } from '../helpers/testRunner';
-import Timer from './Timer';
+import React from "react";
+import { Redirect } from "react-router-dom";
+import IDE from "./IDE";
+import { connect } from "react-redux";
+import { submitSolution } from "../store/solution";
+import IDEOpponent from "./IDEOpponent";
+import clientSocket from "../socket/socket";
+import { runTest } from "../helpers/testRunner";
+import Timer from "./Timer";
 //import Button from "@material-ui/core/Button";
-import { getExercise } from '../store/exercise';
-import { deleteRoom, setRooms } from '../store/rooms';
-import axios from 'axios';
+import { getExercise } from "../store/exercise";
+import { deleteRoom, setRooms } from "../store/rooms";
+import axios from "axios";
 
 class Game extends React.Component {
   constructor(props) {
@@ -18,14 +18,12 @@ class Game extends React.Component {
     this.state = {
       room: {},
       started: false,
-      startDisabled: true
+      startDisabled: true,
     };
 
     this.runTestIDE = this.runTestIDE.bind(this);
     this.handleStart = this.handleStart.bind(this);
   }
-
-
 
   // run the test in the IDE
   async runTestIDE(test, input) {
@@ -37,7 +35,6 @@ class Game extends React.Component {
 
   // when user clicks the START button
   async handleStart() {
-
     // game has started
     this.setState({
       started: true,
@@ -48,51 +45,54 @@ class Game extends React.Component {
     const roomId = String(this.props.location.state.roomId);
     const { data } = await axios.get(`/api/battles/${roomId}`);
 
-    clientSocket.emit('startGame', roomId);
-
+    clientSocket.emit("startGame", roomId);
 
     // set it to local state
-     this.setState({
+    this.setState({
       room: data[0],
     });
   }
 
   async componentDidMount() {
-    clientSocket.on('gameStarted', (value) => {
+    clientSocket.on("gameStarted", async (value) => {
       this.setState({
-        started: value
-      })
+        started: true,
+        funcFrame: this.props.exercise.exerciseBody,
+      });
+
+      // get the room from the database
+      const roomId = String(this.props.location.state.roomId);
+      const { data } = await axios.get(`/api/battles/${roomId}`);
+
+      // set it to local state
+      this.setState({
+        room: data[0],
+      });
     });
 
     const { exerciseId } = this.props.location.state;
     await this.props.getExercise(exerciseId);
 
-
-    clientSocket.on('solution', (solutionObject) => {
+    clientSocket.on("solution", (solutionObject) => {
       this.setState(solutionObject);
     });
 
-
-    clientSocket.on('roomFull', (value) => {
+    clientSocket.on("roomFull", (value) => {
       this.setState({
-        startDisabled: value
-      })
+        startDisabled: value,
+      });
     });
 
-
-
     // current player
-    const currentPlayer = this.props.me._id
+    const currentPlayer = this.props.me._id;
     // player who created the game
     this.props.battles.forEach((battle) => {
       if (battle.roomId === this.props.location.state.roomId) {
         if (battle.players[0]._id !== currentPlayer) {
-          clientSocket.emit('joinRoom', this.props.location.state.roomId);
+          clientSocket.emit("joinRoom", this.props.location.state.roomId);
         }
       }
-    })
-
-
+    });
   }
 
   componentWillUnmount() {
@@ -101,7 +101,7 @@ class Game extends React.Component {
 
     const battleToDelete = battles.filter(
       (battle) => battle.roomId === roomId
-    )[0]
+    )[0];
 
     // if the user who creates a game leaves the game when it's still open, the room gets deleted
     if (battleToDelete.open === true && this.state.started === false) {
@@ -124,7 +124,9 @@ class Game extends React.Component {
           <div id="exercise-problem">
             {/* show the problem once game has started */}
             <h4>Description</h4>
-            {this.state.started === true ? <p>{exercise.problemDescription}</p> : null}
+            {this.state.started === true ? (
+              <p>{exercise.problemDescription}</p>
+            ) : null}
           </div>
 
           <div id="ide-container">
@@ -147,14 +149,14 @@ class Game extends React.Component {
           <div id="start-match">
             {this.state.started === false ? (
               <button
-              onClick={this.handleStart}
-              disabled={this.state.startDisabled}
-              >START</button>
+                onClick={this.handleStart}
+                disabled={this.state.startDisabled}
+              >
+                START
+              </button>
             ) : (
               <>
-                <Timer
-                roomId={this.props.location.state.roomId}
-                 />
+                <Timer roomId={this.props.location.state.roomId} />
                 <div id="seconds-remaining"></div>
               </>
             )}
@@ -164,7 +166,7 @@ class Game extends React.Component {
             <div id="test-results">
               {this.state.result
                 ? this.state.result.message
-                : 'please run your test'}
+                : "please run your test"}
             </div>
           </div>
         </div>
@@ -181,7 +183,7 @@ const mapState = (state) => {
     solution: state.solution,
     battles: state.battles,
     timer: state.timer,
-    me: state.auth
+    me: state.auth,
   };
 };
 
