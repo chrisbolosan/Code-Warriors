@@ -1,10 +1,15 @@
 import React from "react"
 import { connect } from 'react-redux';
 import clientSocket from '../socket/socket';
+import axios from "axios"
 
 class Score extends React.Component {
   constructor() {
     super()
+  }
+
+  componentDidMount() {
+
   }
 
   render() {
