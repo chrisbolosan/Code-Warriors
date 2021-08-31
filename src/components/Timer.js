@@ -10,21 +10,38 @@ export class Timer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      secondsRemaining: 300000 / 1000, //time in seconds
+      oneSubmission: false,
+      secondsRemaining: 300000 / 1000, // time in seconds
     };
   }
 
   componentDidMount() {
-    const { roomId } = this.props
-    this.startTime()
-    // clientSocket.emit("timer", {
-    //   roomId: String(roomId)
-    // })
+    const { me, roomId } = this.props
 
-    // clientSocket.on("timer", (time) => {
-    //   const div = document.getElementById("timer")
-    //   div.innerHTML = <><span>minutes</span><span>seconds</span></>
-    // })
+    // start the timer
+    this.startTime()
+
+    // listen for when a user submits code to stop timer
+    clientSocket.on("submitted", (info) => {
+
+      // is the current user the same as the user who submitted the code
+      if (me._id === info.playerId) {
+        this.setState({
+          oneSubmission: true
+        })
+        // timer stops
+        var _this = this;
+        clearInterval(_this.countdown)
+
+      } else {
+        // if one person has already submitted
+        if (this.state.oneSubmission === true) {
+          clientSocket.emit("gameOver", roomId)
+        } else {
+          console.log("UR OPPONENT SUBMITTED THEIR SOLUTION!")
+        }
+      }
+    })
   }
 
   componentWillUnmount() {
@@ -74,7 +91,8 @@ export class Timer extends React.Component {
 
 const mapState = (state) => {
   return {
-    timer: state.timer
+    timer: state.timer,
+    me: state.auth
   };
 };
 

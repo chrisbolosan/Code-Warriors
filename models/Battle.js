@@ -5,7 +5,6 @@ const BattleSchema = new mongoose.Schema({
   ref: {
     type: String,
     required: true,
-
   },
   roomId: {
     type: Number

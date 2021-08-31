@@ -7,10 +7,10 @@ import IDEOpponent from './IDEOpponent';
 import clientSocket from '../socket/socket';
 import { runTest } from '../helpers/testRunner';
 import Timer from './Timer';
-//import Button from "@material-ui/core/Button";
-import { getExercise } from '../store/exercise';
-import { deleteRoom, setRooms } from '../store/rooms';
-import axios from 'axios';
+import { getExercise } from "../store/exercise";
+import { deleteRoom, setRooms } from "../store/rooms";
+import axios from "axios";
+import Score from "./Score"
 
 class Game extends React.Component {
   constructor(props) {
@@ -19,6 +19,7 @@ class Game extends React.Component {
       room: {},
       started: false,
       startDisabled: true,
+      gameOver: false
     };
 
     this.runTestIDE = this.runTestIDE.bind(this);
@@ -93,6 +94,14 @@ class Game extends React.Component {
         }
       }
     });
+
+    // listen for when it is game over
+    clientSocket.on("endGame", (battleId) => {
+      this.setState({
+        gameOver: true,
+        battleId
+      })
+    })
   }
 
   componentWillUnmount() {
@@ -114,64 +123,72 @@ class Game extends React.Component {
   }
 
   render() {
-    const { roomId } = this.props.location.state;
-    const { submitSolution, exercise } = this.props;
-    const { runTestIDE } = this;
 
-    if (exercise.problemDescription) {
-      return (
-        <div id="game-container">
-          <div id="exercise-problem">
-            {/* show the problem once game has started */}
-            <h4>Description</h4>
-            {this.state.started === true ? (
-              <p>{exercise.problemDescription}</p>
-            ) : null}
-          </div>
-
-          <div id="ide-container">
-            <IDE
-              exercise={this.props.exercise}
-              funcFrame={this.state.funcFrame}
-              submitSolution={submitSolution}
-              enabled={true}
-              roomId={roomId}
-              runTestIDE={runTestIDE}
-              room={this.state.room}
-              submitDisabled={!this.state.started}
-            />
-            <IDEOpponent
-              //pass solution obj as props to dummy IDE
-              solutionObject={this.state}
-              funcFrame={this.state.funcFrame}
-              roomId={roomId}
-            />
-          </div>
-          <div id="start-match">
-            {this.state.started === false ? (
-              <button
-                onClick={this.handleStart}
-                disabled={this.state.startDisabled}
-              >
-                START
-              </button>
-            ) : (
-              <>
-                <Timer roomId={this.props.location.state.roomId} />
-                <div id="seconds-remaining"></div>
-              </>
-            )}
-          </div>
-          <div id="test">
-            <h3 id="test-header">Test Results</h3>
-            {this.state.result
-              ? this.state.result.message
-              : 'please run your test'}
-          </div>
-        </div>
-      );
+    if (this.state.gameOver === true ) {
+      return <Score roomId={this.state.room.roomId} />
     } else {
-      return <div>"Game Loading..."</div>;
+      const { roomId } = this.props.location.state;
+      const { submitSolution, exercise } = this.props;
+      const { runTestIDE } = this;
+
+      if (exercise.problemDescription) {
+        return (
+          <div id="game-container">
+            <div id="exercise-problem">
+              {/* show the problem once game has started */}
+              <h4>Description</h4>
+              {this.state.started === true ? (
+                <p>{exercise.problemDescription}</p>
+              ) : null}
+            </div>
+
+            <div id="ide-container">
+              <IDE
+                exercise={this.props.exercise}
+                funcFrame={this.state.funcFrame}
+                submitSolution={submitSolution}
+                enabled={true}
+                roomId={roomId}
+                runTestIDE={runTestIDE}
+                room={this.state.room}
+                submitDisabled={!this.state.started}
+              />
+              <IDEOpponent
+                //pass solution obj as props to dummy IDE
+                solutionObject={this.state}
+                funcFrame={this.state.funcFrame}
+                roomId={roomId}
+              />
+            </div>
+            <div id="start-match">
+              {this.state.started === false ? (
+                <button
+                  onClick={this.handleStart}
+                  disabled={this.state.startDisabled}
+                >
+                  START
+                </button>
+              ) : (
+                <>
+                  <Timer roomId={this.props.location.state.roomId} />
+                  <div id="seconds-remaining"></div>
+                </>
+              )}
+            </div>
+            <div id="test">
+              <h3>Test Results</h3>
+              <div id="test-results">
+                {this.state.result
+                  ? this.state.result.message
+                  : "please run your test"}
+              </div>
+            </div>
+
+          </div>
+        );
+      } else {
+        return <div>"Game Loading..."</div>;
+      }
     }
   }
 }

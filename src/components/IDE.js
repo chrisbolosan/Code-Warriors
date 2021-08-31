@@ -8,7 +8,8 @@ import { Controlled } from 'react-codemirror2';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import clientSocket from '../socket/socket';
-import { updateRoom } from '../store/rooms';
+import { updateRoom, updatePlayer } from '../store/rooms';
+import axios from "axios"
 
 class IDE extends React.Component {
   constructor(props) {
@@ -50,11 +51,16 @@ class IDE extends React.Component {
 
   // when a user clicks "SUBMIT"
   async handleSubmit(event) {
-    console.log("on submit", this.state.input)
-
+    // tell server client has submitted their solution
+    clientSocket.emit("submitted", {
+      roomId: this.state.roomId,
+      playerId: this.props.me._id
+    })
+    // submit button gets disabled
     this.setState({
       submitDisabled: true,
     });
+
     event.preventDefault();
     if (this.props.enabled) {
       await this.props.submitSolution(
@@ -62,41 +68,49 @@ class IDE extends React.Component {
         this.state.input
       );
     }
+    // all players in the room
+    let players = this.state.room.players;
 
-    const players = this.state.room.players;
-    const currentPlayerId = this.props.me._id;
-    const updatedPlayers = players.map((player) => {
+    // the current player
+    let currentPlayerId = this.props.me._id;
+
+    let updatedPlayerIdx = 0
+
+    // returns the updated player and their index.
+    const updatedPlayers = players.map((player , idx) => {
       if (player.id === currentPlayerId) {
-        return {
+        updatedPlayerIdx = idx
+        return ({
           ...player,
           time: this.props.timer,
           submitted: true,
-          solution: this.props.solution.success,
-        };
+          solution: this.props.solution.success
+        })
       } else {
-        return player;
+        return player
       }
-    });
+    })
 
-    await this.props.updateRoom(
-      {
-        players: updatedPlayers,
-      },
-      this.state.room._id
-    );
+    const updatedPlayer = updatedPlayers[updatedPlayerIdx]
+    const battleId = this.state.room._id
 
-    const res = updatedPlayers.some((player) => {
-      return player.submitted === false;
-    });
+    const { updatePlayer } = this.props
+    updatePlayer(updatedPlayer, battleId)
 
-    const [player1, player2] = updatedPlayers;
+    // const res = updatedPlayers.some((player) => {
+    //   return player.submitted === false;
+    // });
 
-    if (!res) {
-      const p1Score = this.getWinner(player1, player2);
-      const p2Score = this.getWinner(player2, player1);
-      const winner = p1Score > p2Score ? player1 : player2;
-      alert(`${winner.username} is the winner!`);
-    }
+    // const [player1, player2] = updatedPlayers;
+
+
+    // // BUGGY RN.
+    // if (!res) {
+    //   const p1Score = this.getWinner(player1, player2);
+    //   const p2Score = this.getWinner(player2, player1);
+    //   const winner = p1Score > p2Score ? player1 : player2;
+    //   alert(`${winner.username} is the winner!`);
+    // }
   }
 
   async componentDidUpdate(prevProps) {
@@ -180,6 +194,7 @@ class IDE extends React.Component {
               className="btn btn-warning "
               type="submit"
               onClick={this.handleRun}
+              disabled={this.state.submitDisabled}
             >
               Run
             </button>
@@ -212,6 +227,9 @@ const mapDispatch = (dispatch) => {
     updateRoom: (room, roomId) => {
       dispatch(updateRoom(room, roomId));
     },
+    updatePlayer: (updatedPlayer, battleId) => {
+      dispatch(updatePlayer(updatedPlayer, battleId))
+    }
   };
 };
 
