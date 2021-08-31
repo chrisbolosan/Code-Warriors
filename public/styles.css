@@ -225,6 +225,21 @@ p {
   background-color: #3a2a35;
 }
 
+#test {
+  background-color: black;
+  font-family: monospace;
+  color: greenyellow;
+  border-radius: 15px;
+  padding: 15px;
+  width: 450px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#test-header {
+  text-align: center;
+}
+
 /* login and signup forms */
 #login {
   height: 320px;
