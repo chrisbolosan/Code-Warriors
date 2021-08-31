@@ -10,7 +10,7 @@ const Navbar = ({ isLoggedIn, handleClick, userId, auth }) => {
     setUser(auth);
   }, [auth]);
 
-  console.log('Navbar: ', user);
+  // console.log('Navbar: ', user);
 
   return (
     <nav className="navbar navbar-expand-lg">

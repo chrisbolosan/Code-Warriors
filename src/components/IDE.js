@@ -17,7 +17,7 @@ class IDE extends React.Component {
       input: '',
       playerId: '',
       roomId: '',
-      submitted: false,
+      submitDisabled: true,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -53,7 +53,7 @@ class IDE extends React.Component {
     console.log("on submit", this.state.input)
 
     this.setState({
-      submitted: true,
+      submitDisabled: true,
     });
     event.preventDefault();
     if (this.props.enabled) {
@@ -108,6 +108,12 @@ class IDE extends React.Component {
     if (prevProps.room !== this.props.room) {
       this.setState({
         room: this.props.room,
+      });
+    }
+
+    if (prevProps.submitDisabled !== this.props.submitDisabled) {
+      this.setState({
+        submitDisabled: this.props.submitDisabled,
       });
     }
   }
@@ -181,7 +187,7 @@ class IDE extends React.Component {
               type="submit"
               className="btn btn-success"
               onClick={this.handleSubmit}
-              disabled={this.state.submitted ? true : false}
+              disabled={this.state.submitDisabled}
             >
               Submit
             </button>
