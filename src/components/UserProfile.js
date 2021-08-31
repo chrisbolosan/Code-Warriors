@@ -9,24 +9,32 @@ class UserProfile extends React.Component {
 
   render() {
     return (
-      <div id="userprofile">
-        <div className="username">
-          <h3>Username</h3>
-          <p>{this.props.profile.username}</p>
+      <>
+        <h1 className="user-header">User Profile</h1>
+        <div id="userprofile">
+          <hr />
+          <div className="username">
+            <h3>Username</h3>
+            <p>{this.props.profile.username}</p>
+          </div>
+          <hr />
           <div className="email">
             <h3>Email</h3>
             <p>{this.props.profile.email}</p>
           </div>
+          <hr />
           <div className="rank">
             <h3>Rank</h3>
             <p>{this.props.profile.rank}</p>
           </div>
+          <hr />
           <div className="total-points">
             <h3>Total Points</h3>
             <p>{this.props.profile.totalPoints}</p>
           </div>
+          <hr />
         </div>
-      </div>
+      </>
     );
   }
 }

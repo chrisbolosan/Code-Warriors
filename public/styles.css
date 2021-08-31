@@ -150,6 +150,31 @@ p {
   background-color: #6d5666;
 }
 
+#userprofile {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  margin-left: auto;
+  text-align: center;
+  width: 550px;
+  margin-right: auto;
+  padding: 20px;
+  border-radius: 15px;
+  border-width: 3px;
+  border-style: dotted;
+}
+
+#userprofile div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user-header {
+  margin-top: 20px;
+  text-align: center;
+}
+
 /* IDE */
 
 #exercise-problem {
