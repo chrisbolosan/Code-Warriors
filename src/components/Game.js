@@ -138,6 +138,7 @@ class Game extends React.Component {
               roomId={roomId}
               runTestIDE={runTestIDE}
               room={this.state.room}
+              submitDisabled={!this.state.started}
             />
             <IDEOpponent
               //pass solution obj as props to dummy IDE
