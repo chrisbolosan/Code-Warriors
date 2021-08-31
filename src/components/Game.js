@@ -37,6 +37,7 @@ class Game extends React.Component {
 
   // when user clicks the START button
   async handleStart() {
+
     // game has started
     this.setState({
       started: true,
@@ -47,13 +48,22 @@ class Game extends React.Component {
     const roomId = String(this.props.location.state.roomId);
     const { data } = await axios.get(`/api/battles/${roomId}`);
 
+    clientSocket.emit('startGame', roomId);
+
+
     // set it to local state
-    await this.setState({
+     this.setState({
       room: data[0],
     });
   }
 
   async componentDidMount() {
+    clientSocket.on('gameStarted', (value) => {
+      this.setState({
+        started: value
+      })
+    });
+
     const { exerciseId } = this.props.location.state;
     await this.props.getExercise(exerciseId);
 
@@ -62,17 +72,14 @@ class Game extends React.Component {
       this.setState(solutionObject);
     });
 
-    // clientSocket.on('timer', (secondsRemaining) => {
-    //   const div = document.getElementById('seconds-remaining');
-    //   div.innerHTML = secondsRemaining;
-    // });
 
     clientSocket.on('roomFull', (value) => {
       this.setState({
         startDisabled: value
       })
-      alert('room is full')
     });
+
+
 
     // current player
     const currentPlayer = this.props.me._id
@@ -145,7 +152,9 @@ class Game extends React.Component {
               >START</button>
             ) : (
               <>
-                <Timer roomId={this.props.location.state.roomId} />
+                <Timer
+                roomId={this.props.location.state.roomId}
+                 />
                 <div id="seconds-remaining"></div>
               </>
             )}
