@@ -1,8 +1,7 @@
 import React from "react"
 import { connect } from 'react-redux';
-import clientSocket from '../socket/socket';
+import { Link } from 'react-router-dom';
 import { setBattle } from "../store/battle"
-import axios from "axios"
 
 class Score extends React.Component {
   constructor(props) {
@@ -13,24 +12,7 @@ class Score extends React.Component {
       battle: {}
     }
     this.getScore = this.getScore.bind(this);
-
   }
-
-  // async componentDidMount() {
-  //   // const { roomId, setBattle } = this.props
-  //   // await setBattle(roomId)
-  //   // const currentPlayer = this.props.me
-
-  //   const battle = this.props.battle;
-
-  //   // const players = battle.players;
-
-
-  //   // this.setState({
-  //   //   player1Score: this.getWinner()
-  //   // })
-  // }
-
 
   componentDidUpdate(prevProps) {
     if (prevProps.battle !== this.props.battle) {
@@ -49,15 +31,10 @@ class Score extends React.Component {
       }
     }
     return currentPlayerScore
-    // let playerScore = 0;
-    // if (player.time > opponant.time) playerScore += 5;
-    // if (player.solution) playerScore += 7;
-    // return playerScore;
   }
 
-
   render() {
-    const { roomId, me } = this.props
+    const { me } = this.props
     const { getScore } = this
 
     if (this.state.battle._id) {
@@ -77,26 +54,77 @@ class Score extends React.Component {
       console.log("current player score", currentPlayerScore)
       console.log("opponent player score", opponentScore)
 
+      const winner = currentPlayerScore > opponentScore ? currentPlayer : opponentPlayer
 
-      return (
-        <div>
-          { roomId ? (
-            <div>
-              this is the roomId passed from game {roomId}
+      // if they are tie (both codes dont work)
+      if (currentPlayerScore === opponentScore) {
+        return (
+          <div id="score-container">
+            <h2>Tie</h2>
+            <div id="scores">
+              <div>
+                <p>{currentPlayer.username}</p>
+                <p>Points: {currentPlayerScore}</p>
+              </div>
+              <div>
+                <p>{opponentPlayer.username}</p>
+                <p>Points: {opponentScore}</p>
+              </div>
             </div>
-          ): (
-            <div>Loading.......</div>
-          )}
-        </div>
-      )
+            <Link to="/">
+              <button>Leave</button>
+            </Link>
+          </div>
+        )
+      }
+      else if (winner.id === currentPlayer.id) {
+        // if the winner is the current player, show the crown and scores
+        // button to home
+        return (
+          <div id="score-container">
+            <img alt="won" src="crown.png" />
+            <div id="scores">
+              <div>
+                <p>{currentPlayer.username}</p>
+                <p>Points: {currentPlayerScore}</p>
+              </div>
+              <div>
+                <p>{opponentPlayer.username}</p>
+                <p>Points: {opponentScore}</p>
+              </div>
+            </div>
+            <Link to="/">
+              <button>Leave</button>
+            </Link>
+          </div>
+        )
+      } else {
+        // if the winner is the opponent, show sad face and scores
+        // button to home
+        return (
+          <div id="score-container">
+            <img alt="lost" src="crying.png" />
+            <div id="scores">
+              <div>
+                <p>{currentPlayer.username}</p>
+                <p>Points: {currentPlayerScore}</p>
+              </div>
+              <div>
+                <p>{opponentPlayer.username}</p>
+                <p>Points: {opponentScore}</p>
+              </div>
+            </div>
+            <Link to="/">
+              <button>Leave</button>
+            </Link>
+          </div>
+        )
+      }
     } else {
-      return <div>LOADING.....</div>
+      return (
+        <div>Calculating scores...</div>
+      )
     }
-
-
-
-
-
   }
 }
 
