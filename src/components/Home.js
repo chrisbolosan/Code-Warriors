@@ -4,9 +4,13 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setRooms, addRoom, updateRoom } from '../store/rooms';
 import { getRandomExercise } from '../store/exercise';
+import { useLocation } from "react-router-dom"
+import axios from "axios"
+import { withRouter } from "react-router"
 
 const Home = (props) => {
   const { fetchRooms, addRoom, getRandomExercise, updateRoom } = props;
+  console.log("uselocation", useLocation())
   const [rooms, setRooms] = useState([]);
   const [roomId, setRoomId] = useState(0);
 
@@ -21,7 +25,17 @@ const Home = (props) => {
     const randomRoomId = Math.floor(Math.random() * 10000000);
     setRoomId(randomRoomId);
     getRandomExercise();
+
+    // async function updateScore(score) {
+    //   await axios.put(`/api/users/${props.me._id}`, {
+    //   totalPoints: score
+    //   })
+    // }
+    // if (props.location.state.currentPlayerScore) {
+    //   updateScore(props.location.state.currentPlayerScore)
+    // }
   }, []);
+
 
   // when a user clicks creates a game
   async function handleClick() {

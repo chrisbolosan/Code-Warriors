@@ -2,13 +2,13 @@ import React from "react"
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setBattle } from "../store/battle"
+import axios from "axios"
 
 class Score extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       currentPlayer: 0,
-      opponant: 0,
       battle: {}
     }
     this.getScore = this.getScore.bind(this);
@@ -51,9 +51,6 @@ class Score extends React.Component {
       const currentPlayerScore = getScore(currentPlayer, opponentPlayer)
       const opponentScore = getScore(opponentPlayer, currentPlayer)
 
-      console.log("current player score", currentPlayerScore)
-      console.log("opponent player score", opponentScore)
-
       const winner = currentPlayerScore > opponentScore ? currentPlayer : opponentPlayer
 
       // if they are tie (both codes dont work)
@@ -71,7 +68,12 @@ class Score extends React.Component {
                 <p>Points: {opponentScore}</p>
               </div>
             </div>
-            <Link to="/">
+            <Link to={{
+              pathname: "/",
+              state: {
+                currentPlayerScore: currentPlayerScore
+              }
+            }}>
               <button>Leave</button>
             </Link>
           </div>
@@ -93,7 +95,12 @@ class Score extends React.Component {
                 <p>Points: {opponentScore}</p>
               </div>
             </div>
-            <Link to="/">
+            <Link to={{
+              pathname: "/",
+              state: {
+                currentPlayerScore: currentPlayerScore
+              }
+            }}>
               <button>Leave</button>
             </Link>
           </div>
@@ -114,7 +121,12 @@ class Score extends React.Component {
                 <p>Points: {opponentScore}</p>
               </div>
             </div>
-            <Link to="/">
+            <Link to={{
+              pathname: "/",
+              state: {
+                currentPlayerScore: currentPlayerScore
+              }
+            }}>
               <button>Leave</button>
             </Link>
           </div>
