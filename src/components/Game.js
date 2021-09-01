@@ -122,6 +122,7 @@ class Game extends React.Component {
       return;
     }
   }
+  clientSocket.emit('leaveRoom', roomId)
   }
 
   render() {
