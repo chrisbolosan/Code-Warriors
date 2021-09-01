@@ -91,18 +91,14 @@ exports.login = async (req, res, next) => {
 
 // @desc Update a specific user
 // @route PUT /api/users/:id
-// @access Private only to user's own id.
+// @access Public only to user's own id.
 exports.updateUser = async (req, res, next) => {
   try {
-    if (req.admin) {
-      const user = await User.findByIdAndUpdate(req.params.id, req.body);
-      res.status(204).json(user);
-    } else if (String(req.params.id) === String(req._id)) {
-      const user = await User.findByIdAndUpdate(req.params.id, req.body);
-      res.status(204).json(user);
-    } else {
-      res.status(401).json({ success: false, message: 'Unauthorized request' });
-    }
+    const { totalPoints } = req.body;
+    const user = await User.findById(req.params.id);
+    const newPoints = totalPoints + user.totalPoints;
+    user.update({ totalPoints: newPoints });
+    res.status(204).json(user);
   } catch (error) {
     next();
   }

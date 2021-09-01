@@ -51,13 +51,6 @@ UserSchema.pre('save', async function (next) {
   else this.rank = 'Master';
 });
 
-UserSchema.pre('updateOne', async function (next) {
-  if (this.totalPoints >= 50 && this.totalPoints < 150) this.rank = 'Novice';
-  else if (this.totalPoints >= 150 && this.totalPoints < 300)
-    this.rank = 'Intermediate';
-  else this.rank = 'Master';
-});
-
 UserSchema.methods.matchPassword = function (password) {
   //compares old password with new
   return bcrypt.compareSync(password, this.password);
