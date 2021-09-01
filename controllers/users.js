@@ -95,10 +95,14 @@ exports.login = async (req, res, next) => {
 exports.updateUser = async (req, res, next) => {
   try {
     const { totalPoints } = req.body;
+    let newRank;
     const user = await User.findById(req.params.id);
     const newPoints = totalPoints + user.totalPoints;
-    user.update({ totalPoints: newPoints });
-    res.status(204).json(user);
+    if (newPoints >= 50 && newPoints < 150) newRank = 'Novice';
+    else if (newPoints >= 150 && newPoints < 300) newRank = 'Intermediate';
+    else newRank = 'master';
+    user.update({ totalPoints: newPoints, rank: newRank });
+    res.status(200).json(user);
   } catch (error) {
     next();
   }
