@@ -91,18 +91,21 @@ exports.login = async (req, res, next) => {
 
 // @desc Update a specific user
 // @route PUT /api/users/:id
-// @access Private only to user's own id.
+// @access Public only to user's own id.
 exports.updateUser = async (req, res, next) => {
   try {
-    if (req.admin) {
-      const user = await User.findByIdAndUpdate(req.params.id, req.body);
-      res.status(204).json(user);
-    } else if (String(req.params.id) === String(req._id)) {
-      const user = await User.findByIdAndUpdate(req.params.id, req.body);
-      res.status(204).json(user);
-    } else {
-      res.status(401).json({ success: false, message: 'Unauthorized request' });
-    }
+    const { totalPoints } = req.body;
+    let newRank;
+    const user = await User.findById(req.params.id);
+    const newPoints = totalPoints + user.totalPoints;
+    if (newPoints >= 50 && newPoints < 150) newRank = 'Novice';
+    else if (newPoints >= 150 && newPoints < 300) newRank = 'Intermediate';
+    else newRank = 'master';
+    const changed = await User.findByIdAndUpdate(req.params.id, {
+      totalPoints: newPoints,
+      rank: newRank,
+    });
+    res.status(200).json(changed);
   } catch (error) {
     next();
   }
