@@ -12,7 +12,7 @@ class Score extends React.Component {
       opponant: 0,
       battle: {}
     }
-    this.getWinner = this.getWinner.bind(this);
+    this.getScore = this.getScore.bind(this);
 
   }
 
@@ -40,27 +40,43 @@ class Score extends React.Component {
     }
   }
 
-  getWinner(player, opponant) {
-    let playerScore = 0;
-    if (player.time > opponant.time) playerScore += 5;
-    if (player.solution) playerScore += 7;
-    return playerScore;
+  getScore(currentPlayer, opponentPlayer) {
+    let currentPlayerScore = 0
+    if (currentPlayer.solution) {
+      currentPlayerScore += 7
+      if (currentPlayer.time > opponentPlayer.time) {
+        currentPlayerScore += 5
+      }
+    }
+    return currentPlayerScore
+    // let playerScore = 0;
+    // if (player.time > opponant.time) playerScore += 5;
+    // if (player.solution) playerScore += 7;
+    // return playerScore;
   }
 
 
   render() {
     const { roomId, me } = this.props
-
-
+    const { getScore } = this
 
     if (this.state.battle._id) {
       const { battle } = this.state
-      let currentPlayerScore = 0;
-      let oppponentScore = 0;
+
       const currentPlayer = battle.players.filter(player => {
        return player.id === me._id
-      })
-      console.log(currentPlayer)
+      })[0]
+
+      const opponentPlayer = battle.players.filter(player => {
+        return player.id !== me._id
+      })[0]
+
+      const currentPlayerScore = getScore(currentPlayer, opponentPlayer)
+      const opponentScore = getScore(opponentPlayer, currentPlayer)
+
+      console.log("current player score", currentPlayerScore)
+      console.log("opponent player score", opponentScore)
+
 
       return (
         <div>
