@@ -44,14 +44,14 @@ UserSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-UserSchema.post('save', async function (next) {
+UserSchema.pre('save', async function (next) {
   if (this.totalPoints >= 50 && this.totalPoints < 150) this.rank = 'Novice';
   else if (this.totalPoints >= 150 && this.totalPoints < 300)
     this.rank = 'Intermediate';
   else this.rank = 'Master';
 });
 
-UserSchema.post('updateOne', async function (next) {
+UserSchema.pre('updateOne', async function (next) {
   if (this.totalPoints >= 50 && this.totalPoints < 150) this.rank = 'Novice';
   else if (this.totalPoints >= 150 && this.totalPoints < 300)
     this.rank = 'Intermediate';
