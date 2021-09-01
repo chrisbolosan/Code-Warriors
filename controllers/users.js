@@ -101,8 +101,11 @@ exports.updateUser = async (req, res, next) => {
     if (newPoints >= 50 && newPoints < 150) newRank = 'Novice';
     else if (newPoints >= 150 && newPoints < 300) newRank = 'Intermediate';
     else newRank = 'master';
-    user.update({ totalPoints: newPoints, rank: newRank });
-    res.status(200).json(user);
+    const changed = await User.findByIdAndUpdate(req.params.id, {
+      totalPoints: newPoints,
+      rank: newRank,
+    });
+    res.status(200).json(changed);
   } catch (error) {
     next();
   }
