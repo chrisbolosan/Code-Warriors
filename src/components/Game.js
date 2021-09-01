@@ -113,6 +113,7 @@ class Game extends React.Component {
     )[0];
 
     // if the user who creates a game leaves the game when it's still open, the room gets deleted
+  if (battleToDelete) {
     if (battleToDelete.open === true && this.state.started === false) {
       deleteBattle(battleToDelete.roomId);
       setRooms();
@@ -120,6 +121,7 @@ class Game extends React.Component {
       // this logic should be: if the game started and a user leaves, the opponent wins the game and the room gets deleted
       return;
     }
+  }
   }
 
   render() {

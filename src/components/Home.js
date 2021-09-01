@@ -89,7 +89,7 @@ const Home = (props) => {
       </Link>
       <h2>Rooms</h2>
       <div className="rooms-container">
-        {props.battles.map((room) => {
+        {props.battles[0] && props.battles.map((room) => {
           return (
             // JOIN GAME Button
             <div className="room-item">
@@ -109,7 +109,7 @@ const Home = (props) => {
                   key={room._id}
                   type="button"
                   className="room-button"
-                >{`${room.players[0].username}'s room`}</button>
+                >{`${room.players ? room.players[0].username : 'User'}'s room`}</button>
               </Link>
             </div>
           );
