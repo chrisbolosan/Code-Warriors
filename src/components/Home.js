@@ -4,14 +4,15 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setRooms, addRoom, updateRoom } from '../store/rooms';
 import { getRandomExercise } from '../store/exercise';
-import { useLocation } from "react-router-dom"
+import { useLocation } from 'react-router-dom';
 import { getExercises } from '../store/exercises'
-import axios from "axios"
-import { withRouter } from "react-router"
+import axios from 'axios';
+import { withRouter } from 'react-router';
+import DifficultyFilter from './DifficultyFilter';
 
 const Home = (props) => {
   const { fetchRooms, addRoom, getRandomExercise, updateRoom } = props;
-  console.log("uselocation", useLocation())
+  console.log('uselocation', useLocation());
   const [rooms, setRooms] = useState([]);
   const [roomId, setRoomId] = useState(0);
 
@@ -37,7 +38,6 @@ const Home = (props) => {
     //   updateScore(props.location.state.currentPlayerScore)
     // }
   }, []);
-
 
   // when a user clicks creates a game
   async function handleClick() {
@@ -89,6 +89,8 @@ const Home = (props) => {
   return (
     <div className="main-home">
       <h1>Welcome! Create or Join a Game</h1>
+
+      <DifficultyFilter />
       {/* Create Game */}
       <Link
         to={{
@@ -104,32 +106,35 @@ const Home = (props) => {
         </button>
       </Link>
       <h2>Rooms</h2>
-          <div className="rooms-container">
-        {props.battles[0] && props.battles.map((room) => {
-          return (
-            // JOIN GAME Button
-            <div className="room-item">
-              <Link
-                to={{
-                  pathname: '/game',
-                  state: {
-                    roomId: room.roomId,
-                  exerciseId: room.ref,
-                  },
-                }}
-              >
-                <button
-                  onClick={joinRoom}
-                  value={room.roomId}
-                  name={room._id}
-                  key={room._id}
-                  type="button"
-                  className="room-button"
-                >{`${room.players ? room.players[0].username : 'User'}'s room`}</button>
-              </Link>
-            </div>
-          );
-        })}
+      <div className="rooms-container">
+        {props.battles[0] &&
+          props.battles.map((room) => {
+            return (
+              // JOIN GAME Button
+              <div className="room-item">
+                <Link
+                  to={{
+                    pathname: '/game',
+                    state: {
+                      roomId: room.roomId,
+                      exerciseId: room.ref,
+                    },
+                  }}
+                >
+                  <button
+                    onClick={joinRoom}
+                    value={room.roomId}
+                    name={room._id}
+                    key={room._id}
+                    type="button"
+                    className="room-button"
+                  >{`${
+                    room.players ? room.players[0].username : 'User'
+                  }'s room`}</button>
+                </Link>
+              </div>
+            );
+          })}
       </div>
     </div>
   );
