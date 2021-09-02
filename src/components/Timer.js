@@ -12,7 +12,7 @@ export class Timer extends React.Component {
     super(props);
     this.state = {
       oneSubmission: false,
-      secondsRemaining: 3000 / 1000, // time in seconds
+      secondsRemaining: 300000 / 1000, // time in seconds
     };
   }
 
