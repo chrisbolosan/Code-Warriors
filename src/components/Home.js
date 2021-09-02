@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import clientSocket from '../socket/socket';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { setRooms, addRoom, updateRoom } from '../store/rooms';
-import { getRandomExercise } from '../store/exercise';
-
+import React, { useState, useEffect } from "react";
+import clientSocket from "../socket/socket";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { setRooms, addRoom, updateRoom } from "../store/rooms";
+import { getRandomExercise } from "../store/exercise";
 
 const Home = (props) => {
   const { fetchRooms, addRoom, getRandomExercise, updateRoom } = props;
@@ -13,7 +12,7 @@ const Home = (props) => {
 
   useEffect(() => {
     fetchRooms();
-    clientSocket.on('rooms', (rooms) => {
+    clientSocket.on("rooms", (rooms) => {
       setRooms(rooms);
     });
   }, [fetchRooms, rooms]);
@@ -22,15 +21,7 @@ const Home = (props) => {
     const randomRoomId = Math.floor(Math.random() * 10000000);
     setRoomId(randomRoomId);
     getRandomExercise();
-
-    // async function updateScore(score) {
-
-    // }
-    // if (props.location.state.currentPlayerScore) {
-    //   updateScore(props.location.state.currentPlayerScore)
-    // }
   }, []);
-
 
   // when a user clicks creates a game
   async function handleClick() {
@@ -48,7 +39,7 @@ const Home = (props) => {
         },
       ],
     });
-    clientSocket.emit('createGame', roomId);
+    clientSocket.emit("createGame", roomId);
   }
 
   // when a user clicks join game
@@ -82,10 +73,23 @@ const Home = (props) => {
   return (
     <div className="main-home">
       <h1>Welcome! Create or Join a Game</h1>
+
+
+        <div>
+          <select name="times" id="times" class="form-select">
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={15}>15</option>
+            <option value={20}>20</option>
+            <option value={25}>25</option>
+            <option value={30}>30</option>
+          </select>
+        </div>
+
       {/* Create Game */}
       <Link
         to={{
-          pathname: '/game',
+          pathname: "/game",
           state: {
             roomId: roomId,
             exerciseId: props.exercise._id,
@@ -98,31 +102,34 @@ const Home = (props) => {
       </Link>
       <h2>Rooms</h2>
       <div className="rooms-container">
-        {props.battles[0] && props.battles.map((room) => {
-          return (
-            // JOIN GAME Button
-            <div className="room-item">
-              <Link
-                to={{
-                  pathname: '/game',
-                  state: {
-                    roomId: room.roomId,
-                    exerciseId: room.ref,
-                  },
-                }}
-              >
-                <button
-                  onClick={joinRoom}
-                  value={room.roomId}
-                  name={room._id}
-                  key={room._id}
-                  type="button"
-                  className="room-button"
-                >{`${room.players ? room.players[0].username : 'User'}'s room`}</button>
-              </Link>
-            </div>
-          );
-        })}
+        {props.battles[0] &&
+          props.battles.map((room) => {
+            return (
+              // JOIN GAME Button
+              <div className="room-item">
+                <Link
+                  to={{
+                    pathname: "/game",
+                    state: {
+                      roomId: room.roomId,
+                      exerciseId: room.ref,
+                    },
+                  }}
+                >
+                  <button
+                    onClick={joinRoom}
+                    value={room.roomId}
+                    name={room._id}
+                    key={room._id}
+                    type="button"
+                    className="room-button"
+                  >{`${
+                    room.players ? room.players[0].username : "User"
+                  }'s room`}</button>
+                </Link>
+              </div>
+            );
+          })}
       </div>
     </div>
   );
@@ -152,6 +159,5 @@ const mapDispatch = (dispatch) => {
     },
   };
 };
-
 
 export default connect(mapState, mapDispatch)(Home);
