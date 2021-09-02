@@ -6,7 +6,7 @@ import { setRooms, addRoom, updateRoom } from '../store/rooms';
 import { getRandomExercise } from '../store/exercise';
 import { useLocation } from "react-router-dom"
 import axios from "axios"
-import { withRouter } from "react-router"
+
 
 const Home = (props) => {
   const { fetchRooms, addRoom, getRandomExercise, updateRoom } = props;
@@ -157,5 +157,6 @@ const mapDispatch = (dispatch) => {
     },
   };
 };
+
 
 export default connect(mapState, mapDispatch)(Home);
