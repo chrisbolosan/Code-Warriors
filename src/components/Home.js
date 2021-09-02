@@ -3,19 +3,17 @@ import clientSocket from '../socket/socket';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setRooms, addRoom, updateRoom } from '../store/rooms';
-import { getRandomExercise } from '../store/exercise';
+import { getRandomExercise, getFilteredExercise } from '../store/exercise';
 import { useLocation } from 'react-router-dom';
-import { getExercises, filterExercises } from '../store/exercises';
 import axios from 'axios';
 import { withRouter } from 'react-router';
 import DifficultyFilter from './DifficultyFilter';
 
 const Home = (props) => {
-  const { fetchRooms, addRoom, getRandomExercise, updateRoom, getExercises, filterExercises } = props;
+  const { fetchRooms, addRoom, getRandomExercise, updateRoom, getFilteredExercise } = props;
   console.log('uselocation', useLocation());
   const [rooms, setRooms] = useState([]);
   const [roomId, setRoomId] = useState(0);
-  const [exercises, setExercises] = useState([]);
   const [exercise, setExercise] = useState({});
   const [difficulty, setDifficulty] = React.useState('');
 
@@ -30,8 +28,7 @@ const Home = (props) => {
     const randomRoomId = Math.floor(Math.random() * 10000000);
     setRoomId(randomRoomId);
     getRandomExercise();
-    getExercises();
-    setExercises(props.exercises);
+    setExercise(props.exercise)
 
 
     // async function updateScore(score) {
@@ -49,7 +46,7 @@ const Home = (props) => {
     // generate a random roomId
     await addRoom({
       roomId: roomId,
-      ref: props.exercise._id,
+      ref: exercise._id,
       players: [
         {
           id: props.auth._id,
@@ -93,8 +90,8 @@ const Home = (props) => {
 
   const handleChange = (event) => {
     setDifficulty(event.target.value);
-    filterExercises('level', event.target.value);
-    console.log('Filtered Exercises: ', exercises);
+    getFilteredExercise(difficulty);
+    setExercise(props.exercise);
   };
 
   return (
@@ -156,7 +153,6 @@ const mapState = (state) => {
     battles: state.battles,
     exercise: state.exercise,
     auth: state.auth,
-    exercises: state.exercises,
   };
 };
 
@@ -174,8 +170,9 @@ const mapDispatch = (dispatch) => {
     updateRoom: (room, roomId) => {
       dispatch(updateRoom(room, roomId));
     },
-    getExercises: () => { dispatch(getExercises()); },
-    filterExercises: (filterType, value) => {dispatch(filterExercises(filterType, value))}
+    getFilteredExercise: (difficulty) => {
+      dispatch(getFilteredExercise(difficulty));
+    },
   };
 };
 
