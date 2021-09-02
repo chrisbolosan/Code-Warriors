@@ -31,7 +31,6 @@ const Home = (props) => {
     setRoomId(randomRoomId);
     getRandomExercise();
     getExercises();
-    console.log('Initial Fetch of Exercises', props.exercises);
     setExercises(props.exercises);
 
 
