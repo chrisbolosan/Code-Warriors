@@ -4,13 +4,10 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setRooms, addRoom, updateRoom } from '../store/rooms';
 import { getRandomExercise } from '../store/exercise';
-import { useLocation } from "react-router-dom"
-import axios from "axios"
 
 
 const Home = (props) => {
   const { fetchRooms, addRoom, getRandomExercise, updateRoom } = props;
-  console.log("uselocation", useLocation())
   const [rooms, setRooms] = useState([]);
   const [roomId, setRoomId] = useState(0);
 
@@ -27,9 +24,7 @@ const Home = (props) => {
     getRandomExercise();
 
     // async function updateScore(score) {
-    //   await axios.put(`/api/users/${props.me._id}`, {
-    //   totalPoints: score
-    //   })
+
     // }
     // if (props.location.state.currentPlayerScore) {
     //   updateScore(props.location.state.currentPlayerScore)

@@ -1,6 +1,5 @@
 import React from "react"
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { setBattle } from "../store/battle"
 import LeaveGame from './LeaveGame'
 import axios from "axios"
@@ -69,14 +68,8 @@ class Score extends React.Component {
                 <p>Points: {opponentScore}</p>
               </div>
             </div>
-            <Link to={{
-              pathname: "/",
-              state: {
-                currentPlayerScore: currentPlayerScore
-              }
-            }}>
-              <button>Leave</button>
-            </Link>
+            <LeaveGame currentPlayerScore={currentPlayerScore} me={me} />
+
           </div>
         )
       }
@@ -96,14 +89,7 @@ class Score extends React.Component {
                 <p>Points: {opponentScore}</p>
               </div>
             </div>
-            <Link to={{
-              pathname: "/",
-              state: {
-                currentPlayerScore: currentPlayerScore
-              }
-            }}>
-              <button>Leave</button>
-            </Link>
+            <LeaveGame currentPlayerScore={currentPlayerScore} me={me} />
           </div>
         )
       } else {
@@ -122,7 +108,7 @@ class Score extends React.Component {
                 <p>Points: {opponentScore}</p>
               </div>
             </div>
-            <LeaveGame />
+            <LeaveGame currentPlayerScore={currentPlayerScore} me={me} />
 
           </div>
         )
@@ -154,14 +140,3 @@ const mapDispatch = (dispatch) => {
 };
 
 export default connect(mapState, mapDispatch)(Score)
-
-
-   {/* <Link to={{
-              pathname: "/",
-              props: {
-                // currentPlayerScore: currentPlayerScore
-                test: true
-              }
-            }}>
-              <button>Leave</button>
-            </Link> */}
