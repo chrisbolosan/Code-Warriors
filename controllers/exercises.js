@@ -129,3 +129,17 @@ exports.getRandomExercise = async (req, res, next) => {
     next(error);
   }
 };
+
+
+exports.getFilteredExercise = async (req, res, next) => {
+  try {
+    const exercises = await Exercise.find({
+      difficulty: req.params.difficulty,
+    });
+    res
+      .status(200)
+      .json(exercises[Math.floor(Math.random() * exercises.length)]);
+  } catch (err) {
+    next(err);
+  }
+};

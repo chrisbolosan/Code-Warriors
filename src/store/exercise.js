@@ -3,6 +3,7 @@ import axios from 'axios';
 // ACTION TYPES
 const GET_RANDOM_EXERCISE = "GET_RANDOM_EXERCISE";
 const GET_EXERCISE = "GET_EXERCISE";
+const GET_FILTERED_EXERCISE = "GET_FILTERED_EXERCISE";
 
 // ACTION CREATORS
 export const _getRandomExercise = (exercise) => {
@@ -19,6 +20,13 @@ export const _getExercise = (exercise) => {
   };
 };
 
+export const _getFilteredExercise = (exercise) => {
+  return {
+    type: GET_FILTERED_EXERCISE,
+    exercise
+  }
+}
+
 // THUNKS
 export const getRandomExercise = () => {
   return async (dispatch) => {
@@ -34,12 +42,26 @@ export const getExercise = (exerciseId) => {
   };
 };
 
+export const getFilteredExercise = (difficulty) => {
+  return async (dispatch) => {
+    try {
+      const {data: exercise} = await axios.get(`/api/exercises/filter${difficulty}`)
+      dispatch(_getFilteredExercise(exercise))
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+}
+
 // REDUCER
 export default function exerciseReducer(state = {}, action) {
   switch (action.type) {
     case GET_RANDOM_EXERCISE:
       return action.exercise;
     case GET_EXERCISE:
+      return action.exercise;
+    case GET_FILTERED_EXERCISE:
       return action.exercise;
     default:
       return state;
