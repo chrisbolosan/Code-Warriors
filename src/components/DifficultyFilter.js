@@ -17,14 +17,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DifficultyFilter() {
+export default function DifficultyFilter(props) {
+  const {handleChange, difficulty} = props;
   const classes = useStyles();
-  const [difficulty, setDifficulty] = React.useState('');
+
   const [open, setOpen] = React.useState(false);
 
-  const handleChange = (event) => {
-    setDifficulty(event.target.value);
-  };
 
   const handleClose = () => {
     setOpen(false);

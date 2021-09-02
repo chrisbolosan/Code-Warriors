@@ -5,16 +5,19 @@ import { connect } from 'react-redux';
 import { setRooms, addRoom, updateRoom } from '../store/rooms';
 import { getRandomExercise } from '../store/exercise';
 import { useLocation } from 'react-router-dom';
-import { getExercises } from '../store/exercises'
+import { getExercises, filterExercises } from '../store/exercises'
 import axios from 'axios';
 import { withRouter } from 'react-router';
 import DifficultyFilter from './DifficultyFilter';
 
 const Home = (props) => {
-  const { fetchRooms, addRoom, getRandomExercise, updateRoom } = props;
+  const { fetchRooms, addRoom, getRandomExercise, updateRoom, getExercises, filterExercises } = props;
   console.log('uselocation', useLocation());
   const [rooms, setRooms] = useState([]);
   const [roomId, setRoomId] = useState(0);
+  const [exercises, setExercises] = useState([])
+  const [exercise, setExercise] = useState({})
+  const [difficulty, setDifficulty] = React.useState('');
 
   useEffect(() => {
     fetchRooms();
@@ -28,6 +31,9 @@ const Home = (props) => {
     setRoomId(randomRoomId);
     getRandomExercise();
     getExercises();
+    console.log('Initial Fetch of Exercises', props.exercises)
+    setExercises(props.exercises)
+
 
     // async function updateScore(score) {
     //   await axios.put(`/api/users/${props.me._id}`, {
@@ -86,11 +92,16 @@ const Home = (props) => {
     );
   }
 
+  const handleChange = (event) => {
+    setDifficulty(event.target.value);
+    console.log(exercises)
+  };
+
   return (
     <div className="main-home">
       <h1>Welcome! Create or Join a Game</h1>
 
-      <DifficultyFilter />
+      <DifficultyFilter handleChange={handleChange} />
       {/* Create Game */}
       <Link
         to={{
@@ -164,6 +175,7 @@ const mapDispatch = (dispatch) => {
       dispatch(updateRoom(room, roomId));
     },
     getExercises: () => { dispatch(getExercises()); },
+    filterExercises: (filterType, value) => {dispatch(filterExercises(filterType, value))}
   };
 };
 
