@@ -1,5 +1,6 @@
 html {
   transform: scale(1);
+  transform-origin: 0 0;
 }
 
 body {
@@ -367,4 +368,66 @@ p {
   height: 150px;
   width: 150px;
   margin: auto;
+}
+
+/*clock*/
+.timeContainer {
+  /* margin: 150px auto; */
+  text-align: center;
+  width: 750px;
+}
+.time {
+  background: #88bdff;
+  /* border: 2px solid #88bdff; */
+  border-radius: 25px;
+  display: flex;
+  height: 200px;
+  justify-content: space-around;
+  align-items: center;
+  border: 7px solid black;
+  margin-bottom: 25px;
+  margin-top: 25px;
+  box-shadow: rgb(38 57 77) 0px 20px 30px -10px;
+  background-image: linear-gradient(
+    to top,
+    #2e1114,
+    #351417,
+    #3c171b,
+    #441a1e,
+    #4b1d21
+  );
+}
+
+.blockTimer {
+  background: white;
+  border-radius: 25px;
+  flex: auto;
+  font-size: 75px;
+  margin: 0 15px;
+  /* padding: 15px;
+  position: relative; */
+  border-style: solid;
+  border-width: 5px;
+}
+.blockcolon {
+  border-radius: 25px;
+  flex: auto;
+  font-size: 75px;
+  margin: 0 15px;
+  padding: 15px;
+  position: relative;
+  background-image: linear-gradient(
+    to top,
+    #2e1114,
+    #351417,
+    #3c171b,
+    #441a1e,
+    #4b1d21
+  );
+}
+
+.colon {
+  font-size: 110px;
+  font-weight: 800;
+  color: white;
 }
