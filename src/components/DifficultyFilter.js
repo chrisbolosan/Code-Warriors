@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   formControl: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(2),
     minWidth: 120,
   },
 }));
@@ -36,11 +36,11 @@ export default function DifficultyFilter() {
 
   return (
     <div>
-      <Button className={classes.button} onClick={handleOpen}>
+      {/* <Button className={classes.button} onClick={handleOpen}>
         Choose your Level
-      </Button>
+      </Button> */}
       <FormControl className={classes.formControl}>
-        <InputLabel id="demo-controlled-open-select-label">
+        <InputLabel id="controlled-open-select-label">
           Difficulty Level
         </InputLabel>
         <Select
@@ -52,11 +52,7 @@ export default function DifficultyFilter() {
           value={difficulty}
           onChange={handleChange}
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
           <MenuItem value={'Easy'}>Easy</MenuItem>
-          <MenuItem value={'Intermediate'}>Intermediate</MenuItem>
           <MenuItem value={'Hard'}>Hard</MenuItem>
         </Select>
       </FormControl>
