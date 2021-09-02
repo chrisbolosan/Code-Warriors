@@ -29,7 +29,7 @@ const Home = (props) => {
     setRoomId(randomRoomId);
     getRandomExercise();
     setExercise(props.exercise)
-
+    console.log('Initial state after random eexercise call: ', exercise)
 
     // async function updateScore(score) {
     //   await axios.put(`/api/users/${props.me._id}`, {
@@ -90,8 +90,10 @@ const Home = (props) => {
 
   const handleChange = (event) => {
     setDifficulty(event.target.value);
+    console.log('(handleChange func) Value of state before getFilteredExercise is invoked: ', exercise)
     getFilteredExercise(difficulty);
     setExercise(props.exercise);
+    console.log('(handleChange func) Value of state after getFilteredExercise is invoked: ', exercise)
   };
 
   return (
@@ -105,7 +107,7 @@ const Home = (props) => {
           pathname: '/game',
           state: {
             roomId: roomId,
-            exerciseId: props.exercise._id,
+            exerciseId: exercise._id,
           },
         }}
       >
