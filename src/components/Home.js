@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { setRooms, addRoom, updateRoom } from '../store/rooms';
 import { getRandomExercise } from '../store/exercise';
 import { useLocation } from "react-router-dom"
+import { getExercises } from '../store/exercises'
 import axios from "axios"
 import { withRouter } from "react-router"
 
@@ -25,6 +26,7 @@ const Home = (props) => {
     const randomRoomId = Math.floor(Math.random() * 10000000);
     setRoomId(randomRoomId);
     getRandomExercise();
+    getExercises();
 
     // async function updateScore(score) {
     //   await axios.put(`/api/users/${props.me._id}`, {
@@ -102,7 +104,7 @@ const Home = (props) => {
         </button>
       </Link>
       <h2>Rooms</h2>
-      <div className="rooms-container">
+          <div className="rooms-container">
         {props.battles[0] && props.battles.map((room) => {
           return (
             // JOIN GAME Button
@@ -112,7 +114,7 @@ const Home = (props) => {
                   pathname: '/game',
                   state: {
                     roomId: room.roomId,
-                    exerciseId: room.ref,
+                  exerciseId: room.ref,
                   },
                 }}
               >
@@ -138,6 +140,7 @@ const mapState = (state) => {
     battles: state.battles,
     exercise: state.exercise,
     auth: state.auth,
+    exercises: state.exercises,
   };
 };
 
@@ -155,6 +158,7 @@ const mapDispatch = (dispatch) => {
     updateRoom: (room, roomId) => {
       dispatch(updateRoom(room, roomId));
     },
+    getExercises: () => { dispatch(getExercises()); },
   };
 };
 

@@ -9,7 +9,7 @@ export const _getExercises = (exercises) => {
   }
 }
 
-export const getExercises = (exercises) => {
+export const getExercises = () => {
   return async (dispatch) => {
     try{
       const {data: exercises } = await axios.get('/api/exercises')
