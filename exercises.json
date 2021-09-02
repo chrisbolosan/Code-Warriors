@@ -56,7 +56,7 @@
   },
   {
     "exerciseBody": "function min() {}",
-    "test": "function checkTest(func, target) {return func([5, 1, 9, 10, 3, 0] === target)} checkTest(min, 0)",
+    "test": "function checkTest(func, target) {return func([5, 1, 9, 10, 3, 0]) === target} checkTest(min, 0)",
     "problemDescription": "Write a function that returns the min number from a given array, you are not allowed to use Math.min()"
   }
 ]
