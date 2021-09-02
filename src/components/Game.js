@@ -216,4 +216,3 @@ const mapDispatch = (dispatch) => {
 
 export default connect(mapState, mapDispatch)(Game);
 
-// <Button onClick={this.handleStart} variant="inherit" color="secondary" ><Timer /></Button>
