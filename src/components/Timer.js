@@ -12,7 +12,7 @@ export class Timer extends React.Component {
     super(props);
     this.state = {
       oneSubmission: false,
-      secondsRemaining: 300000 / 1000, // time in seconds
+      secondsRemaining: 3000 / 1000, // time in seconds
     };
   }
 
@@ -44,7 +44,12 @@ export class Timer extends React.Component {
   }
 
   async componentWillUnmount() {
-    const { roomId, setBattle } = this.props;
+    const { roomId, setBattle } = this.props
+    if (this.props.timer === 0) {
+      console.log('TIMER OUT')
+      clientSocket.emit("outOfTime", roomId);
+      this.props.setTime(1000);
+    }
 
     var _this = this;
     clearInterval(_this.countdown);
@@ -66,7 +71,7 @@ export class Timer extends React.Component {
     this.countdown = setInterval(function () {
       _this.props.setTime(_this.state.secondsRemaining - 1);
       _this.setState({ secondsRemaining: _this.state.secondsRemaining - 1 });
-      if (!_this.state.secondsRemaining) {
+      if (_this.state.secondsRemaining === 0) {
         clearInterval(_this.countdown);
       }
     }, 1000);
@@ -74,20 +79,32 @@ export class Timer extends React.Component {
 
   render() {
     const { timer } = this.props;
-    return (
-      <div className="App">
-        {timer === 0 ? (
+    if (timer === 0 && this.state.oneSubmission) {
+      return (
+        <div className="App">
           <Redirect to="/score" />
-        ) : (
-          <div className="timer-container">
+        </div>
+      )
+    } else if (timer === 0 && !this.state.oneSubmission) {
+      return (
+        <div className="App">
+          <Redirect to="/" />
+        </div>
+      )
+    } else {
+      return (
+        (
+          <div className="App">
+            <div className="timer-container">
             <span className="bloc-timer">
               Time Remaining : {this.getMinutes()}
             </span>
             <span className="bloc-timer"> :{this.getSeconds()}</span>
           </div>
-        )}
-      </div>
-    );
+          </div>
+        )
+      )
+    }
   }
 }
 

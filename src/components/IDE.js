@@ -26,7 +26,7 @@ class IDE extends React.Component {
   }
 
   async handleChange(userInput) {
-    await this.setState({ input: userInput });
+    this.setState({ input: userInput });
 
     //Emit the solution and clientId in an object
     clientSocket.emit(`solution`, this.state);
@@ -34,11 +34,8 @@ class IDE extends React.Component {
 
   // when a user clicks "RUN"
   async handleRun(event) {
-    console.log("on run", this.state.input)
     event.preventDefault();
-    if (this.props.enabled) {
-      await this.props.runTestIDE(this.props.exercise.test, this.state.input);
-    }
+    await this.props.runTestIDE(this.props.exercise.test, this.state.input);
   }
 
 
@@ -55,12 +52,10 @@ class IDE extends React.Component {
     });
 
     event.preventDefault();
-    if (this.props.enabled) {
       await this.props.submitSolution(
         this.props.exercise._id,
         this.state.input
       );
-    }
     // all players in the room
     let players = this.state.room.players;
 
@@ -91,12 +86,6 @@ class IDE extends React.Component {
     updatePlayer(updatedPlayer, battleId)
 
 
-    // if (!res) {
-    //   const p1Score = this.getWinner(player1, player2);
-    //   const p2Score = this.getWinner(player2, player1);
-    //   const winner = p1Score > p2Score ? player1 : player2;
-    //   alert(`${winner.username} is the winner!`);
-    // }
   }
 
   async componentDidUpdate(prevProps) {
@@ -120,7 +109,7 @@ class IDE extends React.Component {
 
   async componentDidMount() {
     //sets state to the exercise body and client socket Id
-    await this.setState({
+    this.setState({
       input: this.props.funcFrame,
       playerId: clientSocket.id,
       roomId: this.props.roomId,
@@ -130,22 +119,7 @@ class IDE extends React.Component {
   render() {
     const me = this.props.me;
 
-    // This code checks the status of enabled and sets options based on whether it is
-    // enabled or not
-    const { enabled } = this.props;
-    let options;
-    if (!enabled) {
-      options = {
-        lineWrapping: true,
-        lint: true,
-        mode: 'javascript',
-        lineNumbers: true,
-        theme: 'material',
-        autoCloseBrackets: true,
-        readOnly: true,
-      };
-    } else {
-      options = {
+      let options = {
         lineWrapping: true,
         lint: true,
         mode: 'javascript',
@@ -153,7 +127,7 @@ class IDE extends React.Component {
         theme: 'material',
         autoCloseBrackets: true,
       };
-    }
+
     return (
       <div className="IDE IDE1">
         <div className="user-info">

@@ -86,6 +86,10 @@ io.on('connection', async (socket) => {
   socket.on('leaveRoom', (roomId) => {
     socket.leave(roomId);
   })
+
+  socket.on('outOfTime', (roomId) => {
+    socket.leave(roomId);
+  })
 });
 
 server.listen(PORT, console.log(`Running on port ${PORT}`));
