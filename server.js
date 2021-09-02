@@ -86,6 +86,11 @@ io.on('connection', async (socket) => {
   socket.on('leaveRoom', (roomId) => {
     socket.leave(roomId);
   })
+
+  //listen for when winner  needs to be determined
+  socket.on('determineWinner', (roomId) => {
+    io.in(roomId).emit("winner")
+  })
 });
 
 server.listen(PORT, console.log(`Running on port ${PORT}`));
