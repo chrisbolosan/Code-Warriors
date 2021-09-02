@@ -150,7 +150,6 @@ class Game extends React.Component {
                 exercise={this.props.exercise}
                 funcFrame={this.state.funcFrame}
                 submitSolution={submitSolution}
-                enabled={true}
                 roomId={roomId}
                 runTestIDE={runTestIDE}
                 room={this.state.room}
