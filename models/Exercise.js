@@ -5,6 +5,10 @@ const ExerciseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  difficulty: {
+    type: String,
+    default: 'Easy',
+  },
   test: {
     type: String,
     required: true,
