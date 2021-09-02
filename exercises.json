@@ -6,6 +6,7 @@
   },
   {
     "exerciseBody": "function loopArr(arr, direction, steps) {}",
+    "difficulty": "Hard",
     "test": "function checkTest(func, target) {return func([1, 5, 87, 45, 8, 8], 'left', 2) === [87, 45, 8, 8, 1, 5]} checkTest(loopArr, [87, 45, 8, 8, 1, 5])}",
     "problemDescription": "Write a function loopArr that loops array in a specified direction by some number of steps. By 'looping array' it means removing elements from start and adding them to end of array one-by-one (if direction is 'left') or removing from end and adding them to start one by-one (if direction is 'right')."
   },
@@ -21,6 +22,7 @@
   },
   {
     "exerciseBody": "function fizzbuzz(n) {}",
+    "difficulty": "Hard",
     "test": "function checkTest(func, target) {return JSON.stringify(func(10)) === JSON.stringify([1, 2, 'Fizz', 4, 'Buzz', 'Fizz', 7, 8, 'Fizz', 'Buzz'])} checkTest(fizzbuzz, [1,2,'Fizz',4,'Buzz','Fizz',7,8,'Fizz','Buzz'])",
     "problemDescription": "Return an array containing the numbers from 1 to N, where N is the parametered value. Replace certain values however if any of the following conditions are met: If the value is a multiple of 3: use the value 'Fizz' instead. If the value is a multiple of 5: use the value 'Buzz' instead. If the value is a multiple of 3 & 5: use the value 'FizzBuzz' instead. N will never be less than 1."
   },
@@ -31,6 +33,7 @@
   },
   {
     "exerciseBody": "function moveTen(s) {}",
+    "difficulty": "Hard",
     "test": "function checkTest(func, target) {return func('exampletesthere') === target} checkTest(moveTen, 'ohkwzvodocdrobo')",
     "problemDescription": "Move every letter in the provided string forward 10 letters through the alphabet. If it goes past 'z', start again at 'a'. Input will be a string with length > 0."
   },
