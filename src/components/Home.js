@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { setRooms, addRoom, updateRoom } from '../store/rooms';
 import { getRandomExercise } from '../store/exercise';
 import { useLocation } from 'react-router-dom';
-import { getExercises, filterExercises } from '../store/exercises'
+import { getExercises, filterExercises } from '../store/exercises';
 import axios from 'axios';
 import { withRouter } from 'react-router';
 import DifficultyFilter from './DifficultyFilter';
@@ -15,8 +15,8 @@ const Home = (props) => {
   console.log('uselocation', useLocation());
   const [rooms, setRooms] = useState([]);
   const [roomId, setRoomId] = useState(0);
-  const [exercises, setExercises] = useState([])
-  const [exercise, setExercise] = useState({})
+  const [exercises, setExercises] = useState([]);
+  const [exercise, setExercise] = useState({});
   const [difficulty, setDifficulty] = React.useState('');
 
   useEffect(() => {
@@ -31,8 +31,8 @@ const Home = (props) => {
     setRoomId(randomRoomId);
     getRandomExercise();
     getExercises();
-    console.log('Initial Fetch of Exercises', props.exercises)
-    setExercises(props.exercises)
+    console.log('Initial Fetch of Exercises', props.exercises);
+    setExercises(props.exercises);
 
 
     // async function updateScore(score) {
@@ -90,11 +90,12 @@ const Home = (props) => {
       },
       battleId
     );
-  }
+  };
 
   const handleChange = (event) => {
     setDifficulty(event.target.value);
-    console.log(exercises)
+    filterExercises('level', event.target.value);
+    console.log('Filtered Exercises: ', exercises);
   };
 
   return (
