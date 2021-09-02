@@ -88,6 +88,7 @@ export class Timer extends React.Component {
     } else if (timer === 0 && !this.state.oneSubmission) {
       return (
         <div className="App">
+          {alert("You ran out of time! No points awarded. Try again!")}
           <Redirect to="/" />
         </div>
       )
