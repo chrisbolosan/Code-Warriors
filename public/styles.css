@@ -1,5 +1,5 @@
 html {
-  zoom: 145%;
+  transform: scale(1);
 }
 
 body {
@@ -355,10 +355,11 @@ p {
   margin: auto;
   margin-top: 100px;
   border: 2px solid black;
-  background-color: #83677b
+  background-color: #83677b;
 }
 
-#score-container p, #score-container h2{
+#score-container p,
+#score-container h2 {
   color: white;
 }
 
