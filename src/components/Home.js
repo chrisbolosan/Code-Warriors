@@ -9,6 +9,8 @@ const Home = (props) => {
   const { fetchRooms, addRoom, getRandomExercise, updateRoom } = props;
   const [rooms, setRooms] = useState([]);
   const [roomId, setRoomId] = useState(0);
+  const [gameTime, setGameTime] = useState(300000);
+
 
   useEffect(() => {
     fetchRooms();
@@ -38,8 +40,15 @@ const Home = (props) => {
           submitted: false,
         },
       ],
+      length: gameTime
     });
     clientSocket.emit("createGame", roomId);
+  }
+
+  //Update the time for the game
+  function updateTime(event){
+    const time = event.target.value
+    setGameTime(time)
   }
 
   // when a user clicks join game
@@ -74,15 +83,15 @@ const Home = (props) => {
     <div className="main-home">
       <h1>Welcome! Create or Join a Game</h1>
 
-
+      {/* Time Selector */}
         <div>
-          <select name="times" id="times" class="form-select">
-            <option value={5}>5</option>
-            <option value={10}>10</option>
-            <option value={15}>15</option>
-            <option value={20}>20</option>
-            <option value={25}>25</option>
-            <option value={30}>30</option>
+          <select onChange={updateTime} name="times" id="times" class="form-select">
+            <option value='300000'>5</option>
+            <option value='600000'>10</option>
+            <option value='900000'>15</option>
+            <option value='1200000'>20</option>
+            <option value='1500000'>25</option>
+            <option value='1800000'>30</option>
           </select>
         </div>
 
@@ -93,6 +102,7 @@ const Home = (props) => {
           state: {
             roomId: roomId,
             exerciseId: props.exercise._id,
+            gameTime: gameTime
           },
         }}
       >
