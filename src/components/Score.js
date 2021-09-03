@@ -2,7 +2,6 @@ import React from "react"
 import { connect } from 'react-redux';
 import { setBattle } from "../store/battle"
 import LeaveGame from './LeaveGame'
-import axios from "axios"
 
 class Score extends React.Component {
   constructor(props) {

@@ -23,6 +23,10 @@ const BattleSchema = new mongoose.Schema({
   open: {
     type: Boolean,
     default: true
+  },
+  length: {
+    type: Number,
+    default: 300000
   }
 });
 

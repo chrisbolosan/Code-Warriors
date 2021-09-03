@@ -1,23 +1,34 @@
-import React from 'react';
-import { Redirect } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { setTime } from '../store/timer';
-import { connect } from 'react-redux';
-import clientSocket from '../socket/socket';
-import { setBattle } from '../store/battle';
+
+import React from "react";
+import { Redirect } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { setTime } from "../store/timer";
+import { connect } from "react-redux";
+import clientSocket from "../socket/socket";
+import { setBattle } from "../store/battle";
+
 
 export class Timer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       oneSubmission: false,
-      secondsRemaining: 300000 / 1000, // time in seconds
+      secondsRemaining: 0
+
     };
   }
 
   componentDidMount() {
-    const { roomId, me } = this.props;
+
+    console.log("GameLength", this.props.gameLength)
+    console.log("Type of GameLength", typeof this.props.gameLength)
+
+    this.setState({
+     secondsRemaining: Number(this.props.gameLength) / 1000, // time in seconds
+    })
+
+    const { roomId, me } = this.props
+
 
     // start the timer
     this.startTime();
@@ -37,7 +48,11 @@ export class Timer extends React.Component {
         if (this.state.oneSubmission === true) {
           clientSocket.emit('gameOver', roomId);
         } else {
-          console.log('UR OPPONENT SUBMITTED THEIR SOLUTION!');
+
+          clientSocket.emit('opponentSubmitted', {
+            roomId: roomId,
+            id: me._id
+          })
         }
       }
     });

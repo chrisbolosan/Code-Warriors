@@ -9,7 +9,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import clientSocket from '../socket/socket';
 import { updateRoom, updatePlayer } from '../store/rooms';
-import axios from "axios"
 
 class IDE extends React.Component {
   constructor(props) {
