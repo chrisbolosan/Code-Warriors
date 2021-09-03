@@ -114,12 +114,13 @@ const Home = (props) => {
       <div className="rooms-container">
         {props.battles[0] &&
           props.battles.map((room) => {
+            console.log(room)
             return (
               // JOIN GAME Button
               <div className="room-item">
                 <Link
                   to={{
-                    pathname: "/game",
+                    pathname: room.open ? "/game" : "/",
                     state: {
                       roomId: room.roomId,
                       exerciseId: room.ref,
