@@ -1,6 +1,5 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { setTime } from "../store/timer";
 import { connect } from "react-redux";
@@ -12,11 +11,18 @@ export class Timer extends React.Component {
     super(props);
     this.state = {
       oneSubmission: false,
-      secondsRemaining: 300000 / 1000, // time in seconds
+      secondsRemaining: 0
     };
   }
 
   componentDidMount() {
+    console.log("GameLength", this.props.gameLength)
+    console.log("Type of GameLength", typeof this.props.gameLength)
+
+    this.setState({
+     secondsRemaining: Number(this.props.gameLength) / 1000, // time in seconds
+    })
+
     const { roomId, me } = this.props
 
     // start the timer

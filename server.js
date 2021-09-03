@@ -87,6 +87,7 @@ io.on('connection', async (socket) => {
     socket.leave(roomId);
   })
 
+  //Listen for game clock running out
   socket.on('outOfTime', (roomId) => {
     socket.leave(roomId);
   })
