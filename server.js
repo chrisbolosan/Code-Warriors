@@ -90,6 +90,11 @@ io.on('connection', async (socket) => {
     socket.leave(roomId);
   })
 
+  //listen for when winner  needs to be determined
+  socket.on('determineWinner', (roomId) => {
+    io.in(roomId).emit("winner")
+  })
+  
   //Listen for game clock running out
   socket.on('outOfTime', (roomId) => {
     socket.leave(roomId);

@@ -3,13 +3,16 @@ import clientSocket from "../socket/socket";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { setRooms, addRoom, updateRoom } from "../store/rooms";
-import { getRandomExercise } from "../store/exercise";
+import { getRandomExercise, getFilteredExercise } from "../store/exercise";
+import DifficultyFilter from './DifficultyFilter';
 
 const Home = (props) => {
-  const { fetchRooms, addRoom, getRandomExercise, updateRoom } = props;
+  const { fetchRooms, addRoom, getRandomExercise, updateRoom, getFilteredExercise } = props;
   const [rooms, setRooms] = useState([]);
   const [roomId, setRoomId] = useState(0);
   const [gameTime, setGameTime] = useState(300000);
+  const [fExercise, setExercise] = useState({});
+  const [difficulty, setDifficulty] = useState('')
 
 
   useEffect(() => {
@@ -77,12 +80,44 @@ const Home = (props) => {
       },
       battleId
     );
-  }
+  };
+
+  async function handleChange(event){
+        setDifficulty(event.target.value)
+        if(event.target.value.length > 0 && event.target.value){
+          console.log('Prior to switch: ', event.target.value)
+          switch(event.target.value){
+            case "Easy":
+              console.log('Difficulty level (Easy): ', event.target.value)
+               await getFilteredExercise(event.target.value);
+                //setExercise(props.exercise)
+                break;
+            case "Hard":
+              console.log('Difficulty level (Hard): ', event.target.value)
+              await getFilteredExercise(event.target.value);
+              //setExercise(props.exercise)
+                break;
+            default:
+                getRandomExercise();
+                //setExercise(props.exercise)
+      }
+
+        }
+
+
+  };
 
   return (
     <div className="main-home">
       <h1>Welcome! Create or Join a Game</h1>
 
+      <DifficultyFilter handleChange={handleChange}
+                        //exercise={props.exercise}
+                        // filteredExercise = {fExercise}
+                        // setExercise={setExercise}
+                        difficulty={difficulty}
+                        setDifficulty={setDifficulty}
+      />
       {/* Time Selector */}
         <div>
           <select onChange={updateTime} name="times" id="times" class="form-select">
@@ -166,6 +201,9 @@ const mapDispatch = (dispatch) => {
     },
     updateRoom: (room, roomId) => {
       dispatch(updateRoom(room, roomId));
+    },
+    getFilteredExercise: (difficulty) => {
+      dispatch(getFilteredExercise(difficulty));
     },
   };
 };

@@ -10,6 +10,7 @@ import battles from "./rooms"
 import timer from './timer'
 import battle from "./battle"
 import profile from './user';
+import exercises from './exercises'
 
 
 const reducer = combineReducers({
@@ -20,7 +21,8 @@ const reducer = combineReducers({
   battles,
   timer,
   battle,
-  profile
+  profile,
+  exercises
 });
 
 const middleware = composeWithDevTools(
