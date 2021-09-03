@@ -16,6 +16,13 @@ p {
   filter: blur(3px);
 }
 
+/*navbar*/
+.navbarContainer {
+  zoom: 145%;
+}
+.container-fluid {
+  zoom: 145%;
+}
 #navbarNav {
   justify-content: flex-end;
 }
@@ -97,6 +104,7 @@ p {
   display: flex;
   margin-top: 30px;
   justify-content: space-evenly;
+  zoom: 145%;
 }
 
 .main-home {
@@ -140,6 +148,7 @@ p {
 }
 
 .room-button {
+  zoom: 145%;
   color: white;
   border-style: none;
   background-color: #83677b;
@@ -152,6 +161,7 @@ p {
 }
 
 #userprofile {
+  zoom: 145%;
   display: flex;
   flex-direction: column;
   margin-top: 30px;
@@ -268,6 +278,7 @@ p {
 
 /* login and signup forms */
 #login {
+  zoom: 145%;
   height: 320px;
   width: 300px;
   display: flex;
@@ -282,6 +293,7 @@ p {
 }
 
 #signup {
+  zoom: 145%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -372,7 +384,7 @@ p {
 
 /*clock*/
 .timeContainer {
-  /* margin: 150px auto; */
+  zoom: 40%;
   text-align: center;
   width: 750px;
 }

@@ -6,10 +6,10 @@ import IDEOpponent from './IDEOpponent';
 import clientSocket from '../socket/socket';
 import { runTest } from '../helpers/testRunner';
 import Timer from './Timer';
-import { getExercise } from "../store/exercise";
-import { deleteRoom, setRooms } from "../store/rooms";
-import axios from "axios";
-import Score from "./Score"
+import { getExercise } from '../store/exercise';
+import { deleteRoom, setRooms } from '../store/rooms';
+import axios from 'axios';
+import Score from './Score';
 
 class Game extends React.Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class Game extends React.Component {
       started: false,
       startDisabled: true,
       gameOver: false,
-      gameLength: ''
+      gameLength: '',
     };
 
     this.runTestIDE = this.runTestIDE.bind(this);
@@ -36,8 +36,6 @@ class Game extends React.Component {
 
   // when user clicks the START button
   async handleStart() {
-
-
     // get the room from the database
     const roomId = String(this.props.location.state.roomId);
     const { data } = await axios.get(`/api/battles/${roomId}`);
@@ -47,23 +45,26 @@ class Game extends React.Component {
     // set it to local state
     this.setState({
       room: data[0],
-      gameLength: data[0].length
+      gameLength: data[0].length,
     });
 
-      // game has started
-      this.setState({
-        started: true,
-        funcFrame: this.props.exercise.exerciseBody,
-      });
+    // game has started
+    this.setState({
+      started: true,
+      funcFrame: this.props.exercise.exerciseBody,
+    });
   }
 
   async componentDidMount() {
 
+
     clientSocket.on('gameStarted', async (senderRoomId) => {
+
 
       // get the room from the database
       const roomId = String(this.props.location.state.roomId);
       const { data } = await axios.get(`/api/battles/${roomId}`);
+
 
       if (roomId === senderRoomId) {
         this.setState({
@@ -73,6 +74,7 @@ class Game extends React.Component {
           gameLength: data[0] ? data[0].length : '100000'
         });
       }
+
     });
 
     const { exerciseId } = this.props.location.state;
@@ -100,19 +102,19 @@ class Game extends React.Component {
     });
 
     // listen for when it is game over
-    clientSocket.on("endGame", (battleId) => {
+    clientSocket.on('endGame', (battleId) => {
       this.setState({
         gameOver: true,
-        battleId
-      })
-    })
+        battleId,
+      });
+    });
 
-    clientSocket.on("opponentSubmitted", (submitterId) => {
+    clientSocket.on('opponentSubmitted', (submitterId) => {
       if (submitterId === this.props.me._id) {
-        const status = document.getElementById("status")
-        status.innerHTML = "Opponent has submitted their solution"
+        const status = document.getElementById('status');
+        status.innerHTML = 'Opponent has submitted their solution';
       }
-    })
+    });
   }
 
   componentWillUnmount() {
@@ -124,22 +126,21 @@ class Game extends React.Component {
     )[0];
 
     // if the user who creates a game leaves the game when it's still open, the room gets deleted
-  if (battleToDelete) {
-    if (battleToDelete.open === true && this.state.started === false) {
-      deleteBattle(battleToDelete.roomId);
-      setRooms();
-    } else {
-      // this logic should be: if the game started and a user leaves, the opponent wins the game and the room gets deleted
-      return;
+    if (battleToDelete) {
+      if (battleToDelete.open === true && this.state.started === false) {
+        deleteBattle(battleToDelete.roomId);
+        setRooms();
+      } else {
+        // this logic should be: if the game started and a user leaves, the opponent wins the game and the room gets deleted
+        return;
+      }
     }
-  }
-  clientSocket.emit('leaveRoom', roomId)
+    clientSocket.emit('leaveRoom', roomId);
   }
 
   render() {
-
-    if (this.state.gameOver === true ) {
-      return <Score roomId={this.state.room.roomId} />
+    if (this.state.gameOver === true) {
+      return <Score roomId={this.state.room.roomId} />;
     } else {
       const { roomId } = this.props.location.state;
       const { submitSolution, exercise } = this.props;
@@ -147,7 +148,7 @@ class Game extends React.Component {
 
       if (exercise.problemDescription) {
         return (
-          <div id="game-container">
+          <div id="game-container" style={{ zoom: 1 }}>
             <div id="exercise-problem">
               {/* show the problem once game has started */}
               <h4>Description</h4>
@@ -187,9 +188,9 @@ class Game extends React.Component {
               ) : (
                 <>
                   <Timer
-                  roomId={this.props.location.state.roomId}
-                  gameLength={this.state.gameLength}
-                 />
+                    roomId={this.props.location.state.roomId}
+                    gameLength={this.state.gameLength}
+                  />
                   <div id="seconds-remaining"></div>
                 </>
               )}
@@ -199,10 +200,9 @@ class Game extends React.Component {
               <div id="test-results">
                 {this.state.result
                   ? this.state.result.message
-                  : "please run your test"}
+                  : 'please run your test'}
               </div>
             </div>
-
           </div>
         );
       } else {
@@ -231,4 +231,3 @@ const mapDispatch = (dispatch) => {
 };
 
 export default connect(mapState, mapDispatch)(Game);
-
