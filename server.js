@@ -55,7 +55,7 @@ io.on('connection', async (socket) => {
 
   socket.on('startGame', async (roomId) => {
     console.log("ROOMID is ", roomId)
-    io.emit('gameStarted', true)
+    io.emit('gameStarted', roomId)
   })
 
   // listen for when a user submits code
