@@ -50,7 +50,6 @@ class Game extends React.Component {
       room: data[0],
       gameLength: data[0].length
     });
-    console.log(this.state.room)
 
       // game has started
       this.setState({
@@ -110,9 +109,16 @@ class Game extends React.Component {
     clientSocket.on('endGame', (battleId) => {
       this.setState({
         gameOver: true,
-        battleId,
-      });
-    });
+        battleId
+      })
+    })
+
+    clientSocket.on("opponentSubmitted", (submitterId) => {
+      if (submitterId === this.props.me._id) {
+        const status = document.getElementById("status")
+        status.innerHTML = "Opponent has submitted their solution"
+      }
+    })
   }
 
   componentWillUnmount() {
@@ -165,12 +171,15 @@ class Game extends React.Component {
                 room={this.state.room}
                 submitDisabled={!this.state.started}
               />
-              <IDEOpponent
-                //pass solution obj as props to dummy IDE
-                solutionObject={this.state}
-                funcFrame={this.state.funcFrame}
-                roomId={roomId}
-              />
+              <div>
+                <IDEOpponent
+                  //pass solution obj as props to dummy IDE
+                  solutionObject={this.state}
+                  funcFrame={this.state.funcFrame}
+                  roomId={roomId}
+                />
+                <div id="status"></div>
+              </div>
             </div>
             <div id="start-match">
               {this.state.started === false ? (
