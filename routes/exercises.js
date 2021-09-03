@@ -10,6 +10,7 @@ const {
   submitSolution,
   testSolution,
   getRandomExercise,
+  getFilteredExercise,
 } = require('../controllers/exercises');
 
 //middleware for only authorized users and admins
@@ -18,6 +19,8 @@ const authHandler = require('../middleware/auth');
 router.route('/').get(getExercises).post(authHandler, createExercise);
 router.route('/random').get(getRandomExercise);
 router.route('/solution').post(submitSolution);
+
+router.route('/filtered/:difficulty').get(getFilteredExercise);
 
 router
   .route('/:id')

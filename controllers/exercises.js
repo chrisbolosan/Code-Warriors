@@ -1,6 +1,23 @@
 const Exercise = require('../models/Exercise');
 const Jsrunner = require('javascript-code-runner');
-const babel = require('@babel/core');
+
+
+
+
+exports.getFilteredExercise = async (req, res, next) => {
+  try {
+    const exercises = await Exercise.find({
+      difficulty: req.params.difficulty,
+    });
+    res
+      .status(200)
+      .json(exercises[Math.floor(Math.random() * exercises.length)]);
+  } catch (err) {
+    next(err);
+  }
+};
+
+
 
 // @desc    Get Exercise
 // @route   GET /api/exercises
@@ -130,16 +147,8 @@ exports.getRandomExercise = async (req, res, next) => {
   }
 };
 
+// @desc    Get random filtered exercise
+// @route   GET /api/exercises/:difficulty
+// @access  Public
 
-exports.getFilteredExercise = async (req, res, next) => {
-  try {
-    const exercises = await Exercise.find({
-      difficulty: req.params.difficulty,
-    });
-    res
-      .status(200)
-      .json(exercises[Math.floor(Math.random() * exercises.length)]);
-  } catch (err) {
-    next(err);
-  }
-};
+

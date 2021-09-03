@@ -1,25 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import clientSocket from '../socket/socket';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { setRooms, addRoom, updateRoom } from '../store/rooms';
-import { getRandomExercise, getFilteredExercise } from '../store/exercise';
-import { useLocation } from 'react-router-dom';
-import axios from 'axios';
-import { withRouter } from 'react-router';
-import DifficultyFilter from './DifficultyFilter';
+import React, { useState, useEffect } from "react";
+import clientSocket from "../socket/socket";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { setRooms, addRoom, updateRoom } from "../store/rooms";
+import { getRandomExercise } from "../store/exercise";
 
 const Home = (props) => {
-  const { fetchRooms, addRoom, getRandomExercise, updateRoom, getFilteredExercise } = props;
-  console.log('uselocation', useLocation());
+  const { fetchRooms, addRoom, getRandomExercise, updateRoom } = props;
   const [rooms, setRooms] = useState([]);
   const [roomId, setRoomId] = useState(0);
-  const [exercise, setExercise] = useState({});
-  const [difficulty, setDifficulty] = React.useState('');
+  const [gameTime, setGameTime] = useState(300000);
+
 
   useEffect(() => {
     fetchRooms();
-    clientSocket.on('rooms', (rooms) => {
+    clientSocket.on("rooms", (rooms) => {
       setRooms(rooms);
     });
   }, [fetchRooms, rooms]);
@@ -28,17 +23,6 @@ const Home = (props) => {
     const randomRoomId = Math.floor(Math.random() * 10000000);
     setRoomId(randomRoomId);
     getRandomExercise();
-    setExercise(props.exercise)
-    console.log('Initial state after random eexercise call: ', exercise)
-
-    // async function updateScore(score) {
-    //   await axios.put(`/api/users/${props.me._id}`, {
-    //   totalPoints: score
-    //   })
-    // }
-    // if (props.location.state.currentPlayerScore) {
-    //   updateScore(props.location.state.currentPlayerScore)
-    // }
   }, []);
 
   // when a user clicks creates a game
@@ -56,8 +40,15 @@ const Home = (props) => {
           submitted: false,
         },
       ],
+      length: gameTime
     });
-    clientSocket.emit('createGame', roomId);
+    clientSocket.emit("createGame", roomId);
+  }
+
+  //Update the time for the game
+  function updateTime(event){
+    const time = event.target.value
+    setGameTime(time)
   }
 
   // when a user clicks join game
@@ -101,13 +92,26 @@ const Home = (props) => {
       <h1>Welcome! Create or Join a Game</h1>
 
       <DifficultyFilter handleChange={handleChange} />
+      {/* Time Selector */}
+        <div>
+          <select onChange={updateTime} name="times" id="times" class="form-select">
+            <option value='300000'>5</option>
+            <option value='600000'>10</option>
+            <option value='900000'>15</option>
+            <option value='1200000'>20</option>
+            <option value='1500000'>25</option>
+            <option value='1800000'>30</option>
+          </select>
+        </div>
+
       {/* Create Game */}
       <Link
         to={{
-          pathname: '/game',
+          pathname: "/game",
           state: {
             roomId: roomId,
-            exerciseId: exercise._id,
+            exerciseId: props.exercise._id,
+            gameTime: gameTime
           },
         }}
       >
@@ -124,7 +128,7 @@ const Home = (props) => {
               <div className="room-item">
                 <Link
                   to={{
-                    pathname: '/game',
+                    pathname: "/game",
                     state: {
                       roomId: room.roomId,
                       exerciseId: room.ref,
@@ -139,7 +143,7 @@ const Home = (props) => {
                     type="button"
                     className="room-button"
                   >{`${
-                    room.players ? room.players[0].username : 'User'
+                    room.players ? room.players[0].username : "User"
                   }'s room`}</button>
                 </Link>
               </div>

@@ -20,6 +20,7 @@ class Game extends React.Component {
       started: false,
       startDisabled: true,
       gameOver: false,
+      gameLength: ''
     };
 
     this.runTestIDE = this.runTestIDE.bind(this);
@@ -36,11 +37,7 @@ class Game extends React.Component {
 
   // when user clicks the START button
   async handleStart() {
-    // game has started
-    this.setState({
-      started: true,
-      funcFrame: this.props.exercise.exerciseBody,
-    });
+
 
     // get the room from the database
     const roomId = String(this.props.location.state.roomId);
@@ -51,15 +48,21 @@ class Game extends React.Component {
     // set it to local state
     this.setState({
       room: data[0],
+      gameLength: data[0].length
     });
-  }
+    console.log(this.state.room)
 
-  async componentDidMount() {
-    clientSocket.on('gameStarted', async (value) => {
+      // game has started
       this.setState({
         started: true,
         funcFrame: this.props.exercise.exerciseBody,
       });
+  }
+
+  async componentDidMount() {
+
+    clientSocket.on('gameStarted', async (value) => {
+
 
       // get the room from the database
       const roomId = String(this.props.location.state.roomId);
@@ -68,7 +71,15 @@ class Game extends React.Component {
       // set it to local state
       this.setState({
         room: data[0],
+        gameLength: data[0].length
       });
+    console.log(this.state.room)
+
+    this.setState({
+      started: true,
+      funcFrame: this.props.exercise.exerciseBody,
+    });
+
     });
 
     const { exerciseId } = this.props.location.state;
@@ -149,7 +160,6 @@ class Game extends React.Component {
                 exercise={this.props.exercise}
                 funcFrame={this.state.funcFrame}
                 submitSolution={submitSolution}
-                enabled={true}
                 roomId={roomId}
                 runTestIDE={runTestIDE}
                 room={this.state.room}
@@ -172,7 +182,10 @@ class Game extends React.Component {
                 </button>
               ) : (
                 <>
-                  <Timer roomId={this.props.location.state.roomId} />
+                  <Timer
+                  roomId={this.props.location.state.roomId}
+                  gameLength={this.state.gameLength}
+                 />
                   <div id="seconds-remaining"></div>
                 </>
               )}
@@ -214,4 +227,3 @@ const mapDispatch = (dispatch) => {
 
 export default connect(mapState, mapDispatch)(Game);
 
-// <Button onClick={this.handleStart} variant="inherit" color="secondary" ><Timer /></Button>

@@ -91,6 +91,11 @@ io.on('connection', async (socket) => {
   socket.on('determineWinner', (roomId) => {
     io.in(roomId).emit("winner")
   })
+  
+  //Listen for game clock running out
+  socket.on('outOfTime', (roomId) => {
+    socket.leave(roomId);
+  })
 });
 
 server.listen(PORT, console.log(`Running on port ${PORT}`));

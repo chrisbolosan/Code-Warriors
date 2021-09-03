@@ -46,12 +46,12 @@ export const getExercise = (exerciseId) => {
 export const getFilteredExercise = (difficulty) => {
   return async (dispatch) => {
     try {
-      const {data: exercise} = await axios.get(`/api/exercises/${difficulty}`)
+      const {data: exercise} = await axios.get(`/api/exercises/filtered/${difficulty}`)
       dispatch(_getFilteredExercise(exercise))
     } catch (error) {
       console.log(error)
     }
-
+f
   }
 }
 
