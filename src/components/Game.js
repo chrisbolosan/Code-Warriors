@@ -62,7 +62,6 @@ class Game extends React.Component {
 
     clientSocket.on('gameStarted', async (value) => {
 
-
       // get the room from the database
       const roomId = String(this.props.location.state.roomId);
       const { data } = await axios.get(`/api/battles/${roomId}`);
@@ -70,14 +69,15 @@ class Game extends React.Component {
       // set it to local state
       this.setState({
         room: data[0],
-        gameLength: data[0].length
+        gameLength: data[0] ? data[0].length : '100000'
       });
-    console.log(this.state.room)
 
     this.setState({
       started: true,
       funcFrame: this.props.exercise.exerciseBody,
     });
+
+    console.log("STARTED", this.state.started)
 
     });
 
