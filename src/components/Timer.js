@@ -43,7 +43,10 @@ export class Timer extends React.Component {
         if (this.state.oneSubmission === true) {
           clientSocket.emit("gameOver", roomId);
         } else {
-          console.log("UR OPPONENT SUBMITTED THEIR SOLUTION!");
+          clientSocket.emit('opponentSubmitted', {
+            roomId: roomId,
+            id: me._id
+          })
         }
       }
     });
