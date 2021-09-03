@@ -50,7 +50,6 @@ class Game extends React.Component {
       room: data[0],
       gameLength: data[0].length
     });
-    console.log(this.state.room)
 
       // game has started
       this.setState({
@@ -112,6 +111,12 @@ class Game extends React.Component {
         gameOver: true,
         battleId
       })
+    })
+
+    clientSocket.on("opponentSubmitted", (submitterId) => {
+      if (submitterId === this.props.me._id) {
+        alert('Your opponent has submitted their answer!')
+      }
     })
   }
 

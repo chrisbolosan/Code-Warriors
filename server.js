@@ -72,7 +72,11 @@ io.on('connection', async (socket) => {
     )
     io.in(roomId).emit("endGame", battle._id)
 
-    console.log("GAME OVER", roomId)
+
+  })
+
+  socket.on('opponentSubmitted', (data)=> {
+    io.in(data.roomId).emit("opponentSubmitted", data.id)
   })
 
   // listen for solution code
