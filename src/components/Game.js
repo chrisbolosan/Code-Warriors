@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import IDE from './IDE';
 import { connect } from 'react-redux';
 import { submitSolution } from '../store/solution';
@@ -66,17 +65,7 @@ class Game extends React.Component {
       const roomId = String(this.props.location.state.roomId);
       const { data } = await axios.get(`/api/battles/${roomId}`);
 
-
-
-      // set it to local state
-      // this.setState({
-      //   room: data[0],
-      //   gameLength: data[0] ? data[0].length : '100000'
-      // });
-
-
       if (roomId === senderRoomId) {
-        console.log("STARTED", senderRoomId)
         this.setState({
           started: true,
           funcFrame: this.props.exercise.exerciseBody,
@@ -84,10 +73,6 @@ class Game extends React.Component {
           gameLength: data[0] ? data[0].length : '100000'
         });
       }
-
-
-
-
     });
 
     const { exerciseId } = this.props.location.state;

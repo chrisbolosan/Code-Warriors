@@ -42,19 +42,18 @@ io.on('connection', async (socket) => {
   socket.on('createGame', (roomId) => {
     rooms.push(roomId);
     socket.join(roomId);
-    console.log('create room roomId', roomId)
     io.emit('roomId', roomId);
     io.emit('rooms', rooms);
   });
 
   socket.on('joinRoom', (roomId) => {
-    console.log('join room roomId', roomId);
     socket.join(roomId);
     io.in(roomId).emit('roomFull', false)
+    io.emit('rooms', rooms);
+
   });
 
   socket.on('startGame', async (roomId) => {
-    console.log("ROOMID is ", roomId)
     io.emit('gameStarted', roomId)
   })
 
