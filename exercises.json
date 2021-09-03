@@ -7,12 +7,12 @@
   {
     "exerciseBody": "function loopArr(arr, direction, steps) {}",
     "difficulty": "Hard",
-    "test": "function checkTest(func, target) {return func([1, 5, 87, 45, 8, 8], 'left', 2) === [87, 45, 8, 8, 1, 5]} checkTest(loopArr, [87, 45, 8, 8, 1, 5])}",
+    "test": "function checkTest(func, target) {return JSON.stringify(func([1, 5, 87, 45, 8, 8], 'left', 2)) === JSON.stringify([87, 45, 8, 8, 1, 5])} checkTest(loopArr, [87, 45, 8, 8, 1, 5])}",
     "problemDescription": "Write a function loopArr that loops array in a specified direction by some number of steps. By 'looping array' it means removing elements from start and adding them to end of array one-by-one (if direction is 'left') or removing from end and adding them to start one by-one (if direction is 'right')."
   },
   {
     "exerciseBody": "function reverseWords(str) {}",
-    "test": "function checkTest(func, target) {return func('The quick brown fox jumps over the lazy dog') === 'ehT kciuq nworb xof spmuj revo eht yzal .god'} checkTest(reverseWords, 'ehT kciuq nworb xof spmuj revo eht yzal .god')",
+    "test": "function checkTest(func, target) {return func('The quick brown fox jumps over the lazy dog.') === 'ehT kciuq nworb xof spmuj revo eht yzal .god'} checkTest(reverseWords, 'ehT kciuq nworb xof spmuj revo eht yzal .god')",
     "problemDescription": "Complete the function that accepts a string parameter, and reverses each word in the string. All spaces in the string should be retained."
   },
   {
@@ -28,7 +28,7 @@
   },
   {
     "exerciseBody": "function wordsToSentence(words) {}",
-    "test": "function checkTest(func, target) {return func(['hello', 'world'] === target) checkTest(wordsToSentence, 'hello world')}",
+    "test": "function checkTest(func, target) {return func(['hello', 'world']) === target} checkTest(wordsToSentence, 'hello world')}",
     "problemDescription": "Write function which will create a string from a list of strings, separated by space. Example: ['hello', 'world'] -> 'hello world'"
   },
   {
