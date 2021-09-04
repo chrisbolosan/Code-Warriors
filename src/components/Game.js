@@ -173,6 +173,7 @@ class Game extends React.Component {
                   solutionObject={this.state}
                   funcFrame={this.state.funcFrame}
                   roomId={roomId}
+                  me={this.props.me}
                 />
                 <div id="status"></div>
               </div>
