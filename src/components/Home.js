@@ -64,22 +64,29 @@ const Home = (props) => {
       return battle.roomId === roomId;
     })[0].players[0];
 
+    const player2 =  {
+      id: props.auth._id,
+      username: props.auth.username,
+      rank: props.auth.rank,
+      points: props.auth.totalPoints,
+      submitted: false,
+    }
+
     updateRoom(
       {
         players: [
           player1,
-          {
-            id: props.auth._id,
-            username: props.auth.username,
-            rank: props.auth.rank,
-            points: props.auth.totalPoints,
-            submitted: false,
-          },
+          player2,
         ],
         open: false,
       },
       battleId
     );
+    clientSocket.emit('joinedRoom', {
+      roomId: roomId,
+      player1: player1,
+      player2: player2
+    } )
   };
 
   async function handleChange(event){

@@ -53,6 +53,12 @@ io.on('connection', async (socket) => {
 
   });
 
+  socket.on('joinedRoom', (data) => {
+    io.emit('joinedRoom', data)
+    // io.emit('rooms', rooms);
+    console.log(data)
+  });
+
   socket.on('startGame', async (roomId) => {
     io.emit('gameStarted', roomId)
   })
@@ -94,7 +100,7 @@ io.on('connection', async (socket) => {
   socket.on('determineWinner', (roomId) => {
     io.in(roomId).emit("winner")
   })
-  
+
   //Listen for game clock running out
   socket.on('outOfTime', (roomId) => {
     socket.leave(roomId);
