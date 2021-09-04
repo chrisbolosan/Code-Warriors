@@ -18,11 +18,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function DifficultyFilter(props) {
-  const {handleChange, exercise, setExercise, difficulty, setDifficulty} = props;
+  const { handleChange, exercise, setExercise, difficulty, setDifficulty } =
+    props;
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
-
 
   const handleClose = () => {
     setOpen(false);
@@ -34,9 +34,6 @@ export default function DifficultyFilter(props) {
 
   return (
     <div>
-      {/* <Button className={classes.button} onClick={handleOpen}>
-        Choose your Level
-      </Button> */}
       <FormControl className={classes.formControl}>
         <InputLabel id="controlled-open-select-label">
           Difficulty Level
@@ -50,7 +47,9 @@ export default function DifficultyFilter(props) {
           value={difficulty}
           onChange={handleChange}
         >
-          <MenuItem value={''} selected>All</MenuItem>
+          <MenuItem value={''} selected>
+            All
+          </MenuItem>
           <MenuItem value={'Easy'}>Easy</MenuItem>
           <MenuItem value={'Hard'}>Hard</MenuItem>
         </Select>
