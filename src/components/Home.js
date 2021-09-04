@@ -1,23 +1,28 @@
-import React, { useState, useEffect } from "react";
-import clientSocket from "../socket/socket";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { setRooms, addRoom, updateRoom } from "../store/rooms";
-import { getRandomExercise, getFilteredExercise } from "../store/exercise";
+import React, { useState, useEffect } from 'react';
+import clientSocket from '../socket/socket';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setRooms, addRoom, updateRoom } from '../store/rooms';
+import { getRandomExercise, getFilteredExercise } from '../store/exercise';
 import DifficultyFilter from './DifficultyFilter';
 
 const Home = (props) => {
-  const { fetchRooms, addRoom, getRandomExercise, updateRoom, getFilteredExercise } = props;
+  const {
+    fetchRooms,
+    addRoom,
+    getRandomExercise,
+    updateRoom,
+    getFilteredExercise,
+  } = props;
   const [rooms, setRooms] = useState([]);
   const [roomId, setRoomId] = useState(0);
   const [gameTime, setGameTime] = useState(300000);
   const [fExercise, setExercise] = useState({});
-  const [difficulty, setDifficulty] = useState('')
-
+  const [difficulty, setDifficulty] = useState('');
 
   useEffect(() => {
     fetchRooms();
-    clientSocket.on("rooms", (rooms) => {
+    clientSocket.on('rooms', (rooms) => {
       setRooms(rooms);
     });
   }, [fetchRooms, rooms]);
@@ -43,15 +48,15 @@ const Home = (props) => {
           submitted: false,
         },
       ],
-      length: gameTime
+      length: gameTime,
     });
-    clientSocket.emit("createGame", roomId);
+    clientSocket.emit('createGame', roomId);
   }
 
   //Update the time for the game
-  function updateTime(event){
-    const time = event.target.value
-    setGameTime(time)
+  function updateTime(event) {
+    const time = event.target.value;
+    setGameTime(time);
   }
 
   // when a user clicks join game
@@ -64,20 +69,17 @@ const Home = (props) => {
       return battle.roomId === roomId;
     })[0].players[0];
 
-    const player2 =  {
+    const player2 = {
       id: props.auth._id,
       username: props.auth.username,
       rank: props.auth.rank,
       points: props.auth.totalPoints,
       submitted: false,
-    }
+    };
 
     updateRoom(
       {
-        players: [
-          player1,
-          player2,
-        ],
+        players: [player1, player2],
         open: false,
       },
       battleId
@@ -85,66 +87,66 @@ const Home = (props) => {
     clientSocket.emit('joinedRoom', {
       roomId: roomId,
       player1: player1,
-      player2: player2
-    } )
-  };
+      player2: player2,
+    });
+  }
 
-  async function handleChange(event){
-        setDifficulty(event.target.value)
-        if(event.target.value.length > 0 && event.target.value){
-          console.log('Prior to switch: ', event.target.value)
-          switch(event.target.value){
-            case "Easy":
-              console.log('Difficulty level (Easy): ', event.target.value)
-               await getFilteredExercise(event.target.value);
-                //setExercise(props.exercise)
-                break;
-            case "Hard":
-              console.log('Difficulty level (Hard): ', event.target.value)
-              await getFilteredExercise(event.target.value);
-              //setExercise(props.exercise)
-                break;
-            default:
-                getRandomExercise();
-                //setExercise(props.exercise)
+  async function handleChange(event) {
+    setDifficulty(event.target.value);
+    if (event.target.value.length > 0 && event.target.value) {
+      console.log('Prior to switch: ', event.target.value);
+      switch (event.target.value) {
+        case 'Easy':
+          console.log('Difficulty level (Easy): ', event.target.value);
+          await getFilteredExercise(event.target.value);
+          break;
+        case 'Hard':
+          console.log('Difficulty level (Hard): ', event.target.value);
+          await getFilteredExercise(event.target.value);
+          break;
+        default:
+          getRandomExercise();
       }
-
-        }
-
-
-  };
+    }
+  }
 
   return (
     <div className="main-home">
-      <h1>Welcome! Create or Join a Game</h1>
-
-      <DifficultyFilter handleChange={handleChange}
-                        //exercise={props.exercise}
-                        // filteredExercise = {fExercise}
-                        // setExercise={setExercise}
-                        difficulty={difficulty}
-                        setDifficulty={setDifficulty}
-      />
-      {/* Time Selector */}
+      <h1 className="welcomebanner">Welcome! Create or Join a Game</h1>
+      <div id="gameFilters">
+        <DifficultyFilter
+          handleChange={handleChange}
+          difficulty={difficulty}
+          setDifficulty={setDifficulty}
+        />
+        {/* Time Selector */}
         <div>
-          <select onChange={updateTime} name="times" id="times" class="form-select">
-            <option value='300000'>5</option>
-            <option value='600000'>10</option>
-            <option value='900000'>15</option>
-            <option value='1200000'>20</option>
-            <option value='1500000'>25</option>
-            <option value='1800000'>30</option>
-          </select>
+          <label id="time-container">
+            {' '}
+            <select
+              onChange={updateTime}
+              name="times"
+              id="timesSelector"
+              class="form-select"
+            >
+              <option value="300000">5 Minutes</option>
+              <option value="600000">10 Minutes</option>
+              <option value="900000">15 Minutes</option>
+              <option value="1200000">20 Minutes</option>
+              <option value="1500000">25 Minutes</option>
+              <option value="1800000">30 Minutes</option>
+            </select>
+          </label>
         </div>
-
+      </div>
       {/* Create Game */}
       <Link
         to={{
-          pathname: "/game",
+          pathname: '/game',
           state: {
             roomId: roomId,
             exerciseId: props.exercise._id,
-            gameTime: gameTime
+            gameTime: gameTime,
           },
         }}
       >
@@ -161,7 +163,7 @@ const Home = (props) => {
               <div className="room-item">
                 <Link
                   to={{
-                    pathname: "/game",
+                    pathname: '/game',
                     state: {
                       roomId: room.roomId,
                       exerciseId: room.ref,
@@ -176,7 +178,7 @@ const Home = (props) => {
                     type="button"
                     className="room-button"
                   >{`${
-                    room.players ? room.players[0].username : "User"
+                    room.players ? room.players[0].username : 'User'
                   }'s room`}</button>
                 </Link>
               </div>
