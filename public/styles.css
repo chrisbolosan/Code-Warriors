@@ -396,6 +396,7 @@ p {
   zoom: 40%;
   text-align: center;
   width: 750px;
+  margin-left: 10px;
 }
 .time {
   background: #88bdff;
@@ -453,5 +454,8 @@ p {
 /*time selector */
 .timesSelector {
   zoom: 145%;
+  margin-left: 5px;
+}
+#time-container {
   margin-left: 5px;
 }
