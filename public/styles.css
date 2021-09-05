@@ -60,34 +60,6 @@ p {
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 } */
 
-#leaderboard-container {
-  border-style: solid;
-  padding: 30px;
-  border-radius: 25px;
-  background-color: #83677b;
-  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-}
-
-.leaderboard-box {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
-  border-style: solid;
-  padding: 15px;
-  border-color: #83677b;
-  border-width: 5px;
-  background-color: #64485c;
-  border-radius: 25px;
-}
-
-.leaderboard-box p {
-  color: white;
-  font-weight: 500;
-}
-
-.leaderboard-box a {
-  color: #d1d1d1;
-}
 
 /* #guest {
   display: flex;
@@ -514,5 +486,32 @@ a {
 #left-panel img {
   margin-top: 30px;
   height: 500px;
-  width: 500px;
+  width: 600px;
+}
+
+/*   Leaderboard   */
+#leaderboard-container {
+  flex-direction: column;
+  justify-content: flex-start;
+  border: 1px solid white;
+  padding: 30px;
+  background-color: #374785;
+}
+
+#leaderboard-header {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.leaderboard-box {
+  width: 300px;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 15px;
+  border: 1px solid #080f5b;
+  background-color: white;
+}
+
+.leaderboard-box a, .leaderboard-box p {
+  color: black;
 }

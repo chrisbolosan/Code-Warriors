@@ -11,11 +11,11 @@ class Leaderboard extends React.Component {
   //needs material ui/bootstrap card
   render() {
     return (
-      <div id="leaderboard-container">
-        <h1 id="leaderboard-header">LEADERBOARD</h1>
+      <div id="leaderboard-container" className="flex">
+        <h1 id="leaderboard-header">Leaderboard</h1>
         <div>
           {this.props.leaderboard.map((user) => (
-            <div className="leaderboard-box">
+            <div className="leaderboard-box flex">
               <Link to={`/user/${user._id}`}>{user.username}</Link>
               <p>Points: {user.totalPoints}</p>
             </div>
