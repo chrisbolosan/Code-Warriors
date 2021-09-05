@@ -423,11 +423,64 @@ a {
 /*   User Home  */
 #home-container {
   margin-top: 100px;
-  justify-content: space-evenly
+  padding: 0px 10px;
+  justify-content: space-between
 }
 
 #welcome {
   font-style: italic
+}
+
+#home-options {
+  justify-content: space-between;
+}
+
+#create-button {
+  background-color: #F8E9A1;
+  color: black;
+  font-size: 15px;
+  border-style: none;
+  margin-bottom: 3px;
+}
+
+#create-button:hover {
+  background-color: #fae786;
+}
+
+#final-create-button {
+  padding: 10px;
+  border-style: none;
+  background-color: #fae786
+}
+
+#final-create-button:hover {
+  background-color: #f7de65
+}
+
+#rooms-container {
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  height: 1000px;
+  /* take height off later */
+  width: 400px;
+  border: 2px solid white;
+}
+
+.room-item {
+  margin-left: 5px;
+}
+
+.room-button {
+  width: 133px;
+  background-color: #374785;
+  border-style: none;
+  font-size: 10px;
+  color: white;
+}
+
+.room-button:hover {
+  background-color: #2c3e88;
 }
 
 #home-user {
@@ -441,71 +494,24 @@ a {
   border: solid 1px white;
 }
 
+#game-filters {
+  justify-content: center;
+}
+
+#time-selector {
+  margin-left: 40px;
+}
 
 
-
-
-#gameFilters {
+/* #gameFilters { */
   /* display: flex; */
-  flex-wrap: nowrap;
+  /* flex-wrap: nowrap;
   align-items: center;
   align-content: center;
-}
+} */
 
 /*time selector */
-.timesSelector {
+/* .timesSelector {
   zoom: 145%;
   margin-left: 5px;
-}
-#time-container {
-  margin-left: 5px;
-}
-
-#create-button {
-  background-color: #64485c;
-  color: white;
-  padding: 20px 80px 20px 80px;
-  font-size: 30px;
-  font-weight: 600;
-  border-style: none;
-  border-radius: 25px;
-  margin-top: 30px;
-  margin-bottom: 30px;
-}
-
-#create-button:hover {
-  background-color: #3a2a35;
-}
-
-
-.rooms-container {
-  margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  width: 600px;
-}
-
-.rooms-container > .room-item {
-  flex: 1 1 30%;
-}
-
-.room-item {
-  margin: 7px;
-  text-align: center;
-}
-
-
-.room-button {
-  zoom: 145%;
-  color: white;
-  border-style: none;
-  background-color: #83677b;
-  padding: 15px;
-  border-radius: 15px;
-}
-
-.room-button:hover {
-  background-color: #6d5666;
-}
+} */

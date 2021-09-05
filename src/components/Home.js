@@ -9,6 +9,30 @@ import Fade from '@material-ui/core/Fade';
 import { setRooms, addRoom, updateRoom } from '../store/rooms';
 import { getRandomExercise, getFilteredExercise } from '../store/exercise';
 import DifficultyFilter from './DifficultyFilter';
+import TimeFilter from './TimeFilter';
+
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: "black",
+
+  },
+  paper: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+    alignItems: 'center',
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    height: "300px",
+    width: "450px;"
+  },
+  }));
 
 const Home = (props) => {
   const {
@@ -24,6 +48,7 @@ const Home = (props) => {
   const [open, setOpen] = React.useState(false)
   const [gameTime, setGameTime] = useState(300000);
   const [difficulty, setDifficulty] = useState('');
+  const classes = useStyles()
 
   useEffect(() => {
     fetchRooms();
@@ -37,26 +62,6 @@ const Home = (props) => {
     setRoomId(randomRoomId);
     getRandomExercise();
   }, []);
-
-  const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: "black"
-  },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-    height: "300px",
-    width: "400px;"
-  },
-  }));
-
-  const classes = useStyles()
-
 
   function handleCreate() {
     setOpen(true)
@@ -74,10 +79,10 @@ const Home = (props) => {
       ref: props.exercise._id,
       players: [
         {
-          id: props.auth._id,
-          username: props.auth.username,
-          rank: props.auth.rank,
-          points: props.auth.totalPoints,
+          id: props.me._id,
+          username: props.me.username,
+          rank: props.me.rank,
+          points: props.me.totalPoints,
           submitted: false,
         },
       ],
@@ -95,7 +100,6 @@ const Home = (props) => {
   // when a user clicks join game
   function joinRoom(event) {
     const roomId = Number(event.target.value);
-
     const battleId = event.target.name;
 
     const player1 = props.battles.filter((battle) => {
@@ -103,10 +107,10 @@ const Home = (props) => {
     })[0].players[0];
 
     const player2 = {
-      id: props.auth._id,
-      username: props.auth.username,
-      rank: props.auth.rank,
-      points: props.auth.totalPoints,
+      id: props.me._id,
+      username: props.me.username,
+      rank: props.me.rank,
+      points: props.me.totalPoints,
       submitted: false,
     };
 
@@ -124,7 +128,7 @@ const Home = (props) => {
     });
   }
 
-  async function handleChange(event) {
+  async function handleDifficulty(event) {
     setDifficulty(event.target.value);
     if (event.target.value.length > 0 && event.target.value) {
       console.log('Prior to switch: ', event.target.value);
@@ -145,47 +149,12 @@ const Home = (props) => {
 
   return (
     <div id="home-container" className="flex">
-
       <div id="home-battles">
+        {/* Open Games */}
+        <div id="home-options" className="flex">
+          <p>Open Games</p>
 
-        <div id="gameFilters">
-          <DifficultyFilter
-            handleChange={handleChange}
-            difficulty={difficulty}
-            setDifficulty={setDifficulty}
-          />
-          {/* Time Selector */}
-          <div>
-            <label id="time-container">
-              {' '}
-              <select
-                onChange={updateTime}
-                name="times"
-                id="timesSelector"
-                class="form-select"
-              >
-                <option value="300000">5 Minutes</option>
-                <option value="600000">10 Minutes</option>
-                <option value="900000">15 Minutes</option>
-                <option value="1200000">20 Minutes</option>
-                <option value="1500000">25 Minutes</option>
-                <option value="1800000">30 Minutes</option>
-              </select>
-            </label>
-          </div>
-        </div>
-
-        {/* Create Game */}
-        {/* <Link
-          to={{
-            pathname: '/game',
-            state: {
-              roomId: roomId,
-              exerciseId: props.exercise._id,
-              gameTime: gameTime,
-            },
-          }}
-        > */}
+          {/* Create a Game */}
           <button type="button" id="create-button" onClick={handleCreate}>
             Create Game
           </button>
@@ -201,17 +170,41 @@ const Home = (props) => {
           >
             <Fade in={open}>
               <div className={classes.paper}>
-                <p>Pick ur difficulty level</p>
+                <div id="game-filters" className="flex">
+                  <DifficultyFilter
+                    handleChange={handleDifficulty}
+                    difficulty={difficulty}
+                    setDifficulty={setDifficulty}
+                  />
+                  {/* Select Time */}
+                  <div id="time-selector">
+                    <TimeFilter
+                      handleChange={updateTime}
+                      time={gameTime}
+                    />
+                  </div>
+                </div>
+                <Link
+                  to={{
+                    pathname: '/game',
+                    state: {
+                      roomId: roomId,
+                      exerciseId: props.exercise._id,
+                      gameTime: gameTime,
+                    },
+                  }}
+                >
+                  <button id="final-create-button" onClick={handleClick}>Create game</button>
+                </Link>
               </div>
             </Fade>
           </Modal>
-        {/* </Link> */}
-        <h2>Rooms</h2>
-        <div className="rooms-container">
+
+        </div>
+        <div id="rooms-container" className="flex">
           {props.battles[0] &&
             props.battles.map((room) => {
               return (
-                // JOIN GAME Button
                 <div className="room-item">
                   <Link
                     to={{
@@ -229,9 +222,13 @@ const Home = (props) => {
                       key={room._id}
                       type="button"
                       className="room-button"
-                    >{`${
-                      room.players ? room.players[0].username : 'User'
-                    }'s room`}</button>
+                    >
+                      {
+                      `${room.players ? room.players[0].username : 'User'}`
+                      }
+                      <p>Difficulty</p>
+                      <p>Time</p>
+                    </button>
                   </Link>
                 </div>
               );
@@ -240,10 +237,10 @@ const Home = (props) => {
       </div>
 
       <div id="home-user" className="flex">
-        <h3 id="welcome">{`Hi, ${props.auth.username}`}</h3>
+        <h3 id="welcome">{`Hi, ${props.me.username}`}</h3>
         <div id="dashboard">
-          <p>rank: {props.auth.rank}</p>
-          <p>points: {props.auth.totalPoints}</p>
+          <p>rank: {props.me.rank}</p>
+          <p>points: {props.me.totalPoints}</p>
           <p>matches won:</p>
           <p>matches played:</p>
         </div>
@@ -256,7 +253,7 @@ const mapState = (state) => {
   return {
     battles: state.battles,
     exercise: state.exercise,
-    auth: state.auth,
+    me: state.auth,
   };
 };
 

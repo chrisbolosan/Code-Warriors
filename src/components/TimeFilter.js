@@ -14,8 +14,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DifficultyFilter(props) {
-  const { handleChange, difficulty } = props;
+export default function TimeFilter(props) {
+  const { handleChange, time } = props;
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -32,7 +32,7 @@ export default function DifficultyFilter(props) {
     <div>
       <FormControl className={classes.formControl}>
         <InputLabel id="controlled-open-select-label">
-          Difficulty
+          Time
         </InputLabel>
         <Select
           labelId="controlled-open-select-label"
@@ -40,12 +40,15 @@ export default function DifficultyFilter(props) {
           open={open}
           onClose={handleClose}
           onOpen={handleOpen}
-          value={difficulty}
+          value={time}
           onChange={handleChange}
         >
-          <MenuItem value={''} selected>All</MenuItem>
-          <MenuItem value={'Easy'}>Easy</MenuItem>
-          <MenuItem value={'Hard'}>Hard</MenuItem>
+          <MenuItem value={'5'} selected>5 Minutes</MenuItem>
+          <MenuItem value={'10'}>10 Minutes</MenuItem>
+          <MenuItem value={'15'}>15 Minutes</MenuItem>
+          <MenuItem value={'20'}>20 Minutes</MenuItem>
+          <MenuItem value={'25'}>25 Minutes</MenuItem>
+          <MenuItem value={'30'}>30 Minutes</MenuItem>
         </Select>
       </FormControl>
     </div>
