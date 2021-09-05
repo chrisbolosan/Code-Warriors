@@ -1,74 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
-
 p {
   margin: 0;
-}
-
-#leaderboard-header {
-  color: white;
-}
-
-.main-home {
-  margin-top: 120px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-#gameFilters {
-  /* display: flex; */
-  flex-wrap: nowrap;
-  align-items: center;
-  align-content: center;
-}
-.welcomebanner {
-  zoom: 145%;
-}
-.rooms-container {
-  margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  width: 600px;
-}
-
-.rooms-container > .room-item {
-  flex: 1 1 30%;
-}
-
-.room-item {
-  margin: 7px;
-  text-align: center;
-}
-
-#create-button {
-  background-color: #64485c;
-  color: white;
-  padding: 20px 80px 20px 80px;
-  font-size: 30px;
-  font-weight: 600;
-  border-style: none;
-  border-radius: 25px;
-  margin-top: 30px;
-  margin-bottom: 30px;
-}
-
-#create-button:hover {
-  background-color: #3a2a35;
-}
-
-.room-button {
-  zoom: 145%;
-  color: white;
-  border-style: none;
-  background-color: #83677b;
-  padding: 15px;
-  border-radius: 15px;
-}
-
-.room-button:hover {
-  background-color: #6d5666;
 }
 
 #userprofile {
@@ -271,15 +204,6 @@ p {
   color: white;
 }
 
-/*time selector */
-.timesSelector {
-  zoom: 145%;
-  margin-left: 5px;
-}
-#time-container {
-  margin-left: 5px;
-}
-
 
 /* ---------------------------------------------- */
 body {
@@ -424,7 +348,7 @@ a {
   color: black;
 }
 
-/*   Login   */
+/*   Login / Signup  */
 #login {
   height: 335px;
   width: 400px;
@@ -494,4 +418,94 @@ a {
 
 #login small, #signup small {
   margin-top: 30px;
+}
+
+/*   User Home  */
+#home-container {
+  margin-top: 100px;
+  justify-content: space-evenly
+}
+
+#welcome {
+  font-style: italic
+}
+
+#home-user {
+  flex-direction: column;
+}
+
+#dashboard {
+  height: 500px;
+  width: 500px;
+  background-color: #374785;
+  border: solid 1px white;
+}
+
+
+
+
+
+#gameFilters {
+  /* display: flex; */
+  flex-wrap: nowrap;
+  align-items: center;
+  align-content: center;
+}
+
+/*time selector */
+.timesSelector {
+  zoom: 145%;
+  margin-left: 5px;
+}
+#time-container {
+  margin-left: 5px;
+}
+
+#create-button {
+  background-color: #64485c;
+  color: white;
+  padding: 20px 80px 20px 80px;
+  font-size: 30px;
+  font-weight: 600;
+  border-style: none;
+  border-radius: 25px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+#create-button:hover {
+  background-color: #3a2a35;
+}
+
+
+.rooms-container {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 600px;
+}
+
+.rooms-container > .room-item {
+  flex: 1 1 30%;
+}
+
+.room-item {
+  margin: 7px;
+  text-align: center;
+}
+
+
+.room-button {
+  zoom: 145%;
+  color: white;
+  border-style: none;
+  background-color: #83677b;
+  padding: 15px;
+  border-radius: 15px;
+}
+
+.room-button:hover {
+  background-color: #6d5666;
 }
