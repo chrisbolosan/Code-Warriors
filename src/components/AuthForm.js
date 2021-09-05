@@ -22,6 +22,9 @@ const AuthForm = (props) => {
         </label>
         <input name="email" type="text" />
         <button type="submit">Create an Account</button>
+        <small>
+          Already have an account? Log in  <Link to="/signup">here</Link>.
+        </small>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
     </div>
@@ -42,7 +45,7 @@ const AuthForm = (props) => {
         <button type="submit">Login</button>
         <small>
           Don't have an account? Sign up <Link to="/signup">here</Link>.
-          </small>
+        </small>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
     </div>
