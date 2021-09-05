@@ -1,23 +1,12 @@
-html {
-  transform: scale(1);
-  transform-origin: 0 0;
-}
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
-body {
-  background-color: #ffffff;
-  background-image: url('https://www.transparenttextures.com/patterns/gplay.png');
-}
 
 p {
   margin: 0;
 }
 
-.opponent {
-  filter: blur(3px);
-}
-
 /*navbar*/
-.navbarContainer {
+/* .navbarContainer {
   zoom: 145%;
 }
 .container-fluid {
@@ -39,21 +28,21 @@ p {
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
+} */
 
-.nav-item p {
+/* .nav-item p {
   font-weight: 500;
   color: #83677b;
 }
 
 .nav-item a {
   color: #64485c;
-}
+} */
 
-.dropdown {
+/* .dropdown {
   color: #83677b;
   font-size: 45px;
-}
+} */
 
 #leaderboard-header {
   color: white;
@@ -363,9 +352,9 @@ p {
   outline: none;
 }
 
-.nav-item a {
+/* .nav-item a {
   text-decoration: none;
-}
+} */
 
 #score-container {
   display: flex;
@@ -458,4 +447,51 @@ p {
 }
 #time-container {
   margin-left: 5px;
+}
+
+
+/* ---------------------------------------------- */
+body {
+  background-color: #080f5b;
+  color: white;
+}
+
+.flex {
+  display:flex
+}
+
+.opponent {
+  filter: blur(3px);
+}
+
+/*   Navbar   */
+#navbar-container {
+  background-color: whitesmoke;
+  justify-content: space-between;
+  position: sticky;
+  top: 0px;
+  z-index: 10
+}
+
+#navbar {
+  justify-content: space-between;
+  align-self:baseline;
+  align-items: baseline;
+  height: 50px;
+}
+
+#navbar-brand {
+  font-size: 30px;
+  font-family: 'Lato', sans-serif;
+  color: #080f5b;
+  margin-left: 20px;
+}
+
+.nav-item {
+  margin: 0 30px;
+}
+
+.nav-item a {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #080f5b
 }
