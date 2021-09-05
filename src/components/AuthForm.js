@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { authenticate, signUpThunk } from '../store';
 
 const AuthForm = (props) => {
@@ -28,7 +29,7 @@ const AuthForm = (props) => {
     <div className="login-container">
       <form onSubmit={handleSubmit} name={name} id={name}>
         <h2>Sign-In</h2>
-        <div id="login-form">
+        <div id="login-form" className="flex">
           <label htmlFor="username">
             <p>Username</p>
           </label>
@@ -39,6 +40,9 @@ const AuthForm = (props) => {
           <input name="password" type="password" />
         </div>
         <button type="submit">Login</button>
+        <small>
+          Don't have an account? Sign up <Link to="/signup">here</Link>.
+          </small>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
     </div>
