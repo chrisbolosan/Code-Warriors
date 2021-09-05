@@ -52,7 +52,7 @@ class IDEOpponent extends React.Component {
         this.setState({
           name: opponent.username,
           rank: opponent.rank,
-          points: opponent.rank
+          points: opponent.points
         })
       }
     })
