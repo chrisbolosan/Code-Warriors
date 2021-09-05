@@ -13,7 +13,7 @@ const Navbar = ({ isLoggedIn, handleClick, userId, auth }) => {
   return (
     <nav id="navbar-container">
       <div id="navbar" className="flex">
-        <Link to="/" style={{ textDecoration: 'none' }}>
+        <Link to="/">
           <p id="navbar-brand">Code Warriors</p>
         </Link>
         {/* <button
@@ -30,7 +30,7 @@ const Navbar = ({ isLoggedIn, handleClick, userId, auth }) => {
         { isLoggedIn? (
           <div id="nav-items" className="flex">
             <p className="nav-item">
-              <Link to ="/"  style={{ textDecoration: 'none' }}>
+              <Link to ="/">
                 Home
               </Link>
             </p>
@@ -38,7 +38,7 @@ const Navbar = ({ isLoggedIn, handleClick, userId, auth }) => {
               <Link to={{
               pathname: `/user/${user._id}`,
               state: { user: user }
-              }} style={{ textDecoration: 'none' }}>
+              }}>
                 Profile
               </Link>
             </p>
@@ -51,17 +51,17 @@ const Navbar = ({ isLoggedIn, handleClick, userId, auth }) => {
         ) : (
           <div id="nav-items" className="flex">
             <p className="nav-item">
-              <Link to ="/" style={{ textDecoration: 'none' }}>
+              <Link to ="/">
                 Home
               </Link>
             </p>
             <p className="nav-item">
-              <Link to="/login" style={{ textDecoration: 'none' }}>
+              <Link to="/login">
                 Login
               </Link>
             </p>
             <p className="nav-item">
-              <Link to="/signup" style={{ textDecoration: 'none' }}>
+              <Link to="/signup">
                 Signup
               </Link>
             </p>
