@@ -48,7 +48,6 @@ io.on('connection', async (socket) => {
 
   socket.on('joinRoom', (roomId) => {
     socket.join(roomId);
-    console.log('joined room')
     io.in(roomId).emit('roomFull', false)
     io.emit('rooms', rooms);
 
@@ -57,7 +56,6 @@ io.on('connection', async (socket) => {
   socket.on('joinedRoom', (data) => {
     io.emit('joinedRoom', data)
     // io.emit('rooms', rooms);
-    console.log(data)
   });
 
   socket.on('startGame', async (roomId) => {
@@ -77,6 +75,8 @@ io.on('connection', async (socket) => {
       { completed: "true" }
     )
     io.in(roomId).emit("endGame", battle._id)
+
+
   })
 
   socket.on('opponentSubmitted', (data)=> {
