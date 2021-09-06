@@ -120,11 +120,12 @@ p {
   flex-direction: column;
   background-color: whitesmoke;
   color: black;
-  height: 500px;
+  height: 400px;
+  margin-bottom: 100px;
 }
 
 #founders-container h1 {
-  text-align: center
+  text-align: center;
 }
 
 #founders {
@@ -134,9 +135,13 @@ p {
 
 .founder {
   flex-direction: column;
-  border: solid 1px gray;
+  background-color: whitesmoke;
+  opacity: 98%;
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
   padding: 20px;
+  margin-bottom: 100px;
   text-align: center;
+  border-radius: 14px;
 }
 
 .founder p {
@@ -145,8 +150,34 @@ p {
 
 .founder-desc {
   margin-top: 10px;
+  width: 180px;
+  height: 100px;
+  font-size: 12px;
+  color: gray;
 }
 
+.founder > img {
+  margin: auto;
+  height: 80px;
+  width: 80px;
+}
+
+.founder > p > img{
+  height: 18px;
+  margin-right: 3px;
+}
+
+.name {
+  font-size: 15px;
+}
+
+.job {
+  font-size: 13px;
+}
+
+.fsa {
+  font-size: 17px;
+}
 /*   Login / Signup  */
 #login-container, #signup-container {
   height: 100vh;

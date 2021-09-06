@@ -26,33 +26,38 @@ const GuestHome = () => {
         <h1>Meet the Founders</h1>
         <div id="founders" className="flex">
           <div className="founder flex">
-            <p>Antonio Dinkins</p>
-            <p>Software Engineer</p>
-            <p>Fullstack Academy</p>
+            <img alt="antonio" src="antonio.png"/>
+            <p className="name">Antonio Dinkins</p>
+            <p className="job">Software Engineer</p>
+            <p className="fsa"><img alt="fsa" src="fsa.ico"/>Fullstack Academy</p>
             <p className="founder-desc">...description here</p>
           </div>
           <div className="founder flex">
-            <p>Adrian Rios</p>
-            <p>Software Engineer</p>
-            <p>Fullstack Academy</p>
+            <img alt="antonio" src="adrianrios.png"/>
+            <p className="name">Adrian Rios</p>
+            <p className="job">Software Engineer</p>
+            <p className="fsa"><img alt="fsa" src="fsa.ico"/>Fullstack Academy</p>
             <p className="founder-desc">...description here</p>
           </div>
           <div className="founder flex">
-            <p>Gabe Fridkis</p>
-            <p>Software Engineer</p>
-            <p>Fullstack Academy</p>
+            <img alt="antonio" src="gabefridkis.png"/>
+            <p className="name">Gabe Fridkis</p>
+            <p className="job">Software Engineer</p>
+            <p className="fsa"><img alt="fsa" src="fsa.ico"/>Fullstack Academy</p>
             <p className="founder-desc">...description here</p>
           </div>
           <div className="founder flex">
-            <p>Chris Bolosan</p>
-            <p>Software Engineer</p>
-            <p>Fullstack Academy</p>
+            <img alt="antonio" src="chrisbolosan.png"/>
+            <p className="name">Chris Bolosan</p>
+            <p className="job">Software Engineer</p>
+            <p className="fsa"><img alt="fsa" src="fsa.ico"/>Fullstack Academy</p>
             <p className="founder-desc">...description here</p>
           </div>
           <div className="founder flex">
-            <p>Haram Chang</p>
-            <p>Software Engineer</p>
-            <p>Fullstack Academy</p>
+            <img alt="antonio" src="haramchang.png"/>
+            <p className="name">Haram Chang</p>
+            <p className="job">Software Engineer</p>
+            <p className="fsa"><img alt="fsa" src="fsa.ico" />Fullstack Academy</p>
             <p className="founder-desc">...description here</p>
           </div>
         </div>
