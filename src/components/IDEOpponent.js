@@ -71,9 +71,7 @@ class IDEOpponent extends React.Component {
     return (
       <div className="IDE IDE2">
         <div className="user-info">
-          <small>{this.state.name}</small>
-          <small>Rank: {this.state.rank}</small>
-          <small>Points: {this.state.points}</small>
+          <small id="dont-show">.</small>
         </div>
         <div className="editor-container opponent">
           {/* This is the IDE component from codemirror */}
