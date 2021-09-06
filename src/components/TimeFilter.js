@@ -43,12 +43,12 @@ export default function TimeFilter(props) {
           value={time}
           onChange={handleChange}
         >
-          <MenuItem value={'5'} selected>5 Minutes</MenuItem>
-          <MenuItem value={'10'}>10 Minutes</MenuItem>
-          <MenuItem value={'15'}>15 Minutes</MenuItem>
-          <MenuItem value={'20'}>20 Minutes</MenuItem>
-          <MenuItem value={'25'}>25 Minutes</MenuItem>
-          <MenuItem value={'30'}>30 Minutes</MenuItem>
+          <MenuItem value={"5"}>5 Minutes</MenuItem>
+          <MenuItem value={"10"}>10 Minutes</MenuItem>
+          <MenuItem value={"15"}>15 Minutes</MenuItem>
+          <MenuItem value={"20"}>20 Minutes</MenuItem>
+          <MenuItem value={"25"}>25 Minutes</MenuItem>
+          <MenuItem value={"30"}>30 Minutes</MenuItem>
         </Select>
       </FormControl>
     </div>

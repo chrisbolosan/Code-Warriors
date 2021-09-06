@@ -57,72 +57,13 @@ p {
   margin: auto;
 }
 
-/*clock*/
-.timeContainer {
-  zoom: 40%;
-  text-align: center;
-  width: 750px;
-  margin-left: 10px;
-}
-.time {
-  background: #88bdff;
-  border-radius: 25px;
-  display: flex;
-  height: 200px;
-  justify-content: space-around;
-  align-items: center;
-  border: 7px solid black;
-  margin-bottom: 25px;
-  margin-top: 25px;
-  box-shadow: rgb(38 57 77) 0px 20px 30px -10px;
-  background-image: linear-gradient(
-    to top,
-    #2e1114,
-    #351417,
-    #3c171b,
-    #441a1e,
-    #4b1d21
-  );
-}
-
-.blockTimer {
-  background: white;
-  border-radius: 25px;
-  flex: auto;
-  font-size: 75px;
-  margin: 0 15px;
-  border-style: solid;
-  border-width: 5px;
-}
-.blockcolon {
-  border-radius: 25px;
-  flex: auto;
-  font-size: 75px;
-  margin: 0 15px;
-  padding: 15px;
-  position: relative;
-  background-image: linear-gradient(
-    to top,
-    #2e1114,
-    #351417,
-    #3c171b,
-    #441a1e,
-    #4b1d21
-  );
-}
-
-.colon {
-  font-size: 95px;
-  font-weight: 800;
-  color: white;
-}
-
-
 /* ---------------------------------------------- */
 body {
-  background-color: #080f5b;
+  background-color: #25274d;
   font-family: Arial, Helvetica, sans-serif;
   color: white;
+  height: 100vh;
+  width: 100vw;
 }
 
 .flex {
@@ -335,9 +276,9 @@ a {
 
 /*   User Home  */
 #home-container {
-  margin-top: 100px;
+  margin-top: 50px;
   padding: 0px 10px;
-  justify-content: space-between
+  justify-content: space-between;
 }
 
 #welcome {
@@ -374,10 +315,10 @@ a {
   flex-direction: column;
   align-items: flex-start;
   flex-wrap: wrap;
-  height: 1000px;
+  height: 650px;
+  background-color: #393b55;
   /* take height off later */
-  width: 400px;
-  border: 2px solid white;
+  width: 450px;
 }
 
 .room-item {
@@ -385,8 +326,8 @@ a {
 }
 
 .room-button {
-  width: 133px;
-  background-color: #374785;
+  width: 100px;
+  background-color: #444663;
   border-style: none;
   font-size: 10px;
   color: white;
@@ -401,7 +342,7 @@ a {
 }
 
 #dashboard {
-  height: 500px;
+  height: 650px;
   width: 500px;
   background-color: #374785;
   border: solid 1px white;
@@ -425,9 +366,9 @@ a {
   align-items: center;
   height: 380px;
   width: 500px;
-  border: 1px solid white;
   margin-bottom: 30px;
   padding: 20px;
+  background-color: #464866
 }
 
 #exercise-problem p {
@@ -449,14 +390,12 @@ a {
 }
 
 #start-timer button {
-  height: 50px;
-  width: 100px;
   font-size: 20px;
-  font-weight: 500;
   border-style: none;
-  background-color: white;
-  color: black;
-  margin-bottom: 20px;
+  background-color: #464866;
+  color: white;
+  padding: 7px 12px;
+  margin-bottom: 40px;
 }
 
 #start-match button:hover {
@@ -485,11 +424,12 @@ a {
 
 .your-solution {
   padding: 0px 10px;
-  background-color: rgb(31, 30, 30)
+  background-color: #37384e;
 }
 
 .user-info {
   margin-bottom: 10px;
+  text-align: center;
 }
 
 .user-info small {
@@ -497,15 +437,16 @@ a {
 }
 
 #test {
-  height: 470px;
+  height: 400px;
   width: 500px;
-  border: 1px solid white;
   font-family: monospace;
-  color: greenyellow;
+  background-color: #464866;
+  color: #aaabb8;
   text-align: center;
 }
 
-#test-header {
+#test-results {
+  padding-top: 20px;
   text-align: center;
 }
 
@@ -519,6 +460,22 @@ a {
 }
 
 #prompt p {
-  border: 1px solid white;
+  padding: 5px;
+  background-color: #37384e
 }
 
+#waiting {
+  font-style: italic
+}
+
+.timeContainer p {
+
+  font-size: 15px;
+  font-style: italic
+}
+
+.timeContainer {
+  margin-bottom: 40px;
+  flex-direction: column;
+  align-items: center
+}

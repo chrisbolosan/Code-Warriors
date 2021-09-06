@@ -9,8 +9,7 @@ import Fade from '@material-ui/core/Fade';
 import { setRooms, addRoom, updateRoom } from '../store/rooms';
 import { getRandomExercise, getFilteredExercise } from '../store/exercise';
 import DifficultyFilter from './DifficultyFilter';
-import TimeFilter from './TimeFilter';
-
+// import TimeFilter from './TimeFilter';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -32,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
     height: "300px",
     width: "450px;"
   },
+  root: {
+    flexGrow: 1
+  }
   }));
 
 const Home = (props) => {
@@ -178,10 +180,23 @@ const Home = (props) => {
                   />
                   {/* Select Time */}
                   <div id="time-selector">
-                    <TimeFilter
+                    {/* <TimeFilter
                       handleChange={updateTime}
                       time={gameTime}
-                    />
+                    /> */}
+                    <select
+                      onChange={updateTime}
+                      name="times"
+                      id="timesSelector"
+                      class="form-select"
+                    >
+                      <option value="300000">5 Minutes</option>
+                      <option value="600000">10 Minutes</option>
+                      <option value="900000">15 Minutes</option>
+                      <option value="1200000">20 Minutes</option>
+                      <option value="1500000">25 Minutes</option>
+                      <option value="1800000">30 Minutes</option>
+                    </select>
                   </div>
                 </div>
                 <Link
@@ -236,6 +251,7 @@ const Home = (props) => {
         </div>
       </div>
 
+      {/* HOME USER MIDDLE */}
       <div id="home-user" className="flex">
         <h3 id="welcome">{`Hi, ${props.me.username}`}</h3>
         <div id="dashboard">

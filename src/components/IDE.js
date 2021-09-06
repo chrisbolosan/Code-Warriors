@@ -128,9 +128,9 @@ class IDE extends React.Component {
     return (
       <div className="IDE IDE1">
         {/* user info */}
-        <div className="user-info">
+        {/* <div className="user-info">
           <small>{me.username}   rank: {me.rank}   points: {me.totalPoints}</small>
-        </div>
+        </div> */}
 
         <div className="ide-submit-run flex">
           <p className="your-solution">Your solution</p>

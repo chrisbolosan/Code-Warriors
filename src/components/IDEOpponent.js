@@ -46,13 +46,11 @@ class IDEOpponent extends React.Component {
   componentDidMount() {
     clientSocket.on('joinedRoom', (data) => {
       if (data.roomId === this.props.roomId) {
-        // console.log(data.player1)
-        // console.log(data.player2)
         const opponent = data.player1.id !== this.props.me._id ? data.player1 : data.player2
         this.setState({
           name: opponent.username,
           rank: opponent.rank,
-          points: opponent.rank
+          points: opponent.points
         })
       }
     })
@@ -71,9 +69,18 @@ class IDEOpponent extends React.Component {
     return (
       <div className="IDE IDE2">
         <div className="user-info">
-          <small>{this.state.name}</small>
-          <small>Rank: {this.state.rank}</small>
-          <small>Points: {this.state.points}</small>
+          {this.state.name === "Opponent" ? (
+            <>
+              <span id="waiting">Waiting for an opponent</span>
+              <span id="wait">.</span>
+            </>
+          ) : (
+            <>
+              <small>{this.state.name}</small>
+              <small>Rank: {this.state.rank}</small>
+              <small>Points: {this.state.points}</small>
+            </>
+          )}
         </div>
         <div className="editor-container opponent">
           {/* This is the IDE component from codemirror */}

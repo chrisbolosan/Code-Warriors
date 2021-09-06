@@ -1,12 +1,10 @@
 
 import React from "react";
 import { Redirect } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css";
 import { setTime } from "../store/timer";
 import { connect } from "react-redux";
 import clientSocket from "../socket/socket";
 import { setBattle } from "../store/battle";
-
 
 export class Timer extends React.Component {
   constructor(props) {
@@ -26,6 +24,8 @@ export class Timer extends React.Component {
     this.setState({
      secondsRemaining: Number(this.props.gameLength) / 1000, // time in seconds
     })
+
+    console.log("seconds remaining", this.state.secondsRemaining)
 
     const { roomId, me } = this.props
 
@@ -109,14 +109,9 @@ export class Timer extends React.Component {
       );
     } else {
       return (
-        <div className="timeContainer">
-          <h1>Time Remaining</h1>
+        <div className="timeContainer flex">
+          <p>Time Remaining:</p>
           <div className="time">
-            {/* <span className="blockTimer">
-              Time Remaining : {this.getMinutes()}
-            </span>
-            <span className="blockTimer"> :{this.getSeconds()}</span> */}
-
             <span className="blockTimer">
               <span>{this.getMinutes()}</span>
             </span>

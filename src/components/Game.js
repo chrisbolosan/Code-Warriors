@@ -39,6 +39,8 @@ class Game extends React.Component {
     // get the room from the database
     const roomId = String(this.props.location.state.roomId);
     const { data } = await axios.get(`/api/battles/${roomId}`);
+    console.log("this is the get request response", data)
+
 
     clientSocket.emit('startGame', roomId);
 
@@ -136,6 +138,8 @@ class Game extends React.Component {
   }
 
   render() {
+
+    console.log("this is the game length", this.state.gameLength)
     if (this.state.gameOver === true) {
       return <Score roomId={this.state.room.roomId} />;
     } else {
