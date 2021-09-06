@@ -2,52 +2,156 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { authenticate, signUpThunk } from '../store';
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
+const useStyles = makeStyles(theme => ({
+  paper: {
+		marginTop: theme.spacing(8),
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+	},
+  text: {
+    backgroundColor: "whitesmoke",
+    borderRadius: "5px",
+    paddingTop: "2px"
+  },
+  title: {
+    color: "whitesmoke"
+  },
+	form: {
+		width: '100%', // Fix IE 11 issue.
+		marginTop: theme.spacing(1),
+	},
+	submit: {
+		margin: theme.spacing(3, 0, 2),
+    backgroundColor: "#464866",
+    '&:hover': {
+			backgroundColor: 'rgb(154, 156, 156)',
+		},
+	},
+  more: {
+    color: "whitesmoke"
+  }
+}))
 
 const AuthForm = (props) => {
+  const classes = useStyles()
+
   const { name, displayName, handleSubmit, error } = props;
   return displayName === 'Sign Up' ? (
     <div id="signup-container">
-      <form onSubmit={handleSubmit} name={name} id={name}>
-        <h2>Create an Account</h2>
-        <label htmlFor="username">
-          <p>Username</p>
-        </label>
-        <input name="username" type="text" />
-        <label htmlFor="password">
-          <p>Password</p>
-        </label>
-        <input name="password" type="password" />
-        <label htmlFor="email">
-          <p>Email</p>
-        </label>
-        <input name="email" type="text" />
-        <button type="submit">Create an Account</button>
-        <small>
-          Already have an account? Log in  <Link to="/signup">here</Link>.
-        </small>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
+      <Container component="main" maxWidth="xs">
+			<div className={classes.paper}>
+				<Typography component="h1" variant="h5" className={classes.title}>
+					Create an Account
+				</Typography>
+				<form className={classes.form} onSubmit={handleSubmit} name={name} id={name}>
+					<TextField className={classes.text}
+						variant="outlined"
+						margin="normal"
+						required
+						fullWidth
+						id="username"
+						label="Username"
+						name="username"
+						autoComplete="username"
+						autoFocus
+					/>
+					<TextField className={classes.text}
+						variant="outlined"
+						margin="normal"
+						required
+						fullWidth
+						name="password"
+						label="Password"
+						type="password"
+						id="password"
+						autoComplete="current-password"
+					/>
+          <TextField className={classes.text}
+						variant="outlined"
+						margin="normal"
+						required
+						fullWidth
+						name="email"
+						label="Email"
+						type="email"
+						id="email"
+						autoComplete="email"
+            autoFocus
+					/>
+					<Button
+						type="submit"
+						fullWidth
+						variant="contained"
+						color="primary"
+						className={classes.submit}
+					>
+						Create Your Account
+					</Button>
+					<Grid container justifyContent="center">
+						<Grid item className={classes.more}>
+							Already have an account? Log in  <Link to="/signup">here</Link>
+						</Grid>
+					</Grid>
+				</form>
+			</div>
+	  	</Container>
     </div>
   ) : (
-    <div className="login-container">
-      <form onSubmit={handleSubmit} name={name} id={name}>
-        <h2>Sign-In</h2>
-        <div id="login-form" className="flex">
-          <label htmlFor="username">
-            <p>Username</p>
-          </label>
-          <input name="username" type="text" />
-          <label htmlFor="password">
-            <p>Password</p>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <button type="submit">Login</button>
-        <small>
-          Don't have an account? Sign up <Link to="/signup">here</Link>.
-        </small>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
+    <div id="login-container">
+      <Container component="main" maxWidth="xs">
+			<div className={classes.paper}>
+				<Typography component="h1" variant="h5" className={classes.title}>
+					Login
+				</Typography>
+				<form className={classes.form} onSubmit={handleSubmit} name={name} id={name}>
+					<TextField className={classes.text}
+						variant="outlined"
+						margin="normal"
+						required
+						fullWidth
+						id="username"
+						label="Username"
+						name="username"
+						autoComplete="username"
+						autoFocus
+					/>
+					<TextField className={classes.text}
+						variant="outlined"
+						margin="normal"
+						required
+						fullWidth
+						name="password"
+						label="Password"
+						type="password"
+						id="password"
+						autoComplete="current-password"
+					/>
+					<Button
+						type="submit"
+						fullWidth
+						variant="contained"
+						color="primary"
+						className={classes.submit}
+					>
+						Login
+					</Button>
+					<Grid container justifyContent="center">
+						<Grid item className={classes.more}>
+							Don't have an account? Sign up <Link to="/signup">here</Link>
+						</Grid>
+					</Grid>
+				</form>
+			</div>
+	  	</Container>
+      {/* {error && error.response && <div> {error.response.data} </div>} */}
     </div>
   );
 };
