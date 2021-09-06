@@ -111,7 +111,7 @@ class Game extends React.Component {
     clientSocket.on('opponentSubmitted', (submitterId) => {
       if (submitterId === this.props.me._id) {
         const status = document.getElementById('status');
-        status.innerHTML = 'Opponent has submitted their solution';
+        status.innerHTML = 'Opponent has submitted their solution!';
       }
     });
   }
@@ -139,7 +139,7 @@ class Game extends React.Component {
 
   render() {
 
-    console.log("this is the game length", this.state.gameLength)
+    console.log("this is the exercise", this.props.exercise)
     if (this.state.gameOver === true) {
       return <Score roomId={this.state.room.roomId} />;
     } else {
@@ -154,7 +154,10 @@ class Game extends React.Component {
             <div id="game-left">
               {/* exercise problem and test */}
               <div id="prompt">
-                <p id="prompt-tab">Prompt</p>
+                <div id="prompt-bar" className="flex">
+                  <p id="prompt-tab">Prompt</p>
+                  <p>Difficulty: {this.props.exercise.difficulty}</p>
+                </div>
                 <div id="exercise-problem">
                   {/* show the problem once game has started */}
                   {this.state.started === true ? (
@@ -208,6 +211,7 @@ class Game extends React.Component {
                 />
 
                 <div>
+                  <p id="status"></p>
                   <IDEOpponent
                     //pass solution obj as props to dummy IDE
                     solutionObject={this.state}

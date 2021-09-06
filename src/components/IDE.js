@@ -35,7 +35,6 @@ class IDE extends React.Component {
     await this.props.runTestIDE(this.props.exercise.test, this.state.input);
   }
 
-
   // when a user clicks "SUBMIT"
   async handleSubmit(event) {
     // tell server client has submitted their solution
@@ -81,8 +80,6 @@ class IDE extends React.Component {
 
     const { updatePlayer } = this.props
     updatePlayer(updatedPlayer, battleId)
-
-
   }
 
   async componentDidUpdate(prevProps) {
@@ -114,8 +111,6 @@ class IDE extends React.Component {
   }
 
   render() {
-    const me = this.props.me;
-
       let options = {
         lineWrapping: true,
         lint: true,
@@ -177,6 +172,7 @@ class IDE extends React.Component {
     );
   }
 }
+
 const mapState = (state) => {
   return {
     me: state.auth,

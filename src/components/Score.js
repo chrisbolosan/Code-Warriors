@@ -47,7 +47,9 @@ class Score extends React.Component {
         return player.id !== me._id
       })[0]
 
+
       const currentPlayerScore = getScore(currentPlayer, opponentPlayer)
+
       const opponentScore = getScore(opponentPlayer, currentPlayer)
 
       const winner = currentPlayerScore > opponentScore ? currentPlayer : opponentPlayer
@@ -108,7 +110,6 @@ class Score extends React.Component {
               </div>
             </div>
             <LeaveGame currentPlayerScore={currentPlayerScore} me={me} />
-
           </div>
         )
       }
