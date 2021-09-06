@@ -147,6 +147,7 @@ const Home = (props) => {
             roomId: roomId,
             exerciseId: props.exercise._id,
             gameTime: gameTime,
+            startDisabled: true
           },
         }}
       >
@@ -167,6 +168,7 @@ const Home = (props) => {
                     state: {
                       roomId: room.roomId,
                       exerciseId: room.ref,
+                      startDisabled: false
                     },
                   }}
                 >

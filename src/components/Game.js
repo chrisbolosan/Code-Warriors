@@ -17,7 +17,7 @@ class Game extends React.Component {
     this.state = {
       room: {},
       started: false,
-      startDisabled: true,
+      startDisabled: this.props.location.state.startDisabled,
       gameOver: false,
       gameLength: '',
     };
@@ -84,9 +84,9 @@ class Game extends React.Component {
       this.setState(solutionObject);
     });
 
-    clientSocket.on('roomFull', (value) => {
+    clientSocket.on('joinedRoom', () => {
       this.setState({
-        startDisabled: value,
+        startDisabled: false,
       });
     });
 
