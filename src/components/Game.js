@@ -154,7 +154,7 @@ class Game extends React.Component {
             <div id="game-left">
               {/* exercise problem and test */}
               <div id="prompt">
-                <p>Prompt</p>
+                <p id="prompt-tab">Prompt</p>
                 <div id="exercise-problem">
                   {/* show the problem once game has started */}
                   {this.state.started === true ? (

@@ -459,7 +459,7 @@ a {
   align-items: center;
 }
 
-#prompt p {
+#prompt-tab {
   padding: 5px;
   background-color: #37384e
 }
@@ -469,7 +469,6 @@ a {
 }
 
 .timeContainer p {
-
   font-size: 15px;
   font-style: italic
 }
