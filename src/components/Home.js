@@ -194,7 +194,7 @@ const Home = (props) => {
                     },
                   }}
                 >
-                  <button id="final-create-button" onClick={handleClick}>Create game</button>
+                  <button id="final-create-button" onClick={handleClick}>Create Game</button>
                 </Link>
               </div>
             </Fade>

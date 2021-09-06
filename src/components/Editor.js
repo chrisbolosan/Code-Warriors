@@ -5,7 +5,7 @@ import 'codemirror/mode/javascript/javascript';
 import { Controlled } from 'react-codemirror2';
 import { connect } from 'react-redux';
 import { fetchExercises } from '../store/exercises.js';
-import React, { useState, useEffect } from 'react';
+import React  from 'react';
 
 export function Editor(props) {
   const { onChange, value } = props;
