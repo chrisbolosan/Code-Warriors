@@ -84,7 +84,7 @@ p {
 /*   Guest Home   */
 #guest-home {
   display: flex;
-  margin-top: 50px;
+  margin-top: 25px;
   justify-content: space-evenly;
 }
 
@@ -101,7 +101,7 @@ p {
 #about {
   flex-direction: column;
   align-items: center;
-  margin-top: 60px;
+  margin-top: 20px;
   padding-top: 80px;
   height: 270px;
   background-color: whitesmoke;

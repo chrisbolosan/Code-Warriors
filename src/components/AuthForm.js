@@ -84,7 +84,6 @@ const AuthForm = (props) => {
 						type="email"
 						id="email"
 						autoComplete="email"
-            autoFocus
 					/>
 					<Button
 						type="submit"

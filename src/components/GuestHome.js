@@ -8,18 +8,19 @@ const GuestHome = () => {
     <div id="guest-container">
       <div id="guest-home">
         <div id="left-panel">
-          <p style={{fontSize: "50px"}}>Welcome to Code Warriors!</p>
+          <p style={{fontSize: "50px", fontFamily: "monospace"}}>Hello, World!</p>
           <p><Link to="/login">Login</Link> or <Link to="/signup">Create</Link> an account to play</p>
           <img src="https://i.imgur.com/QsCIwz2.gif" alt="code-snippet-gif"></img>
         </div>
         <Leaderboard />
       </div>
+
       <div id="about" className="flex">
         <h1>What is Code Warriors?</h1>
         <div id="about-desc">
-          Code Warriors is the new fun way to prep for coding interviews. It's an interactive multiplayer game where players can challenge each other to a round of solving algos.
+          Code Warriors is the new fun way to prep for coding interviews. It's an interactive multiplayer game where players can challenge each other to a round of solving algorithms.
           <br/>
-          Code away!
+          Happy Coding!
         </div>
       </div>
       <div id="founders-container" className="flex">

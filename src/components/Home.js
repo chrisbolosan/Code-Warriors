@@ -11,6 +11,8 @@ import { getRandomExercise, getFilteredExercise } from '../store/exercise';
 import DifficultyFilter from './DifficultyFilter';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import ReactCSSTransitionGroup from 'react-transition-group'; // ES6
+
 // import TimeFilter from './TimeFilter';
 import Leaderboard from "./Leaderboard"
 
