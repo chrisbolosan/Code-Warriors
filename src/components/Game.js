@@ -90,16 +90,17 @@ class Game extends React.Component {
       });
     });
 
+
     // current player
-    const currentPlayer = this.props.me._id;
+    // const currentPlayer = this.props.me._id;
     // player who created the game
-    this.props.battles.forEach((battle) => {
-      if (battle.roomId === this.props.location.state.roomId) {
-        if (battle.players[0]._id !== currentPlayer) {
-          clientSocket.emit('joinRoom', this.props.location.state.roomId);
-        }
-      }
-    });
+    // this.props.battles.forEach((battle) => {
+    //   if (battle.roomId === this.props.location.state.roomId) {
+    //     if (battle.players[0]._id !== currentPlayer) {
+    //       clientSocket.emit('joinRoom', this.props.location.state.roomId);
+    //     }
+    //   }
+    // });
 
     // listen for when it is game over
     clientSocket.on('endGame', (battleId) => {
@@ -114,6 +115,14 @@ class Game extends React.Component {
         const status = document.getElementById('status');
         status.innerHTML = 'Opponent has submitted their solution';
       }
+    });
+
+    clientSocket.on('joinedRoom', (data) => {
+      console.log('room full')
+      this.setState({
+        startDisabled: false,
+      });
+      console.log("in socket call", this.state.startDisabled)
     });
   }
 
@@ -139,6 +148,8 @@ class Game extends React.Component {
   }
 
   render() {
+    console.log("in render", this.state.startDisabled)
+
     if (this.state.gameOver === true) {
       return <Score roomId={this.state.room.roomId} />;
     } else {

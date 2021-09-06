@@ -48,6 +48,7 @@ io.on('connection', async (socket) => {
 
   socket.on('joinRoom', (roomId) => {
     socket.join(roomId);
+    console.log('joined room')
     io.in(roomId).emit('roomFull', false)
     io.emit('rooms', rooms);
 
