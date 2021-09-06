@@ -112,10 +112,6 @@ export class Timer extends React.Component {
         <div className="timeContainer">
           <h1>Time Remaining</h1>
           <div className="time">
-            {/* <span className="blockTimer">
-              Time Remaining : {this.getMinutes()}
-            </span>
-            <span className="blockTimer"> :{this.getSeconds()}</span> */}
 
             <span className="blockTimer">
               <span>{this.getMinutes()}</span>
