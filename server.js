@@ -76,8 +76,6 @@ io.on('connection', async (socket) => {
       { completed: "true" }
     )
     io.in(roomId).emit("endGame", battle._id)
-
-
   })
 
   socket.on('opponentSubmitted', (data)=> {
