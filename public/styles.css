@@ -459,3 +459,7 @@ p {
 #time-container {
   margin-left: 5px;
 }
+
+#dont-show {
+  color: white;
+}
