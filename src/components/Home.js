@@ -61,12 +61,7 @@ const Home = (props) => {
 
   // when a user clicks join game
   function joinRoom(event) {
-
-
     const roomId = Number(event.target.value);
-
-    // clientSocket.emit('joinRoom', roomId);
-
 
     const battleId = event.target.name;
 
@@ -152,8 +147,6 @@ const Home = (props) => {
             roomId: roomId,
             exerciseId: props.exercise._id,
             gameTime: gameTime,
-            startDisabled: true
-
           },
         }}
       >
@@ -174,7 +167,6 @@ const Home = (props) => {
                     state: {
                       roomId: room.roomId,
                       exerciseId: room.ref,
-                      startDisabled: false
                     },
                   }}
                 >
