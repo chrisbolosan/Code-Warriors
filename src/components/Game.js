@@ -84,7 +84,11 @@ class Game extends React.Component {
       this.setState(solutionObject);
     });
 
-
+    clientSocket.on('joinedRoom', () => {
+      this.setState({
+        startDisabled: false,
+      });
+    });
 
 
     // current player
