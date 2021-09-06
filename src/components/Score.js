@@ -49,7 +49,6 @@ class Score extends React.Component {
 
 
       const currentPlayerScore = getScore(currentPlayer, opponentPlayer)
-
       const opponentScore = getScore(opponentPlayer, currentPlayer)
 
       const winner = currentPlayerScore > opponentScore ? currentPlayer : opponentPlayer
