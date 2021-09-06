@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { withRouter, Route, Switch } from 'react-router-dom';
 import { me } from './store';
 import Home from './components/Home';
 import Leaderboard from './components/Leaderboard';
-import UserProfile from './components/UserProfile';
+import Account from './components/Account';
 import GuestHome from './components/GuestHome';
 import { Login, SignUp } from './components/AuthForm';
 import Game from './components/Game';
@@ -24,17 +24,16 @@ class Routes extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/game" component={Game} />
-            <Route exact path="/user/:userId" component={UserProfile} />
-            <Route exact path="/leaderboard" component={Leaderboard} />
-            <Route exact path="/score" component={Score} />
+            <Route exact path="/user/:userId" component={Account} />
+            {/* <Route exact path="/leaderboard" component={Leaderboard} /> */}
+            <Route esxact path="/score" component={Score} />
           </Switch>
         ) : (
           <Switch>
             <Route exact path="/" component={GuestHome} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={SignUp} />
-            <Route exact path="/user/:userId" component={UserProfile} />
-            <Route exact path="/leaderboard" component={Leaderboard} />
+            {/* <Route exact path="/leaderboard" component={Leaderboard} /> */}
           </Switch>
         )}
       </div>

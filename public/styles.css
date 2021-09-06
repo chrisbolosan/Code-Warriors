@@ -1,36 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
-p {
-  margin: 0;
-}
-
-#userprofile {
-  zoom: 145%;
-  display: flex;
-  flex-direction: column;
-  margin-top: 30px;
-  margin-left: auto;
-  text-align: center;
-  width: 550px;
-  margin-right: auto;
-  padding: 20px;
-  border-radius: 15px;
-  border-width: 3px;
-  border-style: dotted;
-}
-
-#userprofile div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.user-header {
-  margin-top: 20px;
-  text-align: center;
-}
-
-/* IDE */
+/*  Score  */
 #score-container {
   display: flex;
   flex-direction: column;
@@ -70,6 +40,10 @@ body {
 
 a {
   text-decoration: none;
+}
+
+p {
+  margin: 0;
 }
 
 .opponent {
@@ -173,33 +147,6 @@ a {
   margin-top: 10px;
 }
 
-/*   Leaderboard   */
-#leaderboard-container {
-  flex-direction: column;
-  justify-content: flex-start;
-  border: 1px solid white;
-  padding: 30px;
-  background-color: #374785;
-}
-
-#leaderboard-header {
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.leaderboard-box {
-  width: 300px;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  padding: 15px;
-  border: 1px solid #080f5b;
-  background-color: white;
-}
-
-.leaderboard-box a, .leaderboard-box p {
-  color: black;
-}
-
 /*   Login / Signup  */
 #login-container, #signup-container {
   height: 100vh;
@@ -252,9 +199,9 @@ a {
   align-items: flex-start;
   flex-wrap: wrap;
   height: 650px;
-  background-color: #464866;
   /* take height off later */
   width: 450px;
+  background-color: #464866;
   box-shadow: 10px 5px 5px #313466;
 }
 
@@ -269,6 +216,7 @@ a {
   border-style: none;
   font-size: 12px;
   color: white;
+  border-radius: 3px;
 }
 
 .room-button:hover {
@@ -481,4 +429,72 @@ a {
      -moz-box-shadow: inset 0px 0px 5px rgb(182, 233, 169);
           box-shadow: inset 0px 0px 5px rgb(182, 233, 169);
   outline: none;
+}
+
+/*   User Profile   */
+#profile-container {
+  padding-top: 200px;
+}
+
+#profile {
+  flex-direction: column;
+  margin: auto;
+  margin-top: 30px;
+  width: 500px;
+  padding: 20px;
+  border: 1px solid white;
+  box-shadow: 10px 5px 5px #313466;
+}
+
+#profile div {
+  align-items: center;
+  justify-content: space-between;
+}
+
+#profile-container h1 {
+  text-align: center;
+}
+
+/*   Leaderboard   */
+#leaderboard-container {
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 20px;
+  background-color: #464866;
+  border: solid 2px whitesmoke;
+  box-shadow: 10px 5px 5px #313466;
+}
+
+#leaderboard-header {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.leaderboard-box {
+  width: 350px;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #080f5b;
+  background-color: whitesmoke;
+  align-items: center;
+  border-radius: 3px;
+}
+
+.leaderboard-info {
+  flex-direction: column;
+}
+
+.leaderboard-box p {
+  color: #25274D;
+  font-size: 15px;
+}
+
+.leaderboard-info small {
+  font-size: 12px;
+  color: #25274D;
+}
+
+#leaderboard-rank {
+  font-style: italic;
 }

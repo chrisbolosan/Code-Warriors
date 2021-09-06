@@ -12,6 +12,7 @@ import DifficultyFilter from './DifficultyFilter';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 // import TimeFilter from './TimeFilter';
+import Leaderboard from "./Leaderboard"
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -53,8 +54,6 @@ const useStyles = makeStyles((theme) => ({
     height: "50px"
   }
   }));
-
-
 
 const Home = (props) => {
   const {
@@ -168,8 +167,6 @@ const Home = (props) => {
       }
     }
   }
-
-
 // {/* <TimeFilter
 //                       handleChange={updateTime}
 //                       time={gameTime}
@@ -177,8 +174,48 @@ const Home = (props) => {
 
   return (
     <div id="home-container" className="flex">
-      <div id="home-battles">
+      <Leaderboard />
+      <div id="home-user" className="flex">
+        <h3 id="welcome">{`Hi, ${props.me.username}`}</h3>
+        <div id="dashboard" className="flex">
+          {
+            props.me.points === 0 ? (
+              <><h1>Play a game to see your stats!</h1></>
+            ) : (
+              <>
+                <div className="box flex">
+                  <p className="data">Your rank</p>
+                  <p>{props.me.rank}</p>
+                </div>
+                <div className="box flex">
+                  <p className="data">Total points</p>
+                  <p>{props.me.totalPoints}</p>
+                </div>
+                <div className="box flex">
+                  <p className="data">Matches won</p>
+                  <div id="progress" style={{ width: 100, height: 100}}>
+                    <CircularProgressbar
+                      value={50}
+                      text={`50%`}
+                      styles={buildStyles({
+                        pathTransitionDuration: 0.5,
+                        pathColor: "rgb(235, 235, 127)",
+                        textColor: "whitesmoke",
+                      })}
+                    />
+                  </div>
+                </div>
+                <div className="box flex">
+                  <p className="data">Matches played</p>
+                  <p>data here</p>
+                </div>
+              </>
+            )
+          }
+        </div>
+      </div>
 
+      <div id="home-battles">
         <div id="home-options" className="flex">
           <p>Open Games</p>
           <button type="button" id="create-button" onClick={handleCreate}>
@@ -203,7 +240,6 @@ const Home = (props) => {
                     setDifficulty={setDifficulty}
                   />
                   <div id="time-selector">
-
                     <select
                       onChange={updateTime}
                       name="times"
@@ -267,46 +303,6 @@ const Home = (props) => {
                 </div>
               );
             })}
-        </div>
-      </div>
-
-      <div id="home-user" className="flex">
-        <h3 id="welcome">{`Hi, ${props.me.username}`}</h3>
-        <div id="dashboard" className="flex">
-          {
-            props.me.points === 0 ? (
-              <><h1>You haven't played a game yet.</h1></>
-            ) : (
-              <>
-                <div className="box flex">
-                  <p className="data">Your rank</p>
-                  <p>{props.me.rank}</p>
-                </div>
-                <div className="box flex">
-                  <p className="data">Total points</p>
-                  <p>{props.me.totalPoints}</p>
-                </div>
-                <div className="box flex">
-                  <p className="data">Matches won</p>
-                  <div id="progress" style={{ width: 100, height: 100}}>
-                    <CircularProgressbar
-                      value={50}
-                      text={`50%`}
-                      styles={buildStyles({
-                        pathTransitionDuration: 0.5,
-                        pathColor: "rgb(235, 235, 127)",
-                        textColor: "whitesmoke",
-                      })}
-                    />
-                  </div>
-                </div>
-                <div className="box flex">
-                  <p className="data">Matches played</p>
-                  <p>data here</p>
-                </div>
-              </>
-            )
-          }
         </div>
       </div>
     </div>

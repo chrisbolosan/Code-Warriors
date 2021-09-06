@@ -39,7 +39,7 @@ const Navbar = ({ isLoggedIn, handleClick, userId, auth }) => {
               pathname: `/user/${user._id}`,
               state: { user: user }
               }}>
-                Profile
+                Account
               </Link>
             </p>
             <p className="nav-item" onClick={handleClick}>
