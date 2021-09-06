@@ -9,6 +9,8 @@ import Fade from '@material-ui/core/Fade';
 import { setRooms, addRoom, updateRoom } from '../store/rooms';
 import { getRandomExercise, getFilteredExercise } from '../store/exercise';
 import DifficultyFilter from './DifficultyFilter';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 // import TimeFilter from './TimeFilter';
 
 const useStyles = makeStyles((theme) => ({
@@ -33,8 +35,26 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     flexGrow: 1
+  },
+  home: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-evenly"
+  },
+  left: {
+    display: "flex",
+    flexDirection: "column",
+    flexWrap: "wrap",
+  },
+  gridpaper: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "50px"
   }
   }));
+
+
 
 const Home = (props) => {
   const {
@@ -62,7 +82,7 @@ const Home = (props) => {
   useEffect(() => {
     const randomRoomId = Math.floor(Math.random() * 10000000);
     setRoomId(randomRoomId);
-    getRandomExercise();
+    // getRandomExercise();
   }, []);
 
   function handleCreate() {
@@ -149,14 +169,18 @@ const Home = (props) => {
     }
   }
 
+
+// {/* <TimeFilter
+//                       handleChange={updateTime}
+//                       time={gameTime}
+//                     /> */}
+
   return (
     <div id="home-container" className="flex">
       <div id="home-battles">
-        {/* Open Games */}
+
         <div id="home-options" className="flex">
           <p>Open Games</p>
-
-          {/* Create a Game */}
           <button type="button" id="create-button" onClick={handleCreate}>
             Create Game
           </button>
@@ -178,12 +202,8 @@ const Home = (props) => {
                     difficulty={difficulty}
                     setDifficulty={setDifficulty}
                   />
-                  {/* Select Time */}
                   <div id="time-selector">
-                    {/* <TimeFilter
-                      handleChange={updateTime}
-                      time={gameTime}
-                    /> */}
+
                     <select
                       onChange={updateTime}
                       name="times"
@@ -241,8 +261,7 @@ const Home = (props) => {
                       {
                       `${room.players ? room.players[0].username : 'User'}`
                       }
-                      <p>Difficulty</p>
-                      <p>Time</p>
+                      <p>{`difficulty | ${room.length/60000} min`}</p>
                     </button>
                   </Link>
                 </div>
@@ -251,14 +270,43 @@ const Home = (props) => {
         </div>
       </div>
 
-      {/* HOME USER MIDDLE */}
       <div id="home-user" className="flex">
         <h3 id="welcome">{`Hi, ${props.me.username}`}</h3>
-        <div id="dashboard">
-          <p>rank: {props.me.rank}</p>
-          <p>points: {props.me.totalPoints}</p>
-          <p>matches won:</p>
-          <p>matches played:</p>
+        <div id="dashboard" className="flex">
+          {
+            props.me.points === 0 ? (
+              <><h1>You haven't played a game yet.</h1></>
+            ) : (
+              <>
+                <div className="box flex">
+                  <p className="data">Your rank</p>
+                  <p>{props.me.rank}</p>
+                </div>
+                <div className="box flex">
+                  <p className="data">Total points</p>
+                  <p>{props.me.totalPoints}</p>
+                </div>
+                <div className="box flex">
+                  <p className="data">Matches won</p>
+                  <div id="progress" style={{ width: 100, height: 100}}>
+                    <CircularProgressbar
+                      value={50}
+                      text={`50%`}
+                      styles={buildStyles({
+                        pathTransitionDuration: 0.5,
+                        pathColor: "rgb(235, 235, 127)",
+                        textColor: "whitesmoke",
+                      })}
+                    />
+                  </div>
+                </div>
+                <div className="box flex">
+                  <p className="data">Matches played</p>
+                  <p>data here</p>
+                </div>
+              </>
+            )
+          }
         </div>
       </div>
     </div>

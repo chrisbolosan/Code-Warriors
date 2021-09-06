@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     color: "whitesmoke"
   },
 	form: {
-		width: '100%', // Fix IE 11 issue.
+		width: '100%',
 		marginTop: theme.spacing(1),
 	},
 	submit: {
@@ -42,8 +42,8 @@ const useStyles = makeStyles(theme => ({
 
 const AuthForm = (props) => {
   const classes = useStyles()
-
   const { name, displayName, handleSubmit, error } = props;
+
   return displayName === 'Sign Up' ? (
     <div id="signup-container">
       <Container component="main" maxWidth="xs">

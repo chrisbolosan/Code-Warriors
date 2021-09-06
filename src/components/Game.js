@@ -64,7 +64,6 @@ class Game extends React.Component {
       const roomId = String(this.props.location.state.roomId);
       const { data } = await axios.get(`/api/battles/${roomId}`);
 
-
       if (roomId === senderRoomId) {
         this.setState({
           started: true,

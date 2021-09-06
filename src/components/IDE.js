@@ -111,14 +111,14 @@ class IDE extends React.Component {
   }
 
   render() {
-      let options = {
-        lineWrapping: true,
-        lint: true,
-        mode: 'javascript',
-        lineNumbers: true,
-        theme: 'material',
-        autoCloseBrackets: true,
-      };
+    let options = {
+      lineWrapping: true,
+      lint: true,
+      mode: 'javascript',
+      lineNumbers: true,
+      theme: 'material',
+      autoCloseBrackets: true,
+    };
 
     return (
       <div className="IDE IDE1">
@@ -166,8 +166,6 @@ class IDE extends React.Component {
             options={options}
           />
         </div>
-
-
       </div>
     );
   }
