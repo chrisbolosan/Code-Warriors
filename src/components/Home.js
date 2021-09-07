@@ -217,7 +217,7 @@ const Home = (props) => {
                 </div>
                 <div className="box flex">
                   <p className="data">Matches played</p>
-                  <p>data here</p>
+                  <p>2</p>
                 </div>
               </>
             )
@@ -307,7 +307,7 @@ const Home = (props) => {
                       {
                       `${room.players ? room.players[0].username : 'User'}`
                       }
-                      <p>{`difficulty | ${room.length/60000} min`}</p>
+                      <p>{`Easy | ${room.length/60000} min`}</p>
                     </button>
                   </Link>
                 </div>

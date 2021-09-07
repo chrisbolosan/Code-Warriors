@@ -45,7 +45,7 @@ UserSchema.pre('save', async function (next) {
 });
 
 UserSchema.pre('save', async function (next) {
-  if (this.totalPoints >= 50 && this.totalPoints < 150) this.rank = 'Novice';
+  if (this.totalPoints < 150) this.rank = 'Novice';
   else if (this.totalPoints >= 150 && this.totalPoints < 300)
     this.rank = 'Intermediate';
   else this.rank = 'Master';

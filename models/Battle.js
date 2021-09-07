@@ -27,7 +27,10 @@ const BattleSchema = new mongoose.Schema({
   length: {
     type: Number,
     default: 300000
-  }
+  },
+  // won: {
+  //   type: String,
+  // }
 });
 
 //BattleSchema.plugin(uniqueValidator);
