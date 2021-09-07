@@ -563,3 +563,7 @@ p {
   background-color: white;
   color: black;
 }
+
+#dont-show {
+  color: white;
+}

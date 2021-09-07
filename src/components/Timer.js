@@ -112,6 +112,7 @@ export class Timer extends React.Component {
         <div className="timeContainer flex">
           <p>Time Remaining:</p>
           <div className="time">
+
             <span className="blockTimer">
               <span>{this.getMinutes()}</span>
             </span>

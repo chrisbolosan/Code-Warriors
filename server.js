@@ -56,7 +56,6 @@ io.on('connection', async (socket) => {
   socket.on('joinedRoom', (data) => {
     io.in(data.roomId).emit('joinedRoom', data)
     // io.emit('rooms', rooms);
-    console.log(data)
   });
 
   socket.on('startGame', async (roomId) => {
