@@ -160,7 +160,6 @@ class Game extends React.Component {
   }
 
   render() {
-
     console.log("this is the exercise", this.props.exercise)
     if (this.state.gameOver === true) {
       return <Score player1={this.state.player1} player2={this.state.player2} />;
@@ -233,7 +232,7 @@ class Game extends React.Component {
                 />
 
                 <div>
-                  <p id="status"></p>
+                  <p id="status">.</p>
                   <IDEOpponent
                     //pass solution obj as props to dummy IDE
                     solutionObject={this.state}

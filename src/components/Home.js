@@ -144,8 +144,16 @@ const Home = (props) => {
       },
       battleId
     );
+
+
+
     clientSocket.emit('joinedRoom', {
       roomId: roomId,
+      player: {
+        username: props.me.username,
+        rank: props.me.rank,
+        points: props.me.totalPoints
+      },
       player1: player1,
       player2: player2,
     });

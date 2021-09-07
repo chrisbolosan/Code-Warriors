@@ -45,14 +45,11 @@ class IDEOpponent extends React.Component {
 
   componentDidMount() {
     clientSocket.on('joinedRoom', (data) => {
-      if (data.roomId === this.props.roomId) {
-        const opponent = data.player1.id !== this.props.me._id ? data.player1 : data.player2
-        this.setState({
-          name: opponent.username,
-          rank: opponent.rank,
-          points: opponent.points
-        })
-      }
+      this.setState({
+        name: data.player.username,
+        rank: data.player.opponent.rank,
+        points: data.playeropponent.points
+      })
     })
   }
 
@@ -66,9 +63,11 @@ class IDEOpponent extends React.Component {
       autoCloseBrackets: true,
       readOnly: true,
     };
+
+    console.log("this is opponent state", this.state)
     return (
       <div className="IDE IDE2">
-        <div className="user-info">
+        {/* <div className="user-info">
           {this.state.name === "Opponent" ? (
             <>
               <span id="waiting">Waiting for an opponent</span>
@@ -81,7 +80,7 @@ class IDEOpponent extends React.Component {
               <small>Points: {this.state.points}</small>
             </>
           )}
-        </div>
+        </div> */}
         <div className="editor-container opponent">
           {/* This is the IDE component from codemirror */}
           <Controlled
