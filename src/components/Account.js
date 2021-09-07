@@ -15,13 +15,24 @@ class Account extends React.Component {
           <hr />
           <div className="username flex">
             <p>Username</p>
-            <button>Change</button>
+            <p>{this.props.profile.username}</p>
+            {/* <button>Change</button> */}
+          </div>
+          <div className="rank flex">
+            <p>Rank</p>
+            <p>{this.props.profile.rank}</p>
+            {/* <button>Change</button> */}
+          </div>
+          <div className="totalpoints flex">
+            <p>Points</p>
+            <p>{this.props.profile.totalPoints}</p>
+            {/* <button>Change</button> */}
           </div>
           <hr />
-          <div className="password flex">
+          {/* <div className="password flex">
             <p>Password</p>
             <button>Change</button>
-          </div>
+          </div> */}
           <hr />
           <div className="email flex">
             <p>Email</p>
