@@ -12,6 +12,7 @@ import DifficultyFilter from './DifficultyFilter';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import ReactCSSTransitionGroup from 'react-transition-group'; // ES6
+import axios from "axios"
 
 // import TimeFilter from './TimeFilter';
 import Leaderboard from "./Leaderboard"
@@ -111,6 +112,11 @@ const Home = (props) => {
       ],
       length: gameTime,
     });
+
+    await axios.put(`/api/battles/updateRoom`, {
+      roomId,
+      difficultyLevel: difficulty
+      })
     clientSocket.emit('createGame', roomId);
   }
 
@@ -307,7 +313,7 @@ const Home = (props) => {
                       {
                       `${room.players ? room.players[0].username : 'User'}`
                       }
-                      <p>{`Easy | ${room.length/60000} min`}</p>
+                      <p>{`${room.difficultyLevel} | ${room.length/60000} min`}</p>
                     </button>
                   </Link>
                 </div>

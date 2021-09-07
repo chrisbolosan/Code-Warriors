@@ -79,3 +79,16 @@ exports.getBattle = async (req, res, next) => {
   }
 };
 
+exports.updateRoom = async (req, res, next) => {
+  try {
+    const room = await Battle.findOneAndUpdate({
+      roomId: req.body.roomId
+    }, {
+      difficultyLevel: req.body.difficultyLevel
+    })
+
+    res.status(200).json(room)
+  } catch (error) {
+    next(error)
+  }
+}

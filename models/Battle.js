@@ -28,9 +28,10 @@ const BattleSchema = new mongoose.Schema({
     type: Number,
     default: 300000
   },
-  // won: {
-  //   type: String,
-  // }
+  difficultyLevel: {
+    type: String,
+    default: "Easy"
+  }
 });
 
 //BattleSchema.plugin(uniqueValidator);
