@@ -16,7 +16,7 @@ class LeaveGame extends React.Component {
   render() {
     return (
       <Link to="/">
-        <button>Leave</button>
+        <button id="leave-game">Leave</button>
       </Link>
     );
   }

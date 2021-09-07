@@ -5,8 +5,6 @@ import 'codemirror/theme/material.css';
 import 'codemirror/addon/edit/closebrackets';
 import 'codemirror/mode/javascript/javascript';
 import { Controlled } from 'react-codemirror2';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import clientSocket from '../socket/socket';
 import { updateRoom, updatePlayer } from '../store/rooms';
 
@@ -37,14 +35,8 @@ class IDE extends React.Component {
     await this.props.runTestIDE(this.props.exercise.test, this.state.input);
   }
 
-
   // when a user clicks "SUBMIT"
   async handleSubmit(event) {
-    // tell server client has submitted their solution
-    clientSocket.emit("submitted", {
-      roomId: this.state.roomId,
-      playerId: this.props.me._id
-    })
     // submit button gets disabled
     this.setState({
       submitDisabled: true,
@@ -85,6 +77,14 @@ class IDE extends React.Component {
     updatePlayer(updatedPlayer, battleId)
 
 
+    // tell server client has submitted their solution
+    clientSocket.emit("submitted", {
+      roomId: this.state.roomId,
+      playerId: this.props.me._id,
+      username: this.props.me.username,
+      time: this.props.timer,
+      success: this.props.solution.success
+    })
   }
 
   async componentDidUpdate(prevProps) {
@@ -116,29 +116,52 @@ class IDE extends React.Component {
   }
 
   render() {
-    const me = this.props.me;
-
-      let options = {
-        lineWrapping: true,
-        lint: true,
-        mode: 'javascript',
-        lineNumbers: true,
-        theme: 'material',
-        autoCloseBrackets: true,
-      };
+    let options = {
+      lineWrapping: true,
+      lint: true,
+      mode: 'javascript',
+      lineNumbers: true,
+      theme: 'material',
+      autoCloseBrackets: true,
+    };
 
     return (
       <div className="IDE IDE1">
-        <div className="user-info">
-          <small>{me.username}</small>
-          <small>Rank: {me.rank}</small>
-          <small>Points: {me.totalPoints}</small>
+        {/* user info */}
+        {/* <div className="user-info">
+          <small>{me.username}   rank: {me.rank}   points: {me.totalPoints}</small>
+        </div> */}
+
+        <div className="ide-submit-run flex">
+          <p className="your-solution">Your solution</p>
+
+          <div>
+            {/* RUN BUTTON  */}
+            <button
+              className="ide-run"
+              type="submit"
+              onClick={this.handleRun}
+              disabled={this.state.submitDisabled}
+            >
+              Run Code
+            </button>
+            {/* SUBMIT */}
+            <button
+              type="submit"
+              className="ide-submit"
+              onClick={this.handleSubmit}
+              disabled={this.state.submitDisabled}
+            >
+              Submit Code
+            </button>
+          </div>
         </div>
 
+        {/* IDE */}
         <div className="editor-container">
           {/* This is the IDE component from codemirror */}
           <Controlled
-            // this is the onChange equivilent of the imported component
+            // this is the onChange equivalent of the imported component
             // callback sets the input to the state as code
             onBeforeChange={(editor, data, value) => {
               this.handleChange(value);
@@ -147,31 +170,12 @@ class IDE extends React.Component {
             className="code-mirror-wrapper"
             options={options}
           />
-
-          <div className="ide-buttons">
-            <button
-              className="btn btn-warning "
-              type="submit"
-              onClick={this.handleRun}
-              disabled={this.state.submitDisabled}
-            >
-              Run
-            </button>
-            <button
-              type="submit"
-              className="btn btn-success"
-              onClick={this.handleSubmit}
-              disabled={this.state.submitDisabled}
-            >
-              Submit
-            </button>
-            <ToastContainer />
-          </div>
         </div>
       </div>
     );
   }
 }
+
 const mapState = (state) => {
   return {
     me: state.auth,

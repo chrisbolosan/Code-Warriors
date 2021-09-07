@@ -39,6 +39,8 @@ class Game extends React.Component {
     // get the room from the database
     const roomId = String(this.props.location.state.roomId);
     const { data } = await axios.get(`/api/battles/${roomId}`);
+    console.log("this is the get request response", data)
+
 
     clientSocket.emit('startGame', roomId);
 
@@ -56,15 +58,11 @@ class Game extends React.Component {
   }
 
   async componentDidMount() {
-
-
     clientSocket.on('gameStarted', async (senderRoomId) => {
-
 
       // get the room from the database
       const roomId = String(this.props.location.state.roomId);
       const { data } = await axios.get(`/api/battles/${roomId}`);
-
 
       if (roomId === senderRoomId) {
         this.setState({
@@ -109,10 +107,33 @@ class Game extends React.Component {
       });
     });
 
+    clientSocket.on("submitted", async (info) => {
+      const { roomId, playerId, time, success, username } = info
+      if (playerId === this.props.me._id) {
+        this.setState({
+          player1: {
+            playerId,
+            username,
+            time,
+            success,
+          }
+        })
+      } else {
+        this.setState({
+          player2: {
+            playerId,
+            username,
+            time,
+            success
+          }
+        })
+      }
+    })
+
     clientSocket.on('opponentSubmitted', (submitterId) => {
       if (submitterId === this.props.me._id) {
         const status = document.getElementById('status');
-        status.innerHTML = 'Opponent has submitted their solution';
+        status.innerHTML = 'Opponent has submitted their solution!';
       }
     });
   }
@@ -139,8 +160,9 @@ class Game extends React.Component {
   }
 
   render() {
+    console.log("this is the exercise", this.props.exercise)
     if (this.state.gameOver === true) {
-      return <Score roomId={this.state.room.roomId} />;
+      return <Score player1={this.state.player1} player2={this.state.player2} />;
     } else {
       const { roomId } = this.props.location.state;
       const { submitSolution, exercise } = this.props;
@@ -148,62 +170,83 @@ class Game extends React.Component {
 
       if (exercise.problemDescription) {
         return (
-          <div id="game-container" style={{ zoom: 1 }}>
-            <div id="exercise-problem">
-              {/* show the problem once game has started */}
-              <h4>Description</h4>
-              {this.state.started === true ? (
-                <p>{exercise.problemDescription}</p>
-              ) : null}
+          <div id="game-container" className="flex">
+            {/* LEFT PANEL */}
+            <div id="game-left">
+              {/* exercise problem and test */}
+              <div id="prompt">
+                <div id="prompt-bar" className="flex">
+                  <p id="prompt-tab">Prompt</p>
+                  <p>Difficulty: {this.props.exercise.difficulty}</p>
+                </div>
+                <div id="exercise-problem">
+                  {/* show the problem once game has started */}
+                  {this.state.started === true ? (
+                    <p>{exercise.problemDescription}</p>
+                  ) : null}
+                </div>
+              </div>
+
+              {/* TEST RESULTS */}
+              <div id="test">
+                <div id="test-results">
+                  {this.state.result
+                    ? this.state.result.message
+                    : "Run or submit code when you're ready."}
+                </div>
+              </div>
             </div>
 
-            <div id="ide-container">
-              <IDE
-                exercise={this.props.exercise}
-                funcFrame={this.state.funcFrame}
-                submitSolution={submitSolution}
-                roomId={roomId}
-                runTestIDE={runTestIDE}
-                room={this.state.room}
-                submitDisabled={!this.state.started}
-              />
-              <div>
-                <IDEOpponent
-                  //pass solution obj as props to dummy IDE
-                  solutionObject={this.state}
+
+            <div id="game-middle" className="flex">
+              {/* TIMER AND START BUTTON */}
+              <div id="start-timer">
+                {this.state.started === false ? (
+                  <button
+                    onClick={this.handleStart}
+                    disabled={this.state.startDisabled}
+                  >
+                    START
+                  </button>
+                ) : (
+                  <>
+                    <Timer
+                      roomId={this.props.location.state.roomId}
+                      gameLength={this.state.gameLength}
+                    />
+                    <div id="seconds-remaining"></div>
+                  </>
+                )}
+              </div>
+
+              {/* BOTH IDES */}
+              <div id="ide-container" className="flex">
+                <IDE
+                  exercise={this.props.exercise}
                   funcFrame={this.state.funcFrame}
+                  submitSolution={submitSolution}
                   roomId={roomId}
-                  me={this.props.me}
+                  runTestIDE={runTestIDE}
+                  room={this.state.room}
+                  submitDisabled={!this.state.started}
                 />
-                <div id="status"></div>
-              </div>
-            </div>
-            <div id="start-match">
-              {this.state.started === false ? (
-                <button
-                  onClick={this.handleStart}
-                  disabled={this.state.startDisabled}
-                >
-                  START
-                </button>
-              ) : (
-                <>
-                  <Timer
-                    roomId={this.props.location.state.roomId}
-                    gameLength={this.state.gameLength}
+
+                <div>
+                  <p id="status">.</p>
+                  <IDEOpponent
+                    //pass solution obj as props to dummy IDE
+                    solutionObject={this.state}
+                    funcFrame={this.state.funcFrame}
+                    roomId={roomId}
+                    me={this.props.me}
                   />
-                  <div id="seconds-remaining"></div>
-                </>
-              )}
-            </div>
-            <div id="test">
-              <h3>Test Results</h3>
-              <div id="test-results">
-                {this.state.result
-                  ? this.state.result.message
-                  : 'please run your test'}
+                </div>
+
+
               </div>
             </div>
+
+
           </div>
         );
       } else {

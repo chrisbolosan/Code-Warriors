@@ -68,11 +68,25 @@ class IDEOpponent extends React.Component {
       autoCloseBrackets: true,
       readOnly: true,
     };
+
+    console.log("this is opponent state", this.state)
     return (
       <div className="IDE IDE2">
-        <div className="user-info">
-          <small id="dont-show">.</small>
-        </div>
+        {/* <div className="user-info">
+          {this.state.name === "Opponent" ? (
+            <>
+              <span id="waiting">Waiting for an opponent</span>
+              <span id="wait">.</span>
+            </>
+          ) : (
+            <>
+              <small>{this.state.name}</small>
+              <small>Rank: {this.state.rank}</small>
+              <small>Points: {this.state.points}</small>
+            </>
+          )}
+        </div> */}
+  
         <div className="editor-container opponent">
           {/* This is the IDE component from codemirror */}
           <Controlled

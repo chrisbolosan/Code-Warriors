@@ -2,9 +2,61 @@ import React, { useState, useEffect } from 'react';
 import clientSocket from '../socket/socket';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
+import { Modal } from "@material-ui/core"
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
 import { setRooms, addRoom, updateRoom } from '../store/rooms';
 import { getRandomExercise, getFilteredExercise } from '../store/exercise';
 import DifficultyFilter from './DifficultyFilter';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+import ReactCSSTransitionGroup from 'react-transition-group'; // ES6
+import axios from "axios"
+
+// import TimeFilter from './TimeFilter';
+import Leaderboard from "./Leaderboard"
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: "black",
+
+  },
+  paper: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+    alignItems: 'center',
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    height: "300px",
+    width: "450px;"
+  },
+  root: {
+    flexGrow: 1
+  },
+  home: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-evenly"
+  },
+  left: {
+    display: "flex",
+    flexDirection: "column",
+    flexWrap: "wrap",
+  },
+  gridpaper: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "50px"
+  }
+  }));
 
 const Home = (props) => {
   const {
@@ -14,11 +66,13 @@ const Home = (props) => {
     updateRoom,
     getFilteredExercise,
   } = props;
+
   const [rooms, setRooms] = useState([]);
   const [roomId, setRoomId] = useState(0);
+  const [open, setOpen] = React.useState(false)
   const [gameTime, setGameTime] = useState(300000);
-  const [fExercise, setExercise] = useState({});
   const [difficulty, setDifficulty] = useState('');
+  const classes = useStyles()
 
   useEffect(() => {
     fetchRooms();
@@ -30,8 +84,16 @@ const Home = (props) => {
   useEffect(() => {
     const randomRoomId = Math.floor(Math.random() * 10000000);
     setRoomId(randomRoomId);
-    getRandomExercise();
+    // getRandomExercise();
   }, []);
+
+  function handleCreate() {
+    setOpen(true)
+  }
+
+  function handleClose() {
+    setOpen(false)
+  }
 
   // when a user clicks creates a game
   async function handleClick() {
@@ -41,19 +103,24 @@ const Home = (props) => {
       ref: props.exercise._id,
       players: [
         {
-          id: props.auth._id,
-          username: props.auth.username,
-          rank: props.auth.rank,
-          points: props.auth.totalPoints,
+          id: props.me._id,
+          username: props.me.username,
+          rank: props.me.rank,
+          points: props.me.totalPoints,
           submitted: false,
         },
       ],
       length: gameTime,
     });
+
+    await axios.put(`/api/battles/updateRoom`, {
+      roomId,
+      difficultyLevel: difficulty
+      })
     clientSocket.emit('createGame', roomId);
   }
 
-  //Update the time for the game
+  // update the time for the game
   function updateTime(event) {
     const time = event.target.value;
     setGameTime(time);
@@ -62,7 +129,6 @@ const Home = (props) => {
   // when a user clicks join game
   function joinRoom(event) {
     const roomId = Number(event.target.value);
-
     const battleId = event.target.name;
 
     const player1 = props.battles.filter((battle) => {
@@ -70,10 +136,10 @@ const Home = (props) => {
     })[0].players[0];
 
     const player2 = {
-      id: props.auth._id,
-      username: props.auth.username,
-      rank: props.auth.rank,
-      points: props.auth.totalPoints,
+      id: props.me._id,
+      username: props.me.username,
+      rank: props.me.rank,
+      points: props.me.totalPoints,
       submitted: false,
     };
 
@@ -84,14 +150,22 @@ const Home = (props) => {
       },
       battleId
     );
+
+
+
     clientSocket.emit('joinedRoom', {
       roomId: roomId,
+      player: {
+        username: props.me.username,
+        rank: props.me.rank,
+        points: props.me.totalPoints
+      },
       player1: player1,
       player2: player2,
     });
   }
 
-  async function handleChange(event) {
+  async function handleDifficulty(event) {
     setDifficulty(event.target.value);
     if (event.target.value.length > 0 && event.target.value) {
       console.log('Prior to switch: ', event.target.value);
@@ -109,81 +183,143 @@ const Home = (props) => {
       }
     }
   }
+// {/* <TimeFilter
+//                       handleChange={updateTime}
+//                       time={gameTime}
+//                     /> */}
 
   return (
-    <div className="main-home">
-      <h1 className="welcomebanner">Welcome! Create or Join a Game</h1>
-      <div id="gameFilters">
-        <DifficultyFilter
-          handleChange={handleChange}
-          difficulty={difficulty}
-          setDifficulty={setDifficulty}
-        />
-        {/* Time Selector */}
-        <div>
-          <label id="time-container">
-            {' '}
-            <select
-              onChange={updateTime}
-              name="times"
-              id="timesSelector"
-              class="form-select"
-            >
-              <option value="300000">5 Minutes</option>
-              <option value="600000">10 Minutes</option>
-              <option value="900000">15 Minutes</option>
-              <option value="1200000">20 Minutes</option>
-              <option value="1500000">25 Minutes</option>
-              <option value="1800000">30 Minutes</option>
-            </select>
-          </label>
+    <div id="home-container" className="flex">
+      <Leaderboard />
+      <div id="home-user" className="flex">
+        <h3 id="welcome">{`Hi, ${props.me.username}`}</h3>
+        <div id="dashboard" className="flex">
+          {
+            props.me.points === 0 ? (
+              <><h1>Play a game to see your stats!</h1></>
+            ) : (
+              <>
+                <div className="box flex">
+                  <p className="data">Your rank</p>
+                  <p>{props.me.rank}</p>
+                </div>
+                <div className="box flex">
+                  <p className="data">Total points</p>
+                  <p>{props.me.totalPoints}</p>
+                </div>
+                <div className="box flex">
+                  <p className="data">Matches won</p>
+                  <div id="progress" style={{ width: 100, height: 100}}>
+                    <CircularProgressbar
+                      value={50}
+                      text={`50%`}
+                      styles={buildStyles({
+                        pathTransitionDuration: 0.5,
+                        pathColor: "rgb(235, 235, 127)",
+                        textColor: "whitesmoke",
+                      })}
+                    />
+                  </div>
+                </div>
+                <div className="box flex">
+                  <p className="data">Matches played</p>
+                  <p>2</p>
+                </div>
+              </>
+            )
+          }
         </div>
       </div>
-      {/* Create Game */}
-      <Link
-        to={{
-          pathname: '/game',
-          state: {
-            roomId: roomId,
-            exerciseId: props.exercise._id,
-            gameTime: gameTime,
-          },
-        }}
-      >
-        <button type="button" id="create-button" onClick={handleClick}>
-          Create Game
-        </button>
-      </Link>
-      <h2>Rooms</h2>
-      <div className="rooms-container">
-        {props.battles[0] &&
-          props.battles.map((room) => {
-            return (
-              // JOIN GAME Button
-              <div className="room-item">
+
+      <div id="home-battles">
+        <div id="home-options" className="flex">
+          <p>Open Games</p>
+          <button type="button" id="create-button" onClick={handleCreate}>
+            Create Game
+          </button>
+          <Modal
+            className={classes.modal}
+            open={open}
+            onClose={handleClose}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
+          >
+            <Fade in={open}>
+              <div className={classes.paper}>
+                <div id="game-filters" className="flex">
+                  <DifficultyFilter
+                    handleChange={handleDifficulty}
+                    difficulty={difficulty}
+                    setDifficulty={setDifficulty}
+                  />
+                  <div id="time-selector">
+                    <select
+                      onChange={updateTime}
+                      name="times"
+                      id="timesSelector"
+                      class="form-select"
+                    >
+                      <option value="300000">5 Minutes</option>
+                      <option value="600000">10 Minutes</option>
+                      <option value="900000">15 Minutes</option>
+                      <option value="1200000">20 Minutes</option>
+                      <option value="1500000">25 Minutes</option>
+                      <option value="1800000">30 Minutes</option>
+                    </select>
+                  </div>
+                </div>
                 <Link
                   to={{
                     pathname: '/game',
                     state: {
-                      roomId: room.roomId,
-                      exerciseId: room.ref,
+                      roomId: roomId,
+                      exerciseId: props.exercise._id,
+                      gameTime: gameTime,
                     },
                   }}
                 >
-                  <button
-                    onClick={joinRoom}
-                    value={room.roomId}
-                    name={room._id}
-                    key={room._id}
-                    type="button"
-                    className="room-button"
-                  >{`${
-                    room.players ? room.players[0].username : 'User'
-                  }'s room`}</button>
+                  <button id="final-create-button" onClick={handleClick}>Create Game</button>
                 </Link>
               </div>
-            );
-          })}
+            </Fade>
+          </Modal>
+
+        </div>
+        <div id="rooms-container" className="flex">
+          {props.battles[0] &&
+            props.battles.map((room) => {
+              return (
+                <div className="room-item">
+                  <Link
+                    to={{
+                      pathname: '/game',
+                      state: {
+                        roomId: room.roomId,
+                        exerciseId: room.ref,
+                      },
+                    }}
+                  >
+                    <button
+                      onClick={joinRoom}
+                      value={room.roomId}
+                      name={room._id}
+                      key={room._id}
+                      type="button"
+                      className="room-button"
+                    >
+                      {
+                      `${room.players ? room.players[0].username : 'User'}`
+                      }
+                      <p>{`${room.difficultyLevel} | ${room.length/60000} min`}</p>
+                    </button>
+                  </Link>
+                </div>
+              );
+            })}
+        </div>
       </div>
     </div>
   );
@@ -193,7 +329,7 @@ const mapState = (state) => {
   return {
     battles: state.battles,
     exercise: state.exercise,
-    auth: state.auth,
+    me: state.auth,
   };
 };
 

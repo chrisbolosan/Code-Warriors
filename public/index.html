@@ -17,6 +17,15 @@
       integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
       crossorigin="anonymous"
     ></script>
+    <script>
+      var dots = window.setInterval( function() {
+        var wait = document.getElementById("wait");
+        if ( wait.innerHTML.length > 3 )
+            wait.innerHTML = "";
+        else
+            wait.innerHTML += ".";
+        }, 500);
+    </script>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>

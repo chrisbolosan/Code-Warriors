@@ -10,15 +10,13 @@ const Navbar = ({ isLoggedIn, handleClick, userId, auth }) => {
     setUser(auth);
   }, [auth]);
 
-  // console.log('Navbar: ', user);
-
   return (
-    <nav className="navbar navbar-expand-lg">
-      <div className="container-fluid">
-        <Link to="/" style={{ textDecoration: 'none' }}>
-          <p className="navbar-brand">Code Warriors</p>
+    <nav id="navbar-container">
+      <div id="navbar" className="flex">
+        <Link to="/">
+          <p id="navbar-brand">Code Warriors</p>
         </Link>
-        <button
+        {/* <button
           className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
@@ -28,50 +26,47 @@ const Navbar = ({ isLoggedIn, handleClick, userId, auth }) => {
           aria-label="Toggle navigation"
         >
           <span className="dropdown">+</span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <Link to="/">
-                <p className="nav-link home">Home</p>
+        </button> */}
+        { isLoggedIn? (
+          <div id="nav-items" className="flex">
+            <p className="nav-item">
+              <Link to ="/">
+                Home
               </Link>
-            </li>
-            {isLoggedIn ? (
-              <>
-                <li className="nav-item">
-                  <Link
-                    to={{
-                      pathname: `/user/${user._id}`,
-                      state: { user: user },
-                    }}
-                  >
-                    <p className="nav-link profile">Profile</p>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/">
-                    <p className="nav-link logout" onClick={handleClick}>
-                      Logout
-                    </p>
-                  </Link>
-                </li>
-              </>
-            ) : (
-              <>
-                <li className="nav-item">
-                  <Link to="/login">
-                    <p className="nav-link login-nav">Login</p>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/signup">
-                    <p className="nav-link signup-nav">Signup</p>
-                  </Link>
-                </li>
-              </>
-            )}
-          </ul>
-        </div>
+            </p>
+            <p className="nav-item">
+              <Link to={{
+              pathname: `/user/${user._id}`,
+              state: { user: user }
+              }}>
+                Account
+              </Link>
+            </p>
+            <p className="nav-item" onClick={handleClick}>
+              <Link to="/">
+                Logout
+              </Link>
+            </p>
+          </div>
+        ) : (
+          <div id="nav-items" className="flex">
+            <p className="nav-item">
+              <Link to ="/">
+                Home
+              </Link>
+            </p>
+            <p className="nav-item">
+              <Link to="/login">
+                Login
+              </Link>
+            </p>
+            <p className="nav-item">
+              <Link to="/signup">
+                Signup
+              </Link>
+            </p>
+          </div>
+        )}
       </div>
     </nav>
   );
@@ -81,7 +76,7 @@ const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth._id,
     userId: state.auth._id,
-    auth: state.auth,
+    auth: state.auth
   };
 };
 

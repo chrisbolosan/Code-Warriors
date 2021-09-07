@@ -27,6 +27,10 @@ const BattleSchema = new mongoose.Schema({
   length: {
     type: Number,
     default: 300000
+  },
+  difficultyLevel: {
+    type: String,
+    default: "Easy"
   }
 });
 

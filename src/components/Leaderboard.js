@@ -1,23 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setLeaderboard } from '../store/leaderboard';
-import { Link } from 'react-router-dom';
 
-// thunk api/users/leaderboard
 class Leaderboard extends React.Component {
   componentDidMount() {
     this.props.setLeaderboard();
   }
-  //needs material ui/bootstrap card
+
   render() {
     return (
-      <div id="leaderboard-container">
-        <h1 id="leaderboard-header">LEADERBOARD</h1>
+      <div id="leaderboard-container" className="flex">
+        <h2 id="leaderboard-header">Leaderboard</h2>
         <div>
           {this.props.leaderboard.map((user) => (
-            <div className="leaderboard-box">
-              <Link to={`/user/${user._id}`}>{user.username}</Link>
-              <p>Points: {user.totalPoints}</p>
+            <div className="leaderboard-box flex">
+              <p>{user.username}</p>
+              <div className="leaderboard-info flex">
+                <small id="leaderboard-rank">
+                  {`${user.rank}, ${user.totalPoints} points`}
+                </small>
+                {/* <small># matches won</small> */}
+              </div>
             </div>
           ))}
         </div>
