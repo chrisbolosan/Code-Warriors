@@ -107,6 +107,29 @@ class Game extends React.Component {
       });
     });
 
+    clientSocket.on("submitted", async (info) => {
+      const { roomId, playerId, time, success, username } = info
+      if (playerId === this.props.me._id) {
+        this.setState({
+          player1: {
+            playerId,
+            username,
+            time,
+            success,
+          }
+        })
+      } else {
+        this.setState({
+          player2: {
+            playerId,
+            username,
+            time,
+            success
+          }
+        })
+      }
+    })
+
     clientSocket.on('opponentSubmitted', (submitterId) => {
       if (submitterId === this.props.me._id) {
         const status = document.getElementById('status');
@@ -140,7 +163,7 @@ class Game extends React.Component {
 
     console.log("this is the exercise", this.props.exercise)
     if (this.state.gameOver === true) {
-      return <Score roomId={this.state.room.roomId} />;
+      return <Score player1={this.state.player1} player2={this.state.player2} />;
     } else {
       const { roomId } = this.props.location.state;
       const { submitSolution, exercise } = this.props;

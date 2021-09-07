@@ -65,6 +65,7 @@ io.on('connection', async (socket) => {
 
   // listen for when a user submits code
   socket.on("submitted", async (info) => {
+    console.log("this is the submitted info", info)
     io.in(info.roomId).emit("submitted", info)
   })
 

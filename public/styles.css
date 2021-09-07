@@ -1,30 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
-/*  Score  */
-#score-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  height: 400px;
-  width: 400px;
-  margin: auto;
-  margin-top: 100px;
-  border: 2px solid black;
-  background-color: #83677b;
-}
-
-#score-container p,
-#score-container h2 {
-  color: white;
-}
-
-#score-container img {
-  height: 150px;
-  width: 150px;
-  margin: auto;
-}
-
 /* ---------------------------------------------- */
 body {
   background-color: #25274d;
@@ -528,4 +503,63 @@ p {
 
 #leaderboard-rank {
   font-style: italic;
+}
+
+/*  Score  */
+#score-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  height: 500px;
+  width: 700px;
+  margin: auto;
+  margin-top: 100px;
+  border: 2px solid white;
+  background-color: #464866;
+  box-shadow: 10px 5px 5px #313466;}
+
+.score-title {
+  color: white;
+  font-size: 30px;
+}
+
+#score-container img {
+  height: 200px;
+  width: 200px;
+  margin: auto;
+}
+
+.score-box {
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.winner, .loser {
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+  margin: 50px;
+}
+
+.winner-username, .loser-username {
+  font-size: 25px;
+}
+
+.winner-score, .loser-score {
+  font-size: 20px;
+}
+
+.score-people {
+  justify-content: space-evenly;
+}
+
+#leave-game {
+  margin-top: 30px;
+  width: 100px;
+  height: 50px;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
 }

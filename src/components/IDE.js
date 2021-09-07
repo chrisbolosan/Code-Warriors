@@ -37,11 +37,6 @@ class IDE extends React.Component {
 
   // when a user clicks "SUBMIT"
   async handleSubmit(event) {
-    // tell server client has submitted their solution
-    clientSocket.emit("submitted", {
-      roomId: this.state.roomId,
-      playerId: this.props.me._id
-    })
     // submit button gets disabled
     this.setState({
       submitDisabled: true,
@@ -80,6 +75,16 @@ class IDE extends React.Component {
 
     const { updatePlayer } = this.props
     updatePlayer(updatedPlayer, battleId)
+
+
+    // tell server client has submitted their solution
+    clientSocket.emit("submitted", {
+      roomId: this.state.roomId,
+      playerId: this.props.me._id,
+      username: this.props.me.username,
+      time: this.props.timer,
+      success: this.props.solution.success
+    })
   }
 
   async componentDidUpdate(prevProps) {
