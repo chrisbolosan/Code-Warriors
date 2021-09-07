@@ -11,9 +11,7 @@ import { getRandomExercise, getFilteredExercise } from '../store/exercise';
 import DifficultyFilter from './DifficultyFilter';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import ReactCSSTransitionGroup from 'react-transition-group'; // ES6
 import axios from "axios"
-
 // import TimeFilter from './TimeFilter';
 import Leaderboard from "./Leaderboard"
 
@@ -187,6 +185,7 @@ const Home = (props) => {
 //                       handleChange={updateTime}
 //                       time={gameTime}
 //                     /> */}
+  let matchesWonRatio = Math.floor((props.me.matchesWon/props.me.matchesPlayed) * 100)
 
   return (
     <div id="home-container" className="flex">
@@ -195,7 +194,7 @@ const Home = (props) => {
         <h3 id="welcome">{`Hi, ${props.me.username}`}</h3>
         <div id="dashboard" className="flex">
           {
-            props.me.points === 0 ? (
+            props.me.totalPoints === 0 ? (
               <><h1>Play a game to see your stats!</h1></>
             ) : (
               <>
@@ -211,8 +210,8 @@ const Home = (props) => {
                   <p className="data">Matches won</p>
                   <div id="progress" style={{ width: 100, height: 100}}>
                     <CircularProgressbar
-                      value={50}
-                      text={`50%`}
+                      value={matchesWonRatio}
+                      text={`${matchesWonRatio}%`}
                       styles={buildStyles({
                         pathTransitionDuration: 0.5,
                         pathColor: "rgb(235, 235, 127)",
@@ -223,7 +222,7 @@ const Home = (props) => {
                 </div>
                 <div className="box flex">
                   <p className="data">Matches played</p>
-                  <p>2</p>
+                  <p>{props.me.matchesPlayed}</p>
                 </div>
               </>
             )

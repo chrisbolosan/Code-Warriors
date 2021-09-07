@@ -1,68 +1,90 @@
 [
   {
-    "username": "chrissssssss",
+    "username": "chris",
     "email": "chris@gmail.com",
     "password": "12345678",
-    "totalPoints": 55
+    "totalPoints": 55,
+    "matchesWon": 10,
+    "matchesPlayed": 20
   },
   {
     "username": "haraamee",
     "email": "haram@gmail.com",
     "password": "12345678",
-    "totalPoints": 78
+    "totalPoints": 78,
+    "matchesWon": 24,
+    "matchesPlayed": 42
   },
   {
     "username": "antonioDINKINS",
     "email": "antonio@gmail.com",
     "password": "12345678",
-    "totalPoints": 295
+    "totalPoints": 295,
+    "matchesWon": 47,
+    "matchesPlayed": 92
   },
   {
     "username": "musicrox",
     "email": "gabe@lol.com",
     "password": "12345678",
-    "totalPoints": 30
+    "totalPoints": 30,
+    "matchesWon": 5,
+    "matchesPlayed": 10
   },
   {
     "username": "adrian",
     "email": "adrian@gmail.com",
     "password": "12345678",
-    "totalPoints": 350
+    "totalPoints": 350,
+    "matchesWon": 74,
+    "matchesPlayed": 100
   },
   {
     "username": "lukeskywalker",
     "email": "skywalker@gmail.com",
     "password": "12345678",
-    "totalPoints": 500
+    "totalPoints": 500,
+    "matchesWon": 250,
+    "matchesPlayed": 399
   },
   {
     "username": "jillian",
     "email": "jillian@gmail.com",
     "password": "12345678",
-    "totalPoints": 999
+    "totalPoints": 999,
+    "matchesWon": 301,
+    "matchesPlayed": 475
   },
   {
     "username": "gabe",
     "email": "gabe@gmail.com",
     "password": "12345678",
-    "totalPoints": 125
+    "totalPoints": 125,
+    "matchesWon": 46,
+    "matchesPlayed": 89
   },
   {
     "username": "sarahxxx",
     "email": "adrian@yahoo.com",
     "password": "12345678",
-    "totalPoints": 170
+    "totalPoints": 170,
+    "matchesWon": 75,
+    "matchesPlayed": 103
   },
   {
     "username": "johndoe",
     "email": "hello@gmail.com",
     "password": "12345678",
-    "totalPoints": 230
+    "totalPoints": 230,
+    "matchesWon": 34,
+    "matchesPlayed": 50
   },
   {
     "username": "janedoe",
     "email": "jane@gmail.com",
     "password": "12345678",
-    "totalPoints": 60
+    "totalPoints": 60,
+    "matchesWon": 23,
+    "matchesPlayed": 43
   }
 ]

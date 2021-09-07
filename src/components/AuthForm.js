@@ -144,7 +144,7 @@ const AuthForm = (props) => {
 					</Button>
 					<Grid container justifyContent="center">
 						<Grid item className={classes.more}>
-							Don't have an account? Sign up <Link to="/signup">here</Link>
+							Don't have an account? Sign up <Link to="/login">here</Link>
 						</Grid>
 					</Grid>
 				</form>

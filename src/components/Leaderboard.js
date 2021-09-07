@@ -19,7 +19,7 @@ class Leaderboard extends React.Component {
                 <small id="leaderboard-rank">
                   {`${user.rank}, ${user.totalPoints} points`}
                 </small>
-                {/* <small># matches won</small> */}
+                <small>Matches won: {user.matchesWon}</small>
               </div>
             </div>
           ))}

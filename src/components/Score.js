@@ -2,7 +2,8 @@ import React from "react"
 import { connect } from 'react-redux';
 import { setBattle } from "../store/battle"
 import LeaveGame from './LeaveGame'
-import clientSocket from '../socket/socket';
+import axios from "axios"
+// import clientSocket from '../socket/socket';
 
 class Score extends React.Component {
   constructor(props) {
@@ -10,49 +11,9 @@ class Score extends React.Component {
     this.state = {
 
     }
-    // this.getScore = this.getScore.bind(this);
   }
 
-  // componentDidUpdate(prevProps) {
-  //   setBattle()
-  //   if (prevProps.battle !== this.props.battle) {
-  //     this.setState({
-  //       battle: this.props.battle[0]
-  //     })
-  //   }
-  // }
-
-    // if (this.state.player1.username && this.state.player2.username) {
-    //   const { getScore } = this
-    //   const { player1, player2 } = this.state
-    //   const currentPlayerScore = getScore(player1, player2)
-    //   const opponentPlayerScore = getScore(player2, player1)
-
-    //   if (currentPlayerScore === opponentPlayerScore) {
-    //     return <div>TIE!</div>
-    //   } else if (currentPlayerScore > opponentPlayerScore) {
-    //     return <div>YOU WON!</div>
-    //   } else {
-    //     return <div>you lost sorry</div>
-    //   }
-
-    // } else {
-    //   return <div>Calculating scores...</div>
-    // }
-
-  // getScore(currentPlayer, opponentPlayer) {
-  //   let currentPlayerScore = 0
-  //   if (currentPlayer.success) {
-  //     currentPlayerScore += 7
-  //     if (currentPlayer.time > opponentPlayer.time) {
-  //       currentPlayerScore += 5
-  //     }
-  //   }
-  //   return currentPlayerScore
-  // }
-
-
-  componentDidMount() {
+  async componentDidMount() {
     const { player1, player2 } = this.props
     let player1Score = 0
     let player2Score = 0
@@ -79,26 +40,66 @@ class Score extends React.Component {
       this.setState({
         winner: {
           username: player1.username,
-          score: player1Score
+          score: player1Score,
+          id: player1.playerId
         },
         loser : {
           username: player2.username,
-          score: player2Score
+          score: player2Score,
+          id: player2.playerId
         }
       })
     } else {
       this.setState({
         winner: {
           username: player2.username,
-          score: player2Score
+          score: player2Score,
+          id: player2.playerId
         },
         loser : {
           username: player1.username,
-          score: player1Score
+          score: player1Score,
+          id: player1.playerId
         }
       })
     }
   }
+
+ async componentWillUnmount() {
+    if (this.state.tie) {
+      const matchesPlayed = this.props.me.matchesPlayed + 1
+      await axios.put("/api/users/updateLosingUser", {
+        id: this.props.me._id,
+        newPlayed: matchesPlayed
+      })
+    } else if (this.props.me._id === this.state.winner.id) {
+      const matchesWon = this.props.me.matchesWon + 1
+      const matchesPlayed = this.props.me.matchesPlayed + 1
+
+      await axios.put("/api/users/updateWinningUser", {
+        id: this.props.me._id,
+        newWon: matchesWon,
+        newPlayed: matchesPlayed,
+
+      })
+
+      await axios.put(`/api/users/${this.props.me._id}`, {
+        totalPoints: this.state.winner.score
+      })
+    } else {
+      const matchesPlayed = this.props.me.matchesPlayed + 1
+      await axios.put("/api/users/updateLosingUser", {
+        id: this.props.me._id,
+        newPlayed: matchesPlayed
+      })
+
+      await axios.put(`/api/users/${this.props.me._id}`, {
+        totalPoints: this.state.loser.score
+      })
+    }
+    window.location.reload();
+  }
+
 
 
   render() {
@@ -151,89 +152,6 @@ class Score extends React.Component {
         <LeaveGame />
       </div>
     )
-    // if (this.state.battle._id) {
-    //   const { battle } = this.state
-
-    //   if (this.state.battle.players.length === 2 ) {
-    //     const currentPlayer = battle.players.filter(player => {
-    //     return player.id === me._id
-    //     })[0]
-
-    //     const opponentPlayer = battle.players.filter(player => {
-    //       return player.id !== me._id
-    //   })[0]
-
-    //   const currentPlayerScore = getScore(currentPlayer, opponentPlayer)
-    //   const opponentScore = getScore(opponentPlayer, currentPlayer)
-
-    //   const winner = currentPlayerScore > opponentScore ? currentPlayer : opponentPlayer
-
-    //    // if they are tie (both codes dont work)
-    //   if (currentPlayerScore === opponentScore) {
-    //     return (
-    //       <div id="score-container">
-    //         <h2>Tie</h2>
-    //         <div id="scores">
-    //           <div>
-    //             <p>{currentPlayer.username}</p>
-    //             <p>Points: {currentPlayerScore}</p>
-    //           </div>
-    //           <div>
-    //             <p>{opponentPlayer.username}</p>
-    //             <p>Points: {opponentScore}</p>
-    //           </div>
-    //         </div>
-    //         <LeaveGame currentPlayerScore={currentPlayerScore} me={me} />
-
-    //       </div>
-    //     )
-    //   }
-    //   else if (winner.id === currentPlayer.id) {
-    //     // if the winner is the current player, show the crown and scores
-    //     // button to home
-    //     return (
-    //       <div id="score-container">
-    //         <img alt="won" src="crown.png" />
-    //         <div id="scores">
-    //           <div>
-    //             <p>{currentPlayer.username}</p>
-    //             <p>Points: {currentPlayerScore}</p>
-    //           </div>
-    //           <div>
-    //             <p>{opponentPlayer.username}</p>
-    //             <p>Points: {opponentScore}</p>
-    //           </div>
-    //         </div>
-    //         <LeaveGame currentPlayerScore={currentPlayerScore} me={me} />
-    //       </div>
-    //     )
-    //   } else {
-    //     // if the winner is the opponent, show sad face and scores
-    //     // button to home
-    //     return (
-    //       <div id="score-container">
-    //         <img alt="lost" src="crying.png" />
-    //         <div id="scores">
-    //           <div>
-    //             <p>{currentPlayer.username}</p>
-    //             <p>Points: {currentPlayerScore}</p>
-    //           </div>
-    //           <div>
-    //             <p>{opponentPlayer.username}</p>
-    //             <p>Points: {opponentScore}</p>
-    //           </div>
-    //         </div>
-    //         <LeaveGame currentPlayerScore={currentPlayerScore} me={me} />
-    //       </div>
-    //     )
-    //   }
-    // }
-
-    //   } else {
-    //   return (
-    //     <div>Calculating scores...</div>
-    //   )
-    // }
   }
 }
 

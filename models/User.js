@@ -37,9 +37,14 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  // matchesPlayed: {
-
-  // }
+  matchesPlayed: {
+    type: Number,
+    default: 0
+  },
+  matchesWon: {
+    type: Number,
+    default: 0
+  }
 });
 
 UserSchema.pre('save', async function (next) {

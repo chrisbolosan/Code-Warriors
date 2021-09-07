@@ -138,9 +138,36 @@ exports.getLeaderboard = async (req, res, next) => {
     const leaderboard = await User.find()
       .sort({ totalPoints: -1 })
       .limit(10)
-      .select('username totalPoints rank');
+      .select('username totalPoints rank matchesWon matchesPlayed');
     res.status(200).json(leaderboard);
   } catch (error) {
     next();
   }
 };
+
+exports.updateWinningUser = async (req, res, next) => {
+  try {
+    const user = await User.findOneAndUpdate({
+      _id: req.body.id
+    }, {
+      matchesWon: req.body.newWon,
+      matchesPlayed: req.body.newPlayed,
+    })
+    res.status(200).json(user)
+  } catch (error) {
+    next()
+  }
+}
+
+exports.updateLosingUser = async (req, res, next) => {
+  try {
+    const user = await User.findOneAndUpdate({
+      _id: req.body.id
+    }, {
+      matchesPlayed: req.body.newPlayed,
+    })
+    res.status(200).json(user)
+  } catch (error) {
+    next()
+  }
+}
