@@ -10,6 +10,8 @@ const {
   signup,
   login,
   getLeaderboard,
+  updateWinningUser,
+  updateLosingUser
 } = require('../controllers/users');
 
 //middleware for only authorized users and admins
@@ -24,4 +26,6 @@ router
   .put(updateUser)
   .delete(authHandler, deleteUser);
 
+router.route("/updateWinningUser").put(updateWinningUser)
+router.route("/updateLosingUser").put(updateLosingUser)
 module.exports = router;
