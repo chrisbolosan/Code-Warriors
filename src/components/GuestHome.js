@@ -31,35 +31,36 @@ const GuestHome = () => {
             <p className="name">Antonio Dinkins</p>
             <p className="job">Software Engineer</p>
             <p className="fsa"><img alt="fsa" src="fsa.ico"/>Fullstack Academy</p>
-            <p className="founder-desc">...description here</p>
+            <p className="founder-desc">Everyday is a new day so utilize to the best of your abilities the gifts God has granted you. Every day is a day to learn something new and grow.</p>
           </div>
           <div className="founder flex">
             <img alt="antonio" src="adrianrios.png"/>
             <p className="name">Adrian Rios</p>
             <p className="job">Software Engineer</p>
             <p className="fsa"><img alt="fsa" src="fsa.ico"/>Fullstack Academy</p>
-            <p className="founder-desc">...description here</p>
+            <p className="founder-desc">Bolivian Entrepreneur striking to achieve or solve challenges along the path of coding.</p>
           </div>
           <div className="founder flex">
             <img alt="antonio" src="gabefridkis.png"/>
             <p className="name">Gabe Fridkis</p>
             <p className="job">Software Engineer</p>
             <p className="fsa"><img alt="fsa" src="fsa.ico"/>Fullstack Academy</p>
-            <p className="founder-desc">...description here</p>
+            <p className="founder-desc">Classical Musician. Texas. </p>
           </div>
           <div className="founder flex">
             <img alt="antonio" src="chrisbolosan.png"/>
             <p className="name">Chris Bolosan</p>
             <p className="job">Software Engineer</p>
             <p className="fsa"><img alt="fsa" src="fsa.ico"/>Fullstack Academy</p>
-            <p className="founder-desc">...description here</p>
+            <p className="founder-desc">Database Administrator turned Software Engineer who loves to bbq Memphis style, travel the world, and eat.
+</p>
           </div>
           <div className="founder flex">
             <img alt="antonio" src="haramchang.png"/>
             <p className="name">Haram Chang</p>
             <p className="job">Software Engineer</p>
             <p className="fsa"><img alt="fsa" src="fsa.ico" />Fullstack Academy</p>
-            <p className="founder-desc">...description here</p>
+            <p className="founder-desc">Mother of 2 Dogs.</p>
           </div>
         </div>
       </div>
