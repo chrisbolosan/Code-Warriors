@@ -45,7 +45,7 @@ const GuestHome = () => {
             <p className="name">Gabe Fridkis</p>
             <p className="job">Software Engineer</p>
             <p className="fsa"><img alt="fsa" src="fsa.ico"/>Fullstack Academy</p>
-            <p className="founder-desc">Gabe is a both a professional orchestral musician and a software developer but can only do one at a time.</p>
+            <p className="founder-desc">Gabe is both a professional orchestral musician and a software developer but can only do one at a time.</p>
           </div>
           <div className="founder flex">
             <img alt="antonio" src="chrisbolosan.png"/>
