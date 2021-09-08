@@ -194,7 +194,7 @@ const Home = (props) => {
         <h3 id="welcome">{`Hi, ${props.me.username}`}</h3>
         <div id="dashboard" className="flex">
           {
-            props.me.totalPoints === 0 ? (
+            props.me.matchesPlayed === 0 ? (
               <><h1>Play a game to see your stats!</h1></>
             ) : (
               <>
