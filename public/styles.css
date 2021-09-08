@@ -206,13 +206,14 @@ p {
   flex-wrap: wrap;
   height: 650px;
   /* take height off later */
-  width: 450px;
+  width: 420px;
   background-color: #464866;
   box-shadow: 10px 5px 5px #313466;
 }
 
 .room-item {
   margin-bottom: 5px;
+  margin-right: 5px;
 }
 
 .room-button {
@@ -235,9 +236,9 @@ p {
 
 #dashboard {
   flex-wrap: wrap;
-  padding: 50px;
-  height: 500px;
-  width: 500px;
+  padding: 20px;
+  height: 450px;
+  width: 450px;
   background-color: #464866;
   box-shadow: 10px 5px 5px #313466;
 }
