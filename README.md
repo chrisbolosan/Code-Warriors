@@ -1,4 +1,5 @@
 # CODE WARRIORS
+[Code Warriors](https://code-warriors-fs.herokuapp.com/)
 
 ![Screen Shot 2021-09-07 at 7 47 30 PM (2)](https://user-images.githubusercontent.com/65192723/132424259-10d48180-b9de-42cb-9a98-9265e69ffa75.png)
 <hr />
@@ -35,3 +36,10 @@ We used the [_Create-React-App_](https://github.com/facebook/create-react-app) b
 ```
   yarn start:dev
 ```
+
+## Team
+[Adrian Rios](https://github.com/Galower1)
+[Antonio Dinkins](https://github.com/adinkins2019)
+[Chris Bolosan](https://github.com/chrisbolosan)
+[Gabe Fridkis](https://github.com/gbfrid)
+[Haram Chang](https://github.com/haramchang)
