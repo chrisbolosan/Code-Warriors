@@ -10,7 +10,7 @@ Code Warriors implements the NERD (Node, Express, React/Redux, Database using SQ
 
 **Frontend**
 
-<!-- React Redux was used to manage our applications state.  -->
+_React Redux_ was used to manage our applications state.
 
 **Backend**
 
