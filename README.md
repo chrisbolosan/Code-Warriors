@@ -1,13 +1,19 @@
 # CODE WARRIORS
-[Code Warriors](https://code-warriors-fs.herokuapp.com/)
 
-![Screen Shot 2021-09-07 at 7 47 30 PM (2)](https://user-images.githubusercontent.com/65192723/132424259-10d48180-b9de-42cb-9a98-9265e69ffa75.png)
+</p>
+<p align='center'><a href="https://code-warriors-fs.herokuapp.com/"> <img style="max-width:300px" src="https://cdn.loom.com/sessions/thumbnails/57a3608ba5724a718efdfd2c86982268-with-play.gif"> </br> <p align='center'> Official Site</p> </a> </p>
+
 <hr />
 Code Warriors is the new fun way to prep for coding interviews. It's an interactive multiplayer game where players can challenge each other to a round of solving algorithms.
 
+## Code Warriors Demo
+
+Check out our Demo video <https://youtu.be/Bcz1eSariHw> here! 
+ 
+
 ## Technology Stack & Tools 
 
-Code Warriors implements the NERD (Node, Express, React/Redux, Database using SQL) stack along with Socket.io.
+Code Warriors implements the MERN  (MongoDB, Express.js, React, Node.js) stack along with Socket.io.
 
 **Frontend**
 
@@ -36,10 +42,35 @@ We used the [_Create-React-App_](https://github.com/facebook/create-react-app) b
 ```
   yarn start:dev
 ```
+## Contributors/Collaborators:
 
-## Team
-[Adrian Rios](https://github.com/Galower1)
-[Antonio Dinkins](https://github.com/adinkins2019)
-[Chris Bolosan](https://github.com/chrisbolosan)
-[Gabe Fridkis](https://github.com/gbfrid)
-[Haram Chang](https://github.com/haramchang)
+Thanks to the following people who have contributed to this project:
+
+* [Adrian Rios](https://github.com/Galower1) 📖
+* [Antonio Dinkins](https://github.com/adinkins2019) 📖
+* [Chris Bolosan](https://github.com/chrisbolosan) 📖
+* [Gabe Fridkis](https://github.com/gbfrid) 📖
+* [Haram Chang](https://github.com/haramchang) 📖
+
+## Contact:
+<!--- You can add in your linkedin, medium, stack overflow, dev.to account, etc. here --->
+If you want to contact Chris Bolosan you can reach him at <cbolosan@gmail.com>.
+
+Connect with Chris on <a href="www.linkedin.com/in/chrisbolosan">Linkedin</a>
+
+
+
+## Additional Resources:
+
+https://www.mongodb.com/developer/
+
+https://socket.io/docs/v4
+
+https://jwt.io/
+
+https://mongoosejs.com/
+
+https://react-redux.js.org/using-react-redux/connect-mapstate
+
+https://material-ui.com/
+
