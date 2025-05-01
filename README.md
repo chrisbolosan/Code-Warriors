@@ -1,3 +1,5 @@
+> ℹ️ **Note**: This project is no longer maintained and is archived for reference.
+
 # CODE WARRIORS
 
 </p>
